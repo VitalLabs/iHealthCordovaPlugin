@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    id="co.vitallabs.iHealthPlugin"
+    version="1.0.0">
+
+    <name>iHealthPlugin</name>
+
+  <description>
+    iHealth Plugin for Steroids.js
+  </description>
+
+  <asset src="www/iHealthPlugin.js" target="plugins/iHealthPlugin.js" />
+
+  <engines>
+    <engine name="cordova" version=">=2.7.0" />
+  </engines>
+
+  <!-- android -->
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="plugins">
+      <plugin name="iHealth" value="co.vitallabs.iHealthPlugin"/>
+    </config-file>
+
+    <source-file src="src/android/com/appgyver/plugin/iHealth.java"
+      target-dir="src/com/appgyver/plugin" />
+  </platform>
+
+  <!-- ios -->
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*/plugins">
+      <plugin name="iHealthPlugin" value="iHealth" onload="true" />
+    </config-file>
+
+    <config-file target="config.xml" parent="/widget">
+      <feature name="iHealth">
+        <param name="ios-package" value="iHealth"/>
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+
+    <header-file src="src/ios/iHealthPlugin.h" />
+
+    <source-file src="src/ios/iHealthPlugin.m" />
+
+  </platform>
+</plugin>
