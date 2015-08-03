@@ -139,7 +139,9 @@
 }
 
 #pragma mark - BP7
--(void)DeviceConnectForBP7:(NSNotification *)tempNoti{
+-(void)DeviceConnectForBP7:(CDInvokeUrlCommand *)command
+{
+    CDVPluginResult* pluginResult = nil
     BP7Controller *controller = [BP7Controller shareBP7Controller];
     NSArray *bpDeviceArray = [controller getAllCurrentBP7Instace];
     if(bpDeviceArray.count){
@@ -159,21 +161,28 @@
                 } xiaoboNoHeart:^(NSArray *xiaoboArr) {
                     
                 } result:^(NSDictionary *dic) {
-                    _tipTextView.text = [NSString stringWithFormat:@"result:%@",dic];
+                    //_tipTextView.text = [NSString stringWithFormat:@"result:%@",dic];
                     NSLog(@"dic:%@",dic);
-                } errorBlock:^(BPDeviceError error) {
+                            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"result:%@",dic]];
+                  } errorBlock:^(BPDeviceError error) {
                     NSLog(@"error:%d",error);
-                    _tipTextView.text = [NSString stringWithFormat:@"error:%d",error];
+                    // _tipTextView.text = [NSString stringWithFormat:@"error:%d",error];
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"error:%@",error]];
                 }];
             }
         } errorBlock:^(BPDeviceError error) {
             NSLog(@"error:%d",error);
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"error:%@",error]];
         }];
     }
     else{
         NSLog(@"log...");
-        _tipTextView.text = [NSString stringWithFormat:@"date:%@",[NSDate date]];
+        //_tipTextView.text = [NSString stringWithFormat:@"date:%@",[NSDate date]];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
+
+    // Return stuff
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
 }
 
