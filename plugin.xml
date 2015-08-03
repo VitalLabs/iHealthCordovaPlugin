@@ -39,6 +39,9 @@
     </config-file>
 
     <header-file src="src/ios/iHealthPlugin.h" />
+    <header-file src="src/ios/BPHeader.h" />
+    <header-file src="src/ios/BP7.h" />
+    <header-file src="src/ios/BP3.h" />
 
     <source-file src="src/ios/iHealthPlugin.m" />
 

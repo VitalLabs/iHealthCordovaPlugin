@@ -1,12 +1,13 @@
 /********* iHealthPlugin.m Cordova Plugin Implementation *******/
 
-#import "iHealthPlugin.h"
-#import <Cordova/CDV.h>
-
-//Custom stuf
+//Custom stuff
 #import "BPHeader.h"
 #import "BP3.h"
 #import "BP7.h"
+// EOF Custom stuff
+
+#import "iHealthPlugin.h"
+#import <Cordova/CDV.h>
 
 @implementation iHealthPlugin
 
