@@ -28,12 +28,12 @@
   <!-- ios -->
   <platform name="ios">
     <config-file target="config.xml" parent="/*/plugins">
-      <plugin name="iHealthPlugin" value="iHealth" onload="true" />
+      <plugin name="iHealthPlugin" value="iHealthPlugin" onload="true" />
     </config-file>
 
     <config-file target="config.xml" parent="/widget">
-      <feature name="iHealth">
-        <param name="ios-package" value="iHealth"/>
+      <feature name="iHealthPlugin">
+        <param name="ios-package" value="iHealthPlugin"/>
         <param name="onload" value="true" />
       </feature>
     </config-file>

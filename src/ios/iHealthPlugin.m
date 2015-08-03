@@ -3,7 +3,7 @@
 #import "iHealthPlugin.h"
 #import <Cordova/CDV.h>
 
-@implementation iHealth
+@implementation iHealthPlugin
 
 - (void)ihealth:(CDVInvokedUrlCommand*)command
 {
