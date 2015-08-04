@@ -94,7 +94,7 @@
     }
     else{
         NSLog(@"log...");
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat: @"bpDeviceArray.count %@ %@", bpDeviceArray.count, bpDeviceArray]]; //[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat: @"bpDeviceArray.count %@ %@ %@", bpDeviceArray.count, bpDeviceArray, controller]]; //[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
 
     // Return stuff
