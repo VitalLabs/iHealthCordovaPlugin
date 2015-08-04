@@ -44,14 +44,14 @@
 -(void)DeviceConnectForBP7:(CDInvokeUrlCommand*)command
 {
   
-    CDVPluginResult* pluginResult = nil;
+    __block CDVPluginResult* pluginResult = nil;
     BP7Controller *controller = [BP7Controller shareBP7Controller];
     NSArray *bpDeviceArray = [controller getAllCurrentBP7Instace];
 
     NSString *YourUserName = @"devops@vitallabs.co";
     NSString *SDKKey = @"d1a2829fbe4c473e9566c920eb0c4bc3";
     NSString *SDKSecret = @"f6abeaf0040543b4a00eda3c2f238c84";
-    NSString *stringresult = nil;
+    __block NSString *stringresult = nil;
     
     if(bpDeviceArray.count){
         BP7 *bpInstance = [bpDeviceArray objectAtIndex:0];
