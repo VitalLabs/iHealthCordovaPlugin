@@ -38,11 +38,19 @@
       </feature>
     </config-file>
 
-    <header-file src="src/ios/iHealthPlugin.h" />
     <header-file src="src/ios/BPHeader.h" />
-    <header-file src="src/ios/BP7.h" />
+    <header-file src="src/ios/BP5Controller.h" />
+    <header-file src="src/ios/BP5.h" />
+    <header-file src="src/ios/BP3Controller.h" />
     <header-file src="src/ios/BP3.h" />
-
+    <header-file src="src/ios/BP7Controller.h" />
+    <header-file src="src/ios/BP7.h" />
+    <header-file src="src/ios/BPMacroFile.h" />
+    <header-file src="src/ios/User.h" />
+    <header-file src="src/ios/ABI.h" />
+    <header-file src="src/ios/ABIController.h" />
+    <header-file src="src/ios/iHealthPlugin.h" />
+    
     <source-file src="src/ios/iHealthLibrary(1.0.6).a" framework="true"/>
     <source-file src="src/ios/iHealthPlugin.m" />
 
