@@ -43,7 +43,7 @@
 #pragma mark - BP7
 -(void)DeviceConnectForBP7:(CDInvokeUrlCommand *)command
 {
-    CDVPluginResult* pluginResult = nil
+  CDVPluginResult* pluginResult = nil;
     BP7Controller *controller = [BP7Controller shareBP7Controller];
     NSArray *bpDeviceArray = [controller getAllCurrentBP7Instace];
 
@@ -70,7 +70,7 @@
                 } result:^(NSDictionary *dic) {
                     //_tipTextView.text = [NSString stringWithFormat:@"result:%@",dic];
                     NSLog(@"dic:%@",dic);
-                            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"result:%@",dic]];
+                            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat:@"dic:%@",dic]];
                   } errorBlock:^(BPDeviceError error) {
                     NSLog(@"error:%d",error);
                     // _tipTextView.text = [NSString stringWithFormat:@"error:%d",error];
