@@ -38,6 +38,27 @@
       </feature>
     </config-file>
 
+    <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+      <array>
+        <dict>
+          <key>Supported external accessory protocols</key>
+          <array>
+            <key>Item 0</key>
+            <string>com.jiuan.P930</string>
+            <key>Item 1</key>
+            <string>com.jiuan.BPV20</string>
+            <key>Item 2</key>
+            <string>com.jiuan.BPV21</string>
+          </array>
+          <key>Required background modes</key>
+          <array>
+            <key>Item 0</key>
+            <string>App communicates with an accessory</string>
+          </array>
+        </dict>
+      </array>
+    </config-file>
+    
     <header-file src="src/ios/BPHeader.h" />
     <header-file src="src/ios/BP5Controller.h" />
     <header-file src="src/ios/BP5.h" />
