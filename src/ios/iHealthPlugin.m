@@ -26,31 +26,17 @@
 }
 
 // Custom stuff
-- (void)init
+- (void)initplugin //used to be init
 {
-  //[super viewDidLoad];
-    // Do any additional setup after loading the view.
-    // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForBP3:) name:BP3ConnectNoti object:nil];
-    // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForBP3:) name:BP3DisConnectNoti object:nil];
-    
-    // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForBP5:) name:BP5ConnectNoti object:nil];
-    // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForBP5:) name:BP5DisConnectNoti object:nil];
-    
+  
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForBP7:) name:BP7ConnectNoti object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForBP7:) name:BP7DisConnectNoti object:nil];
     
     
-    //ABI Noti(Contains Arm and Leg)
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForABI:) name:ABIConnectNoti object:nil];
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForABI:) name:ABIDisConnectNoti object:nil];
-    //ABI Noti(Contains Arm only)
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForArm:) name:ArmConnectNoti object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForArm:) name:ArmDisConnectNoti object:nil];
     
-    //[BP3Controller shareBP3Controller];
-    //[BP5Controller shareBP5Controller];
     [BP7Controller shareBP7Controller];
-    //[ABIController shareABIController];
 }
 
 
@@ -60,6 +46,11 @@
     CDVPluginResult* pluginResult = nil
     BP7Controller *controller = [BP7Controller shareBP7Controller];
     NSArray *bpDeviceArray = [controller getAllCurrentBP7Instace];
+
+    NSString *YourUserName = @"devops@vitallabs.co";
+    NSString *SDKKey = @"d1a2829fbe4c473e9566c920eb0c4bc3";
+    NSString *SDKSecret = @"f6abeaf0040543b4a00eda3c2f238c84";
+    
     if(bpDeviceArray.count){
         BP7 *bpInstance = [bpDeviceArray objectAtIndex:0];
         [bpInstance commandStartGetAngleWithUser:YourUserName clientID:SDKKey clientSecret:SDKSecret Authentication:^(UserAuthenResult result) {
