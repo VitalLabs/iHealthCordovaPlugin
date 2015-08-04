@@ -6,13 +6,13 @@ window.ihealth = function(str, callback) {
 
 window.DeviceConnectForBP7 = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to Connecting.');
+        callback('Nothing to Connecting.' + err);
     }, "iHealthPlugin", "DeviceConnectForBP7", []);
 };
 
 window.initplugin = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to init.');
+        callback('Nothing to init.' + err);
     }, "iHealthPlugin", "initplugin", []);
 };
 
