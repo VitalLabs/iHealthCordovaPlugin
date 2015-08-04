@@ -26,7 +26,7 @@
 }
 
 // Custom stuff
-- (void)initplugin //used to be init
+- (void)initplugin:(CDVInvokedUrlCommand*)command //used to be init
 {
   
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForBP7:) name:BP7ConnectNoti object:nil];
@@ -37,11 +37,12 @@
     // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForArm:) name:ArmDisConnectNoti object:nil];
     
     [BP7Controller shareBP7Controller];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 
 #pragma mark - BP7
-- (void)DeviceConnectForBP7:(CDVInvokeUrlCommand*)command
+- (void)DeviceConnectForBP7:(CDVInvokedUrlCommand*)command
 {
   
     __block CDVPluginResult* pluginResult = nil;
@@ -91,9 +92,10 @@
     
 }
 
-- (void)DeviceDisConnectForBP7:(NSNotification *)tempNoti
+- (void)DeviceDisConnectForBP7:(CDVInvokedUrlCommand *)command
 {
     NSLog(@"info:%@",[tempNoti userInfo]);
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 
