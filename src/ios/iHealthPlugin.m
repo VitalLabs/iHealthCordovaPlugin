@@ -41,7 +41,7 @@
 
 
 #pragma mark - BP7
--(void)DeviceConnectForBP7:(CDVInvokeUrlCommand*)command
+- (void)DeviceConnectForBP7:(CDVInvokeUrlCommand*)command
 {
   
     __block CDVPluginResult* pluginResult = nil;
@@ -91,7 +91,8 @@
     
 }
 
--(void)DeviceDisConnectForBP7:(NSNotification *)tempNoti{
+- (void)DeviceDisConnectForBP7:(NSNotification *)tempNoti
+{
     NSLog(@"info:%@",[tempNoti userInfo]);
 }
 
