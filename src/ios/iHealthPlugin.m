@@ -33,15 +33,15 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForBP7:) name:BP7DisConnectNoti object:nil];
     
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForArm:) name:ArmConnectNoti object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForArm:) name:ArmDisConnectNoti object:nil];
+    // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForArm:) name:ArmConnectNoti object:nil];
+    // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForArm:) name:ArmDisConnectNoti object:nil];
     
     [BP7Controller shareBP7Controller];
 }
 
 
 #pragma mark - BP7
--(void)DeviceConnectForBP7:(CDInvokeUrlCommand*)command
+-(void)DeviceConnectForBP7:(CDVInvokeUrlCommand*)command
 {
   
     __block CDVPluginResult* pluginResult = nil;
@@ -56,11 +56,9 @@
     if(bpDeviceArray.count){
         BP7 *bpInstance = [bpDeviceArray objectAtIndex:0];
         [bpInstance commandStartGetAngleWithUser:YourUserName clientID:SDKKey clientSecret:SDKSecret Authentication:^(UserAuthenResult result) {
-            //            _tipTextView.text = [NSString stringWithFormat:@"Authentication Result:%d",result];
             NSLog(@"Authentication Result:%d",result);
         } angle:^(NSDictionary *dic) {
             NSLog(@"angle:%@",dic);
-            //            _tipTextView.text = [NSString stringWithFormat:@"angle:%@",dic];
             NSNumber *angleDigital = [dic valueForKey:@"angle"];
             if(angleDigital.intValue>10 && angleDigital.intValue<30){
                 [bpInstance commandStartMeasure:^(NSArray *pressureArr) {
@@ -70,14 +68,11 @@
                 } xiaoboNoHeart:^(NSArray *xiaoboArr) {
                     
                 } result:^(NSDictionary *dic) {
-                    //_tipTextView.text = [NSString stringWithFormat:@"result:%@",dic];
                     NSLog(@"dic:%@",dic);
                     stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:stringresult];
                   } errorBlock:^(BPDeviceError error) {
                     NSLog(@"error:%d",error);
-                    // _tipTextView.text = [NSString stringWithFormat:@"error:%d",error];
-                    
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"erro1"];
                 }];
             }
@@ -88,7 +83,6 @@
     }
     else{
         NSLog(@"log...");
-        //_tipTextView.text = [NSString stringWithFormat:@"date:%@",[NSDate date]];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
 
