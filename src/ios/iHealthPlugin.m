@@ -47,6 +47,15 @@
 {
   
     __block CDVPluginResult* pluginResult = nil;
+    // Initialize controller
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForBP7:) name:BP7ConnectNoti object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForBP7:) name:BP7DisConnectNoti object:nil];
+    [BP7Controller shareBP7Controller];
+  
+    // EOF Initialize controller
+
+
     BP7Controller *controller = [BP7Controller shareBP7Controller];
     NSArray *bpDeviceArray = [controller getAllCurrentBP7Instace];
 

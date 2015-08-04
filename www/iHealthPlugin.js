@@ -4,15 +4,15 @@ window.ihealth = function(str, callback) {
     }, "iHealthPlugin", "ihealth", [str]);
 };
 
-window.DeviceConnectForBP7 = function(str, callback) {
+window.DeviceConnectForBP7 = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to echo.');
+        callback('Nothing to Connecting.');
     }, "iHealthPlugin", "DeviceConnectForBP7", []);
 };
 
-window.initplugin = function(str, callback) {
+window.initplugin = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to echo.');
+        callback('Nothing to init.');
     }, "iHealthPlugin", "initplugin", []);
 };
 
