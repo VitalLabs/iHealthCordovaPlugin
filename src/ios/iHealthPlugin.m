@@ -71,16 +71,18 @@
                 } result:^(NSDictionary *dic) {
                     //_tipTextView.text = [NSString stringWithFormat:@"result:%@",dic];
                     NSLog(@"dic:%@",dic);
-                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:dic];
+                    stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:stringresult];
                   } errorBlock:^(BPDeviceError error) {
                     NSLog(@"error:%d",error);
                     // _tipTextView.text = [NSString stringWithFormat:@"error:%d",error];
-                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:error];
+                    
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"erro1"];
                 }];
             }
         } errorBlock:^(BPDeviceError error) {
             NSLog(@"error:%d",error);
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:error];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"error2"];
         }];
     }
     else{
