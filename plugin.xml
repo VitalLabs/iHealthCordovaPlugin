@@ -73,6 +73,7 @@
 
     <framework src="ExternalAccessory.framework" />
     <framework src="CoreBluetooth.framework" />
+    <framework src="SystemConfiguration.framework" />
     
   </platform>
 </plugin>
