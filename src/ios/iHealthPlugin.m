@@ -10,7 +10,7 @@
 #import <Cordova/CDV.h>
 
 CDVPluginResult* pluginResult = nil;
-BP7Controller *bp7Controller = nil
+BP7Controller *bp7Controller = nil;
 
 @implementation iHealthPlugin
 
