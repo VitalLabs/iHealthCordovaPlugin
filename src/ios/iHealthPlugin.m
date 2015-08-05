@@ -48,7 +48,7 @@ BP7Controller *bp7Controller = nil;
 
   if(bpDeviceArray.count) {
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                         messageAsString:ihealth];
+                                         messageAsBool:true];
   } else {
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
   }
