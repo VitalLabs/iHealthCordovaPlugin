@@ -38,7 +38,8 @@
       </feature>
     </config-file>
 
-    <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+    <!--
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
       <array>
         <dict>
           <key>UISupportedExternalAccessoryProtocols</key>
@@ -53,6 +54,22 @@
             <string>bluetooth-central</string>
 	        </array>
         </dict>
+      </array>
+    </config-file>
+    -->
+
+    <config-file target="*-Info.plist" parent="UIBackgroundModes">
+      <array>
+        <string>bluetooth-central</string>
+        <string>external-accessory</string>
+      </array>
+    </config-file>
+
+    <config-file target="*-Info.plist" parent="UISupportedExternalAccessoryProtocols">
+      <array>
+        <string>com.jiuan.P930</string>
+        <string>com.jiuan.BPV20</string>
+        <string>com.jiuan.BPV21</string>
       </array>
     </config-file>
     
