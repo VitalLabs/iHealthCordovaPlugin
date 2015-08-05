@@ -10,9 +10,9 @@ window.DeviceConnectForBP7 = function(callback) {
     }, "iHealthPlugin", "DeviceConnectForBP7", []);
 };
 
-window.initplugin = function(callback) {
+window.pluginInitialize = function(callback) {
     cordova.exec(callback, function(err) {
         callback('Nothing to init.' + err);
-    }, "iHealthPlugin", "initplugin", []);
+    }, "iHealthPlugin", "pluginInitialize", []);
 };
 
