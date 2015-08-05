@@ -10,7 +10,7 @@
 #import <Cordova/CDV.h>
 
 CDVPluginResult* pluginResult = nil;
-BP7Controller* bp7Controller = [BP7Controller shareBP7Controller];
+BP7Controller *bp7Controller = [BP7Controller shareBP7Controller];
 
 @implementation iHealthPlugin
 
@@ -49,14 +49,7 @@ BP7Controller* bp7Controller = [BP7Controller shareBP7Controller];
 {
   
     __block CDVPluginResult* pluginResult = nil;
-    // Initialize controller
-
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForBP7:) name:BP7ConnectNoti object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForBP7:) name:BP7DisConnectNoti object:nil];
-    [BP7Controller shareBP7Controller];
-  
-    // EOF Initialize controller
-
+    
 
     //BP7Controller *controller = [BP7Controller shareBP7Controller];
     NSArray *bpDeviceArray = [bp7Controller getAllCurrentBP7Instace];
@@ -96,7 +89,7 @@ BP7Controller* bp7Controller = [BP7Controller shareBP7Controller];
     }
     else{
         NSLog(@"log...");
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat: @"bpDeviceArray.count %@ %@ %@", bpDeviceArray.count, bpDeviceArray, controller]]; //[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat: @"bpDeviceArray.count %@ %@ %@", bpDeviceArray.count, bpDeviceArray, bp7Controller]]; //[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
 
     // Return stuff
