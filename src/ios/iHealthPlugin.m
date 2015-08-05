@@ -10,7 +10,7 @@
 #import <Cordova/CDV.h>
 
 CDVPluginResult* pluginResult = nil;
-BP7Controller *bp7Controller = [BP7Controller shareBP7Controller];
+BP7Controller *bp7Controller = nil
 
 @implementation iHealthPlugin
 
@@ -39,7 +39,7 @@ BP7Controller *bp7Controller = [BP7Controller shareBP7Controller];
   // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForArm:) name:ArmConnectNoti object:nil];
   // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForArm:) name:ArmDisConnectNoti object:nil];
     
-  [BP7Controller shareBP7Controller];
+  bp7Controller = [BP7Controller shareBP7Controller];
   //[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
