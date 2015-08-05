@@ -19,27 +19,25 @@ BP7Controller *bp7Controller = nil;
     NSString* ihealth = [command.arguments objectAtIndex:0];
 
     if (ihealth != nil && [ihealth length] > 0) {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:ihealth];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                         messageAsString:ihealth];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
 
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    [self.commandDelegate sendPluginResult:pluginResult
+                                callbackId:command.callbackId];
 }
 
 // Custom stuff
 - (void)pluginInitialize:(CDVInvokedUrlCommand*)command 
 {
-  //CDVPluginResult* pluginResult = nil;
-  
-  //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForBP7:) name:BP7ConnectNoti object:nil];
-  //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForBP7:) name:BP7DisConnectNoti object:nil];
-  
-    
   bp7Controller = [BP7Controller shareBP7Controller];
 
-  pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat: @"pluginInitialize %@", bp7Controller]];
-  [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+  pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                   messageAsString:[NSString stringWithFormat: @"pluginInitialize %@", bp7Controller]];
+  [self.commandDelegate sendPluginResult:pluginResult
+                              callbackId:command.callbackId];
 }
 
 
@@ -49,10 +47,7 @@ BP7Controller *bp7Controller = nil;
   
     __block CDVPluginResult* pluginResult = nil;
     
-
-    //BP7Controller *controller = [BP7Controller shareBP7Controller];
     NSArray *bpDeviceArray = [bp7Controller getAllCurrentBP7Instace];
-
     NSString *YourUserName = @"devops@vitallabs.co";
     NSString *SDKKey = @"d1a2829fbe4c473e9566c920eb0c4bc3";
     NSString *SDKSecret = @"f6abeaf0040543b4a00eda3c2f238c84";
@@ -60,7 +55,10 @@ BP7Controller *bp7Controller = nil;
     
     if(bpDeviceArray.count){
         BP7 *bpInstance = [bpDeviceArray objectAtIndex:0];
-        [bpInstance commandStartGetAngleWithUser:YourUserName clientID:SDKKey clientSecret:SDKSecret Authentication:^(UserAuthenResult result) {
+        [bpInstance commandStartGetAngleWithUser:YourUserName
+                                        clientID:SDKKey
+                                    clientSecret:SDKSecret
+                                  Authentication:^(UserAuthenResult result) {
             NSLog(@"Authentication Result:%d",result);
         } angle:^(NSDictionary *dic) {
             NSLog(@"angle:%@",dic);
@@ -75,36 +73,42 @@ BP7Controller *bp7Controller = nil;
                 } result:^(NSDictionary *dic) {
                     NSLog(@"dic:%@",dic);
                     stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
-                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:stringresult];
-                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                                     messageAsString:stringresult];
+                    [self.commandDelegate sendPluginResult:pluginResult
+                                                callbackId:command.callbackId];
                   } errorBlock:^(BPDeviceError error) {
                     NSLog(@"error:%d",error);
-                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"erro1"];
-                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                                     messageAsString:@"Device Error"];
+                    [self.commandDelegate sendPluginResult:pluginResult
+                                                callbackId:command.callbackId];
                 }];
             }
         } errorBlock:^(BPDeviceError error) {
             NSLog(@"error:%d",error);
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"error2"];
-            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                             messageAsString:@"Device Error"];
+            [self.commandDelegate sendPluginResult:pluginResult
+                                        callbackId:command.callbackId];
         }];
     }
     else{
         NSLog(@"log...");
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat: @"bpDeviceArray.count %@ %@ %@ %@", bpDeviceArray.count, [bpDeviceArray count],bpDeviceArray, bp7Controller]]; //[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                         messageAsString:[NSString stringWithFormat: @"bpDeviceArray.count %@ %@ %@ %@", bpDeviceArray.count, [bpDeviceArray count],bpDeviceArray, bp7Controller]]; 
+        [self.commandDelegate sendPluginResult:pluginResult
+                                    callbackId:command.callbackId];
     }
-    
-
-    // Return stuff
     
 }
 
 - (void)DeviceDisConnectForBP7:(CDVInvokedUrlCommand *)command
 {
-  CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"disconnect"];
-  //NSLog(@"info:%@",[tempNoti userInfo]);
-  [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+  CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                                    messageAsString:@"disconnect"];
+  [self.commandDelegate sendPluginResult:pluginResult
+                              callbackId:command.callbackId];
 }
 
 
