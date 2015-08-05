@@ -9,11 +9,13 @@
 #import "iHealthPlugin.h"
 #import <Cordova/CDV.h>
 
+CDVPluginResult* pluginResult = nil;
+BP7Controller* bp7Controller = [BP7Controller shareBP7Controller];
+
 @implementation iHealthPlugin
 
 - (void)ihealth:(CDVInvokedUrlCommand*)command
 {
-    CDVPluginResult* pluginResult = nil;
     NSString* ihealth = [command.arguments objectAtIndex:0];
 
     if (ihealth != nil && [ihealth length] > 0) {
@@ -56,8 +58,8 @@
     // EOF Initialize controller
 
 
-    BP7Controller *controller = [BP7Controller shareBP7Controller];
-    NSArray *bpDeviceArray = [controller getAllCurrentBP7Instace];
+    //BP7Controller *controller = [BP7Controller shareBP7Controller];
+    NSArray *bpDeviceArray = [bp7Controller getAllCurrentBP7Instace];
 
     NSString *YourUserName = @"devops@vitallabs.co";
     NSString *SDKKey = @"d1a2829fbe4c473e9566c920eb0c4bc3";
