@@ -4,6 +4,9 @@
 
 @interface iHealthPlugin : CDVPlugin
 
-- (void)ihealth:(CDVInvokedUrlCommand*)command;
+- (void) pluginInitialize;
+- (void) ihealth:(CDVInvokedUrlCommand*)command;
+- (void) DeviceConnectForBP7:(CDVInvokedUrlCommand*)command;
+- (void) DeviceDisConnectForBP7:(CDVInvokedUrlCommand*)command;
 
 @end
