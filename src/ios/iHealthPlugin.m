@@ -76,23 +76,27 @@ BP7Controller *bp7Controller = nil;
                     NSLog(@"dic:%@",dic);
                     stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:stringresult];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                   } errorBlock:^(BPDeviceError error) {
                     NSLog(@"error:%d",error);
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"erro1"];
+                    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
                 }];
             }
         } errorBlock:^(BPDeviceError error) {
             NSLog(@"error:%d",error);
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"error2"];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];
     }
     else{
         NSLog(@"log...");
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat: @"bpDeviceArray.count %@ %@ %@ %@", bpDeviceArray.count, [bpDeviceArray count],bpDeviceArray, bp7Controller]]; //[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }
+    
 
     // Return stuff
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
 }
 
