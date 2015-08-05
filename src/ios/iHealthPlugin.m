@@ -41,6 +41,22 @@ BP7Controller *bp7Controller = nil;
 }
 
 
+- (void) isBP7CuffAvailable:(CDVInvokedUrlCommand*)command
+{
+
+  NSArray *bpDeviceArray = [bp7Controller getAllCurrentBP7Instace];
+
+  if(bpDeviceArray.count) {
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                         messageAsString:ihealth];
+  } else {
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+  }
+  
+  [self.commandDelegate sendPluginResult:pluginResult
+                                callbackId:command.callbackId];
+}
+
 #pragma mark - BP7
 - (void)DeviceConnectForBP7:(CDVInvokedUrlCommand*)command
 {
