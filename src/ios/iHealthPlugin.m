@@ -89,7 +89,7 @@ BP7Controller *bp7Controller = nil;
     }
     else{
         NSLog(@"log...");
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat: @"bpDeviceArray.count %@ %@ %@", bpDeviceArray.count, bpDeviceArray, bp7Controller]]; //[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat: @"bpDeviceArray.count %@ %@ %@ %@", bpDeviceArray.count, [bpDeviceArray count],bpDeviceArray, bp7Controller]]; //[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
     }
 
     // Return stuff
