@@ -28,19 +28,18 @@ BP7Controller *bp7Controller = nil;
 }
 
 // Custom stuff
-- (void)pluginInitialize//:(CDVInvokedUrlCommand*)command //used to be init
+- (void)pluginInitialize:(CDVInvokedUrlCommand*)command 
 {
   //CDVPluginResult* pluginResult = nil;
-  //pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"initPlugin"];
+  
   [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForBP7:) name:BP7ConnectNoti object:nil];
   [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForBP7:) name:BP7DisConnectNoti object:nil];
   
     
-  // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceConnectForArm:) name:ArmConnectNoti object:nil];
-  // [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(DeviceDisConnectForArm:) name:ArmDisConnectNoti object:nil];
-    
   bp7Controller = [BP7Controller shareBP7Controller];
-  //[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+
+  pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[NSString stringWithFormat: @"pluginInitialize %@", bp7Controller]];
+  [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 
