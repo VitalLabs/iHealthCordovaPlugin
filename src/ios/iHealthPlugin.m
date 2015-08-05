@@ -50,7 +50,8 @@ BP7Controller *bp7Controller = nil;
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                          messageAsBool:true];
   } else {
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                         messageAsBool:false];
   }
   
   [self.commandDelegate sendPluginResult:pluginResult

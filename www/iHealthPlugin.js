@@ -6,20 +6,20 @@ window.ihealth = function(str, callback) {
 
 window.DeviceConnectForBP7 = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to Connecting.' + err);
+        callback('Nothing to Connecting. ' + err);
     }, "iHealthPlugin", "DeviceConnectForBP7", []);
 };
 
 window.isBP7CuffAvailable = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to Connecting.' + err);
+        callback(err);
     }, "iHealthPlugin", "isBP7CuffAvailable", []);
 };
 
 
 window.pluginInitialize = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to init.' + err);
+        callback('Nothing to init. ' + err);
     }, "iHealthPlugin", "pluginInitialize", []);
 };
 
