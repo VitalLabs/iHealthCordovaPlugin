@@ -90,7 +90,7 @@ BP7Controller *bp7Controller = nil;
                     NSLog(@"dic:%@",dic);
                     stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                                     messageAsString:stringresult];
+                                                     messageAsDictionary:dic];
                     [self.commandDelegate sendPluginResult:pluginResult
                                                 callbackId:command.callbackId];
                   } errorBlock:^(BPDeviceError error) {
@@ -111,8 +111,8 @@ BP7Controller *bp7Controller = nil;
     }
     else{
         NSLog(@"log...");
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                         messageAsString:[NSString stringWithFormat: @"bpDeviceArray.count %@ %@ %@ %@", bpDeviceArray.count, [bpDeviceArray count],bpDeviceArray, bp7Controller]]; 
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+                                         messageAsString:@"No devices available"]; 
         [self.commandDelegate sendPluginResult:pluginResult
                                     callbackId:command.callbackId];
     }
