@@ -2,7 +2,7 @@
 
 //Custom stuff
 #import "BPHeader.h"
-//#import "BP3.h"
+#import "BP5.h"
 #import "BP7.h"
 // EOF Custom stuff
 
@@ -11,6 +11,7 @@
 
 CDVPluginResult* pluginResult = nil;
 BP7Controller *bp7Controller = nil;
+BP5Controller *bp5Controller = nil;
 
 @implementation iHealthPlugin
 
@@ -33,14 +34,16 @@ BP7Controller *bp7Controller = nil;
 - (void)pluginInitialize:(CDVInvokedUrlCommand*)command 
 {
   bp7Controller = [BP7Controller shareBP7Controller];
+  bp5Controller = [BP5Controller shareBP5Controller];
 
   pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                   messageAsString:[NSString stringWithFormat: @"pluginInitialize %@", bp7Controller]];
+                                   messageAsString:[NSString stringWithFormat: @"pluginInitialize BP7: %@ BP5: %@", bp7Controller, bp5Controller]];
   [self.commandDelegate sendPluginResult:pluginResult
                               callbackId:command.callbackId];
 }
 
 
+// Functions to make sure Cuffs are available
 - (void) isBP7CuffAvailable:(CDVInvokedUrlCommand*)command
 {
 
@@ -58,6 +61,24 @@ BP7Controller *bp7Controller = nil;
                                 callbackId:command.callbackId];
 }
 
+- (void) isBP5CuffAvailable:(CDVInvokedUrlCommand*)command
+{
+
+  NSArray *bpDeviceArray = [bp5Controller getAllCurrentBP5Instace];
+
+  if(bpDeviceArray.count) {
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                         messageAsBool:true];
+  } else {
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                         messageAsBool:false];
+  }
+  
+  [self.commandDelegate sendPluginResult:pluginResult
+                                callbackId:command.callbackId];
+}
+
+// FUnctions to connect to Cuffs
 #pragma mark - BP7
 - (void)DeviceConnectForBP7:(CDVInvokedUrlCommand*)command
 {
@@ -120,7 +141,81 @@ BP7Controller *bp7Controller = nil;
     
 }
 
+#pragma mark - BP5
+- (void)DeviceConnectForBP5:(CDVInvokedUrlCommand*)command
+{
+  
+    __block CDVPluginResult* pluginResult = nil;
+    
+    NSArray *bpDeviceArray = [bp5Controller getAllCurrentBP5Instace];
+    NSString *YourUserName = @"devops@vitallabs.co";
+    NSString *SDKKey = @"d1a2829fbe4c473e9566c920eb0c4bc3";
+    NSString *SDKSecret = @"f6abeaf0040543b4a00eda3c2f238c84";
+    __block NSString *stringresult = nil;
+    
+    if(bpDeviceArray.count){
+        BP5 *bpInstance = [bpDeviceArray objectAtIndex:0];
+        [bpInstance commandStartGetAngleWithUser:YourUserName
+                                        clientID:SDKKey
+                                    clientSecret:SDKSecret
+                                  Authentication:^(UserAuthenResult result) {
+            NSLog(@"Authentication Result:%d",result);
+        } angle:^(NSDictionary *dic) {
+            NSLog(@"angle:%@",dic);
+            NSNumber *angleDigital = [dic valueForKey:@"angle"];
+            if(angleDigital.intValue>10 && angleDigital.intValue<30){
+                [bpInstance commandStartMeasure:^(NSArray *pressureArr) {
+                    
+                } xiaoboWithHeart:^(NSArray *xiaoboArr) {
+                    
+                } xiaoboNoHeart:^(NSArray *xiaoboArr) {
+                    
+                } result:^(NSDictionary *dic) {
+                    NSLog(@"dic:%@",dic);
+                    stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                                     messageAsDictionary:dic];
+                    [self.commandDelegate sendPluginResult:pluginResult
+                                                callbackId:command.callbackId];
+                  } errorBlock:^(BPDeviceError error) {
+                    NSLog(@"error:%d",error);
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                                     messageAsString:@"Device Error"];
+                    [self.commandDelegate sendPluginResult:pluginResult
+                                                callbackId:command.callbackId];
+                }];
+            }
+        } errorBlock:^(BPDeviceError error) {
+            NSLog(@"error:%d",error);
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                             messageAsString:@"Device Error"];
+            [self.commandDelegate sendPluginResult:pluginResult
+                                        callbackId:command.callbackId];
+        }];
+    }
+    else{
+        NSLog(@"log...");
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+                                         messageAsString:@"No devices available"]; 
+        [self.commandDelegate sendPluginResult:pluginResult
+                                    callbackId:command.callbackId];
+    }
+    
+}
+
+
+// Functions for Disconnect Cuffs
+
+
 - (void)DeviceDisConnectForBP7:(CDVInvokedUrlCommand *)command
+{
+  CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                                    messageAsString:@"disconnect"];
+  [self.commandDelegate sendPluginResult:pluginResult
+                              callbackId:command.callbackId];
+}
+
+- (void)DeviceDisConnectForBP5:(CDVInvokedUrlCommand *)command
 {
   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                     messageAsString:@"disconnect"];
