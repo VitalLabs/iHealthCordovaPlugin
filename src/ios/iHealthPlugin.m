@@ -155,36 +155,26 @@ BP5Controller *bp5Controller = nil;
     
     if(bpDeviceArray.count){
         BP5 *bpInstance = [bpDeviceArray objectAtIndex:0];
-        [bpInstance commandStartGetAngleWithUser:YourUserName
-                                        clientID:SDKKey
-                                    clientSecret:SDKSecret
-                                  Authentication:^(UserAuthenResult result) {
+
+        [bpInstance commandStartMeasureWithUser:YourUserName
+                                       clientID:SDKKey
+                                   clientSecret:SDKSecret
+                                 Authentication:^(UserAuthenResult result) {
             NSLog(@"Authentication Result:%d",result);
-        } angle:^(NSDictionary *dic) {
-            NSLog(@"angle:%@",dic);
-            NSNumber *angleDigital = [dic valueForKey:@"angle"];
-            if(angleDigital.intValue>10 && angleDigital.intValue<30){
-                [bpInstance commandStartMeasure:^(NSArray *pressureArr) {
-                    
-                } xiaoboWithHeart:^(NSArray *xiaoboArr) {
-                    
-                } xiaoboNoHeart:^(NSArray *xiaoboArr) {
-                    
-                } result:^(NSDictionary *dic) {
-                    NSLog(@"dic:%@",dic);
-                    stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
-                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                                     messageAsDictionary:dic];
-                    [self.commandDelegate sendPluginResult:pluginResult
-                                                callbackId:command.callbackId];
-                  } errorBlock:^(BPDeviceError error) {
-                    NSLog(@"error:%d",error);
-                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                                     messageAsString:@"Device Error"];
-                    [self.commandDelegate sendPluginResult:pluginResult
-                                                callbackId:command.callbackId];
-                }];
-            }
+      
+        } pressure:^(NSArray *pressureArr) {
+ 
+        } xiaoboWithHeart:^(NSArray *xiaoboArr) {
+            
+        } xiaoboNoHeart:^(NSArray *xiaoboArr) {
+            
+        } result:^(NSDictionary *dic) {
+            NSLog(@"dic:%@",dic);
+            stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                         messageAsDictionary:dic];
+            [self.commandDelegate sendPluginResult:pluginResult
+                                        callbackId:command.callbackId];
         } errorBlock:^(BPDeviceError error) {
             NSLog(@"error:%d",error);
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
@@ -192,6 +182,7 @@ BP5Controller *bp5Controller = nil;
             [self.commandDelegate sendPluginResult:pluginResult
                                         callbackId:command.callbackId];
         }];
+
     }
     else{
         NSLog(@"log...");
