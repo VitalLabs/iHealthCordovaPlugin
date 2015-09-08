@@ -24,7 +24,7 @@
     <source-file src="src/android/libs/iHealthLibrary_1.0.13.jar" target-dir="libs" />
     
     
-    <source-file src="src/android/co/vitallabs/plugin/iHealth.java"
+    <source-file src="src/android/co/vitallabs/plugin/Ihealth.java"
                  target-dir="src/co/vitallabs/plugin" />
 
     <service
