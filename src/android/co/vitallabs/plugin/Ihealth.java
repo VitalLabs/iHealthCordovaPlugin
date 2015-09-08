@@ -74,22 +74,16 @@ public class Ihealth extends CordovaPlugin {
       Context context = this.cordova.getActivity().getApplicationContext();
       mAddress = this.cordova.getActivity().getIntent().getStringExtra("mac");
 
-      bpControl = deviceManager.getBpDevice(mAddress);
-
-      
       Log.i("mAddress", "mAddress:" + mAddress);
       deviceManager = DeviceManager.getInstance();
+
+      bpControl = deviceManager.getBpDevice(mAddress);
 
 
       String clientID =  "bbcb0a015545402c8c5683b485009045";
       String clientSecret = "278702abdb2041d0bcc0e7b1bbc43b86";
       bpControl.start(context, clientID, clientSecret);
 
-      // if (message != null && message.length() > 0) {
-      //   callbackContext.success(message);
-      // } else {
-      //   callbackContext.error("Expected one non-empty string argument.");
-      // }
       callbackContext.success("Returning from deviceConnectFroBP5");
     }
 }
