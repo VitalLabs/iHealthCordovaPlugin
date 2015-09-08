@@ -17,9 +17,10 @@
 
   <!-- android -->
   <platform name="android">
-    <config-file target="res/xml/config.xml" parent="plugins">
-      <plugin name="iHealthPlugin" value="co.vitallabs.plugin.Ihealth"/>
-      
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="iHealthPlugin">
+        <param name="android-package" value="co.vitallabs.plugin.Ihealth" />
+      </feature>
     </config-file>
 
     <source-file src="src/android/libs/iHealthLibrary_1.0.13.jar" target-dir="libs" />
