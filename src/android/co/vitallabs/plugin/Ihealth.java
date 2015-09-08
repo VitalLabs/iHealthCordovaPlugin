@@ -30,7 +30,7 @@ import org.json.JSONObject;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class IHealth extends CordovaPlugin implements Interface_Observer_BP {
+public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
 
   private BPControl bpControl;
 	private String TAG = "BPtest_MainActivity";
@@ -67,9 +67,15 @@ public class IHealth extends CordovaPlugin implements Interface_Observer_BP {
 
     private void deviceConnectForBP5(CallbackContext callbackContext) {
 
+      
+      //mAddress = getIntent().getStringExtra("mac");
+
+      //Context context = cordova.getActivity();
+      mAddress = this.cordova.getActivity().getIntent().getStringExtra("mac");
+
       bpControl = deviceManager.getBpDevice(mAddress);
 
-      mAddress = getIntent().getStringExtra("mac");
+      
       Log.i("mAddress", "mAddress:" + mAddress);
       deviceManager = DeviceManager.getInstance();
 
@@ -78,10 +84,11 @@ public class IHealth extends CordovaPlugin implements Interface_Observer_BP {
       String clientSecret = "278702abdb2041d0bcc0e7b1bbc43b86";
       bpControl.start(this, clientID, clientSecret);
 
-      if (message != null && message.length() > 0) {
-        callbackContext.success(message);
-      } else {
-        callbackContext.error("Expected one non-empty string argument.");
-      }
+      // if (message != null && message.length() > 0) {
+      //   callbackContext.success(message);
+      // } else {
+      //   callbackContext.error("Expected one non-empty string argument.");
+      // }
+      callbackContext.success("Returning from deviceConnectFroBP5");
     }
 }
