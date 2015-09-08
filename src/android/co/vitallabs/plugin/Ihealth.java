@@ -11,6 +11,7 @@ import com.jiuan.android.sdk.bp.observer_bp.Interface_Observer_BP;
 import com.jiuan.android.sdk.device.DeviceManager;
 
 //import android.app.Activity;
+import android.content.Context;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
