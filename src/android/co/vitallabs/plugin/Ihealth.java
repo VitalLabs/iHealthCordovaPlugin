@@ -31,7 +31,7 @@ import org.json.JSONObject;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
+public class Ihealth extends CordovaPlugin {
 
   private BPControl bpControl;
 	private String TAG = "BPtest_MainActivity";
