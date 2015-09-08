@@ -21,8 +21,18 @@
       <plugin name="iHealth" value="co.vitallabs.iHealthPlugin"/>
     </config-file>
 
+    <source-file src="src/android/libs/iHealthLibrary_1.0.13.jar" target-dir="libs" />
+    
+    
     <source-file src="src/android/com/appgyver/plugin/iHealth.java"
-      target-dir="src/com/appgyver/plugin" />
+                 target-dir="src/com/appgyver/plugin" />
+
+    <service
+        android:name="com.jiuan.android.sdk.ble.manager.LPCBT422Service"
+        android:enabled="true" />
+    <service
+        android:name="com.jiuan.android.sdk.ble.manager.LPCBT43Service"
+        android:enabled="true" />
   </platform>
 
   <!-- ios -->
@@ -37,26 +47,6 @@
         <param name="onload" value="true" />
       </feature>
     </config-file>
-
-    <!--
-        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
-      <array>
-        <dict>
-          <key>UISupportedExternalAccessoryProtocols</key>
-          <array>
-            <string>com.jiuan.P930</string>
-            <string>com.jiuan.BPV20</string>
-            <string>com.jiuan.BPV21</string>
-          </array>
-          <key>UIBackgroundModes</key>
-	        <array>
-		        <string>external-accessory</string>
-            <string>bluetooth-central</string>
-	        </array>
-        </dict>
-      </array>
-    </config-file>
-    -->
 
     <config-file target="*-Info.plist" parent="UIBackgroundModes">
       <array>
