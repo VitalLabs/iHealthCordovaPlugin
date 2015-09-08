@@ -70,7 +70,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
       
       //mAddress = getIntent().getStringExtra("mac");
 
-      //Context context = cordova.getActivity();
+      Context context = this.cordova.getActivity().getApplicationContext();
       mAddress = this.cordova.getActivity().getIntent().getStringExtra("mac");
 
       bpControl = deviceManager.getBpDevice(mAddress);
@@ -82,7 +82,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
 
       String clientID =  "bbcb0a015545402c8c5683b485009045";
       String clientSecret = "278702abdb2041d0bcc0e7b1bbc43b86";
-      bpControl.start(this, clientID, clientSecret);
+      bpControl.start(context, clientID, clientSecret);
 
       // if (message != null && message.length() > 0) {
       //   callbackContext.success(message);
