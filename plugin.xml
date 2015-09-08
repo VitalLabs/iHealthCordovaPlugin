@@ -18,13 +18,18 @@
   <!-- android -->
   <platform name="android">
     <config-file target="res/xml/config.xml" parent="plugins">
-      <plugin name="iHealth" value="co.vitallabs.iHealthPlugin"/>
+      <plugin name="iHealthPlugin" value="co.vitallabs.plugin.Ihealth"/>
       
     </config-file>
 
     <source-file src="src/android/libs/iHealthLibrary_1.0.13.jar" target-dir="libs" />
     
 
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+
+      <uses-permission android:name="android.permission.BLUETOOTH" />
+      <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    </config-file>
     
     <source-file src="src/android/co/vitallabs/plugin/Ihealth.java"
                  target-dir="src/co/vitallabs/plugin" />
