@@ -61,13 +61,13 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
         Context context = this.cordova.getActivity().getApplicationContext();
       
         deviceManager = DeviceManager.getInstance();
-        Log.i("plugInitialize", "deviceManager"+deviceManager);
+        Log.i(TAG, "deviceManager"+deviceManager);
         deviceManager.initDeviceManager(context, "robertorobles0@gmail.com");
-        Log.i("plugInitialize", "initDeviceManager"+deviceManager);
+        Log.i(TAG, "initDeviceManager"+deviceManager);
         deviceManager.initReceiver();
-        Log.i("plugInitialize", "initReceiver"+deviceManager);
+        Log.i(TAG, "initReceiver"+deviceManager);
         deviceManager.initBpStateCallback(this);
-        Log.i("plugInitialize", "InitBPStateCB"+deviceManager);
+        Log.i(TAG, "InitBPStateCB"+deviceManager);
         if (message != null && message.length() > 0) {
             callbackContext.success(message);
         } else {
@@ -86,7 +86,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
       Context context = this.cordova.getActivity().getApplicationContext();
       mAddress = this.cordova.getActivity().getIntent().getStringExtra("mac");
 
-      Log.i("mAddress", "mAddress:" + mAddress);
+      Log.i(TAG, "mAddress:" + mAddress);
       deviceManager = DeviceManager.getInstance();
 
       bpControl = deviceManager.getBpDevice(mAddress);
@@ -104,14 +104,14 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
     public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
         //deviceMap.put(deviceMac, deviceType);
         //refresh();
-        Log.i("deviceConnect", deviceMac + " " + deviceType);
+        Log.i(TAG, deviceMac + " " + deviceType);
     }
 
     @Override
     public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
       //deviceMap.remove(deviceMac);
       // refresh();
-      Log.i("deviceDisConnect", deviceMac + " " + deviceType);
+      Log.i(TAG, deviceMac + " " + deviceType);
     }
 
   
