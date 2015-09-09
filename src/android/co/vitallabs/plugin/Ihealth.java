@@ -38,7 +38,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
 	private String TAG = "BPtest_MainActivity";
   private String mAddress;
 	private DeviceManager deviceManager;
-
+  
   
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -100,6 +100,21 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
     }
 
 
+      @Override
+    public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
+        //deviceMap.put(deviceMac, deviceType);
+        //refresh();
+        Log.i("deviceConnect", deviceMac + " " + deviceType);
+    }
+
+    @Override
+    public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
+      //deviceMap.remove(deviceMac);
+      // refresh();
+      Log.i("deviceDisConnect", deviceMac + " " + deviceType);
+    }
+
+  
     // Interface methods
   //   	@Override
 	// public void msgInden() {
