@@ -8,6 +8,7 @@ import java.util.Set;
 import com.jiuan.android.sdk.bp.bluetooth.BPCommManager;
 import com.jiuan.android.sdk.bp.bluetooth.BPControl;
 import com.jiuan.android.sdk.bp.observer_bp.Interface_Observer_BP;
+import com.jiuan.android.sdk.bp.observer_comm.Interface_Observer_CommMsg_BP;
 import com.jiuan.android.sdk.device.DeviceManager;
 
 //import android.app.Activity;
@@ -31,7 +32,7 @@ import org.json.JSONObject;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class Ihealth extends CordovaPlugin implements Interface_Observer__BP {
+public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg_BP {
 
   private BPControl bpControl;
 	private String TAG = "BPtest_MainActivity";
@@ -121,7 +122,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer__BP {
 	@Override
 	public void msgError(int num) {
 		// TODO Auto-generated method stub
-    Log.e("error", num);
+    Log.e("error", ""+num);
     // try {
 		// 	Message message = new Message();
 		// 	message.what = 2;
