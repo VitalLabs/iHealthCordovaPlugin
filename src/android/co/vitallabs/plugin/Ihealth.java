@@ -121,7 +121,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer__BP {
 	@Override
 	public void msgError(int num) {
 		// TODO Auto-generated method stub
-    Log.e("error", num)
+    Log.e("error", num);
     // try {
 		// 	Message message = new Message();
 		// 	message.what = 2;
