@@ -57,13 +57,15 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer__BP {
 
     private void pluginInitialize(String message, CallbackContext callbackContext) {
 
+        Context context = this.cordova.getActivity().getApplicationContext();
+      
         deviceManager = DeviceManager.getInstance();
         Log.i("plugInitialize", "deviceManager"+deviceManager);
         deviceManager.initDeviceManager(this, "robertorobles0@gmail.com");
         Log.i("plugInitialize", "initDeviceManager"+deviceManager);
         deviceManager.initReceiver();
         Log.i("plugInitialize", "initReceiver"+deviceManager);
-        deviceManager.initBpStateCallback(this);
+        deviceManager.initBpStateCallback(context);
         Log.i("plugInitialize", "InitBPStateCB"+deviceManager);
         if (message != null && message.length() > 0) {
             callbackContext.success(message);
@@ -113,22 +115,23 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer__BP {
 	@Override
 	public void msgUserStatus(int status) {
 		// TODO Auto-generated method stub
-		Toast.makeText(getApplicationContext(), "user status "+status, Toast.LENGTH_SHORT).show();
+		// Toast.makeText(getApplicationContext(), "user status "+status, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void msgError(int num) {
 		// TODO Auto-generated method stub
-		try {
-			Message message = new Message();
-			message.what = 2;
-			Bundle bundle = new Bundle();
-			bundle.putInt("error", num);
-			message.obj = bundle;
-			handler.sendMessage(message);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+    Log.e("error", num)
+    // try {
+		// 	Message message = new Message();
+		// 	message.what = 2;
+		// 	Bundle bundle = new Bundle();
+		// 	bundle.putInt("error", num);
+		// 	message.obj = bundle;
+		// 	handler.sendMessage(message);
+		// } catch (Exception e) {
+		// 	// TODO: handle exception
+		// }
 	}
 
 	@Override
@@ -165,16 +168,16 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer__BP {
 	public void msgResult(int[] result) {
 		// TODO Auto-generated method stub
 		Log.e("result", result[0]+" "+result[1]+" "+result[2]+" ");
-		try {
-			Message message = new Message();
-			message.what = 1;
-			Bundle bundle = new Bundle();
-			bundle.putIntArray("bp", result);
-			message.obj = bundle;
-			handler.sendMessage(message);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		// try {
+		// 	Message message = new Message();
+		// 	message.what = 1;
+		// 	Bundle bundle = new Bundle();
+		// 	bundle.putIntArray("bp", result);
+		// 	message.obj = bundle;
+		// 	handler.sendMessage(message);
+		// } catch (Exception e) {
+		// 	// TODO: handle exception
+		// }
 	}
 
 	@Override
