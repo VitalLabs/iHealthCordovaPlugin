@@ -62,7 +62,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
       
         deviceManager = DeviceManager.getInstance();
         Log.i("plugInitialize", "deviceManager"+deviceManager);
-        deviceManager.initDeviceManager(this, "robertorobles0@gmail.com");
+        deviceManager.initDeviceManager(context, "robertorobles0@gmail.com");
         Log.i("plugInitialize", "initDeviceManager"+deviceManager);
         deviceManager.initReceiver();
         Log.i("plugInitialize", "initReceiver"+deviceManager);
