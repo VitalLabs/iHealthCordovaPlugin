@@ -45,8 +45,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
 
     Log.i(TAG, "calling action:" + action);
         if (action.equals("pluginInitialize")) {
-            String message = args.getString(0);
-            this.pluginInitialize(message, callbackContext);
+            this.pluginInitialize(callbackContext);
             return true;
         }
 
@@ -58,7 +57,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
         return false;
     }
 
-    private void pluginInitialize(String message, CallbackContext callbackContext) {
+    private void pluginInitialize(CallbackContext callbackContext) {
 
         Log.i(TAG, "pluginInitialize");
         
