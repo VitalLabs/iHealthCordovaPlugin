@@ -65,17 +65,19 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
       
         deviceManager = DeviceManager.getInstance();
         Log.i(TAG, "deviceManager"+deviceManager);
-        deviceManager.initDeviceManager(context, "robertorobles0@gmail.com");
+        deviceManager.initDeviceManager(this.cordova.getActivity(), "devops@vitallabs.co");
         Log.i(TAG, "initDeviceManager"+deviceManager);
         deviceManager.initReceiver();
         Log.i(TAG, "initReceiver"+deviceManager);
-        deviceManager.initBpStateCallback(this);
+        deviceManager.initBpStateCallback(this.cordova.getActivity());
         Log.i(TAG, "InitBPStateCB"+deviceManager);
-        if (message != null && message.length() > 0) {
-            callbackContext.success(message);
-        } else {
-            callbackContext.error("Expected one non-empty string argument.");
-        }
+
+        callbackContext.success(true);
+        // if (message != null && message.length() > 0) {
+        //     callbackContext.success(message);
+        // } else {
+        //     callbackContext.error("Expected one non-empty string argument.");
+        // }
     }
 
   
@@ -94,9 +96,9 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
 
       bpControl = deviceManager.getBpDevice(mAddress);
 
-
-      String clientID =  "bbcb0a015545402c8c5683b485009045";
+      String clientID = "bbcb0a015545402c8c5683b485009045";
       String clientSecret = "278702abdb2041d0bcc0e7b1bbc43b86";
+            
       bpControl.start(context, clientID, clientSecret);
 
       callbackContext.success("Returning from deviceConnectFroBP5");
