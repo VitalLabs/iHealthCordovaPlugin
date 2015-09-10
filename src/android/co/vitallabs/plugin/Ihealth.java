@@ -65,16 +65,16 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
       
         deviceManager = DeviceManager.getInstance();
         Log.i(TAG, "deviceManager "+ deviceManager);
-        Log.i(TAG, "deviceManager2 "+ deviceManager.scanDevice());
-        Log.i(TAG, "deviceManager3 "+ deviceManager.initDeviceManager(this, "devops@vitallabs.co"));
+        //Log.i(TAG, "deviceManager2 "+ deviceManager.scanDevice());
+        //Log.i(TAG, "deviceManager3 "+ deviceManager.initDeviceManager(this, "devops@vitallabs.co"));
         
-        deviceManager.initDeviceManager(this, "devops@vitallabs.co");
+        deviceManager.initDeviceManager(this.context, "devops@vitallabs.co");
         Log.i(TAG, "initDeviceManager"+deviceManager);
         deviceManager.initReceiver();
         Log.i(TAG, "initReceiver"+deviceManager);
-        deviceManager.initBpStateCallback(this);
+        deviceManager.initBpStateCallback(this.context);
         Log.i(TAG, "InitBPStateCB"+deviceManager);
-
+        
         callbackContext.success("true");
         // if (message != null && message.length() > 0) {
         //     callbackContext.success(message);
@@ -101,7 +101,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
       String clientID = "bbcb0a015545402c8c5683b485009045";
       String clientSecret = "278702abdb2041d0bcc0e7b1bbc43b86";
             
-      bpControl.start(this, clientID, clientSecret);
+      bpControl.start(this.context, clientID, clientSecret);
 
       callbackContext.success("Returning from deviceConnectFroBP5");
     }
