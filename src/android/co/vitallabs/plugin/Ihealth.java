@@ -35,15 +35,15 @@ import org.json.JSONObject;
 public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg_BP {
 
   private BPControl bpControl;
-	private String TAG = "BPtest_MainActivity";
+  private String TAG = "BPtest_MainActivity";
   private String mAddress;
-	private DeviceManager deviceManager;
+  private DeviceManager deviceManager;
   
   
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-    Log.i(TAG, "calling action:" + action);
+        Log.i(TAG, "calling action:" + action);
         if (action.equals("pluginInitialize")) {
             this.pluginInitialize(callbackContext);
             return true;
