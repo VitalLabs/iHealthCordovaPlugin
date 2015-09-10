@@ -32,7 +32,7 @@ import org.json.JSONObject;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg_BP {
+public class Ihealth extends CordovaPlugin implements Interface_Observer__BP {
 
   private BPControl bpControl;
   private String TAG = "BPtest_MainActivity";
@@ -68,13 +68,13 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
         //Log.i(TAG, "deviceManager2 "+ deviceManager.scanDevice());
         //Log.i(TAG, "deviceManager3 "+ deviceManager.initDeviceManager(this, "devops@vitallabs.co"));
         
-        deviceManager.initDeviceManager(this.context, "devops@vitallabs.co");
+        //deviceManager.initDeviceManager(this.context, "devops@vitallabs.co");
         Log.i(TAG, "initDeviceManager"+deviceManager);
-        deviceManager.initReceiver();
+        //deviceManager.initReceiver();
         Log.i(TAG, "initReceiver"+deviceManager);
-        deviceManager.initBpStateCallback(this.context);
+        //deviceManager.initBpStateCallback(this.context);
         Log.i(TAG, "InitBPStateCB"+deviceManager);
-        
+        deviceManager.scanDevice();
         callbackContext.success("true");
         // if (message != null && message.length() > 0) {
         //     callbackContext.success(message);
