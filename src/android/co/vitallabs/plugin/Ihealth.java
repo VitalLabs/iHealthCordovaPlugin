@@ -42,6 +42,8 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
   
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+
+    Log.i(TAG, "calling action:" + action);
         if (action.equals("pluginInitialize")) {
             String message = args.getString(0);
             this.pluginInitialize(message, callbackContext);
@@ -58,6 +60,8 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
 
     private void pluginInitialize(String message, CallbackContext callbackContext) {
 
+        Log.i(TAG, "pluginInitialize");
+        
         Context context = this.cordova.getActivity().getApplicationContext();
       
         deviceManager = DeviceManager.getInstance();
