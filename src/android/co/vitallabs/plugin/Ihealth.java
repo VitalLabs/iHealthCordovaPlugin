@@ -32,7 +32,7 @@ import org.json.JSONObject;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class Ihealth extends CordovaPlugin implements Interface_Observer__BP {
+public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
 
   private BPControl bpControl;
   private String TAG = "BPtest_MainActivity";
@@ -107,19 +107,19 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer__BP {
     }
 
 
-      @Override
-    public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
-        //deviceMap.put(deviceMac, deviceType);
-        //refresh();
-        Log.i(TAG, deviceMac + " " + deviceType);
-    }
+    //   @Override
+    // public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
+    //     //deviceMap.put(deviceMac, deviceType);
+    //     //refresh();
+    //     Log.i(TAG, deviceMac + " " + deviceType);
+    // }
 
-    @Override
-    public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
-      //deviceMap.remove(deviceMac);
-      // refresh();
-      Log.i(TAG, deviceMac + " " + deviceType);
-    }
+    // @Override
+    // public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
+    //   //deviceMap.remove(deviceMac);
+    //   // refresh();
+    //   Log.i(TAG, deviceMac + " " + deviceType);
+    // }
 
   
     // Interface methods
