@@ -38,7 +38,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
   private String TAG = "BPtest_MainActivity";
   private String mAddress;
   private DeviceManager deviceManager;
-  
+  protected Context context;
   
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -61,7 +61,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
 
         Log.i(TAG, "pluginInitialize");
         
-        Context context = this.cordova.getActivity().getApplicationContext();
+        this.context = this.cordova.getActivity().getApplicationContext();
       
         deviceManager = DeviceManager.getInstance();
         Log.i(TAG, "deviceManager "+ deviceManager);
@@ -91,7 +91,6 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
       
       //mAddress = getIntent().getStringExtra("mac");
 
-      Context context = this.cordova.getActivity().getApplicationContext();
       mAddress = this.cordova.getActivity().getIntent().getStringExtra("mac");
 
       Log.i(TAG, "mAddress:" + mAddress);
@@ -102,7 +101,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_CommMsg
       String clientID = "bbcb0a015545402c8c5683b485009045";
       String clientSecret = "278702abdb2041d0bcc0e7b1bbc43b86";
             
-      bpControl.start(context, clientID, clientSecret);
+      bpControl.start(this, clientID, clientSecret);
 
       callbackContext.success("Returning from deviceConnectFroBP5");
     }
