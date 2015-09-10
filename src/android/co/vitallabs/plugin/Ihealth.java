@@ -203,11 +203,11 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
 	// 	// }
 	// }
 
-	// @Override
-	// public void msgPowerOff() {
-	// 	// TODO Auto-generated method stub
+	@Override
+	public void msgPowerOff() {
+		// TODO Auto-generated method stub
 
-	// }
+	}
 
 
 }
