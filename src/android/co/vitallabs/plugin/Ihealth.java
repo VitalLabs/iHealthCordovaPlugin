@@ -77,14 +77,20 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
         Log.i(TAG, "initReceiver"+deviceManager);
         //deviceManager.initBpStateCallback(this.context);
         Log.i(TAG, "InitBPStateCB"+deviceManager);
-        deviceManager.scanDevice();
+        // deviceManager.scanDevice();
 
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
         List<String> s = new ArrayList<String>();
-        for(BluetoothDevice bt : pairedDevices)
+        for(BluetoothDevice bt : pairedDevices) {
+          Log.i(TAG, "MyBT devices: "+bt.getName());
+          Log.i(TAG, "MyBT devices: "+bt.getAddress());
+          Log.i(TAG, "MyBT devices: "+bt.getType());
+          Log.i(TAG, "========");
           s.add(bt.getName());
+        }
+          
 
         Log.i(TAG, "myList"+s.toString());
         
