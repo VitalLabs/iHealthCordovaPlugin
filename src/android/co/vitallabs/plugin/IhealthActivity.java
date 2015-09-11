@@ -67,7 +67,7 @@ public class IhealthActivity extends Activity implements Interface_Observer_BP {
 				Bundle bundle2 = (Bundle)msg.obj;
 				int errorNum = bundle2.getInt("error");
 				//Toast.makeText(BP5Activity.this, "error:"+errorNum, Toast.LENGTH_LONG).show();
-        Log.e(TAG, "HandlerError: "+result );
+        Log.e(TAG, "HandlerError: "+errorNum );
 				break;
 			default:
 				break;
