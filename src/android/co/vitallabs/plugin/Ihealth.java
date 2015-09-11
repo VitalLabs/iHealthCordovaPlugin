@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import com.jiuan.android.sdk.bp.bluetooth.BPCommManager;
 import com.jiuan.android.sdk.bp.bluetooth.BPControl;
