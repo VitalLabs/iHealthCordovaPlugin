@@ -42,7 +42,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
 
   private BPControl bpControl;
   private String TAG = "BPtest_Plugin";
-  private String mAddress;
+  private String mAddress = "8CDE5241FE3A";
   private DeviceManager deviceManager;
   private IhealthActivity iActivity;
   protected Context context;
@@ -77,7 +77,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
               Context context = cordova.getActivity()
                     .getApplicationContext();
               Intent intent = new Intent(context, IhealthActivity.class);
-              intent.putExtra("mac", "8C:DE:52:41:FE:3A");
+              intent.putExtra("mac", mAddress);
               cordova.getActivity().startActivity(intent);
             }
           });
@@ -136,7 +136,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
       Log.i(TAG, "mAddress:" + mAddress);
       deviceManager = DeviceManager.getInstance();
 
-      bpControl = deviceManager.getBpDevice("8C:DE:52:41:FE:3A");
+      bpControl = deviceManager.getBpDevice(mAddress);
       Log.i(TAG, "bpControl "+bpControl);
       String clientID = "bbcb0a015545402c8c5683b485009045";
       String clientSecret = "278702abdb2041d0bcc0e7b1bbc43b86";
