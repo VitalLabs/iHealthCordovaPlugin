@@ -123,85 +123,85 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
 
   
     // Interface methods
-  //   	@Override
-	// public void msgInden() {
-	// 	// TODO Auto-generated method stub
+    	@Override
+	public void msgInden() {
+		// TODO Auto-generated method stub
 
-	// }
+	}
 
-	// @Override
-	// public void msgBattery(int battery) {
-	// 	// TODO Auto-generated method stub
+	@Override
+	public void msgBattery(int battery) {
+		// TODO Auto-generated method stub
 
-	// }
+	}
 
-	// @Override
-	// public void msgUserStatus(int status) {
-	// 	// TODO Auto-generated method stub
-	// 	// Toast.makeText(getApplicationContext(), "user status "+status, Toast.LENGTH_SHORT).show();
-	// }
+	@Override
+	public void msgUserStatus(int status) {
+		// TODO Auto-generated method stub
+		// Toast.makeText(getApplicationContext(), "user status "+status, Toast.LENGTH_SHORT).show();
+	}
 
-	// @Override
-	// public void msgError(int num) {
-	// 	// TODO Auto-generated method stub
-  //   Log.e("error", ""+num);
-  //   // try {
-	// 	// 	Message message = new Message();
-	// 	// 	message.what = 2;
-	// 	// 	Bundle bundle = new Bundle();
-	// 	// 	bundle.putInt("error", num);
-	// 	// 	message.obj = bundle;
-	// 	// 	handler.sendMessage(message);
-	// 	// } catch (Exception e) {
-	// 	// 	// TODO: handle exception
-	// 	// }
-	// }
+	@Override
+	public void msgError(int num) {
+		// TODO Auto-generated method stub
+    Log.e("error", ""+num);
+    // try {
+		// 	Message message = new Message();
+		// 	message.what = 2;
+		// 	Bundle bundle = new Bundle();
+		// 	bundle.putInt("error", num);
+		// 	message.obj = bundle;
+		// 	handler.sendMessage(message);
+		// } catch (Exception e) {
+		// 	// TODO: handle exception
+		// }
+	}
 
-	// @Override
-	// public void msgAngle(int angle) {
-	// 	// TODO Auto-generated method stub
+	@Override
+	public void msgAngle(int angle) {
+		// TODO Auto-generated method stub
 
-	// }
+	}
 
-	// @Override
-	// public void msgZeroIng() {
-	// 	// TODO Auto-generated method stub
+	@Override
+	public void msgZeroIng() {
+		// TODO Auto-generated method stub
 
-	// }
+	}
 
-	// @Override
-	// public void msgZeroOver() {
-	// 	// TODO Auto-generated method stub
+	@Override
+	public void msgZeroOver() {
+		// TODO Auto-generated method stub
 
-	// }
+	}
 
-	// @Override
-	// public void msgPressure(int pressure) {
-	// 	// TODO Auto-generated method stub
+	@Override
+	public void msgPressure(int pressure) {
+		// TODO Auto-generated method stub
 
-	// }
+	}
 
-	// @Override
-	// public void msgMeasure(int pressure, int[] measure, boolean heart) {
-	// 	// TODO Auto-generated method stub
+	@Override
+	public void msgMeasure(int pressure, int[] measure, boolean heart) {
+		// TODO Auto-generated method stub
 
-	// }
+	}
 
-	// @Override
-	// public void msgResult(int[] result) {
-	// 	// TODO Auto-generated method stub
-	// 	Log.e("result", result[0]+" "+result[1]+" "+result[2]+" ");
-	// 	// try {
-	// 	// 	Message message = new Message();
-	// 	// 	message.what = 1;
-	// 	// 	Bundle bundle = new Bundle();
-	// 	// 	bundle.putIntArray("bp", result);
-	// 	// 	message.obj = bundle;
-	// 	// 	handler.sendMessage(message);
-	// 	// } catch (Exception e) {
-	// 	// 	// TODO: handle exception
-	// 	// }
-	// }
+	@Override
+	public void msgResult(int[] result) {
+		// TODO Auto-generated method stub
+		Log.e("result", result[0]+" "+result[1]+" "+result[2]+" ");
+		// try {
+		// 	Message message = new Message();
+		// 	message.what = 1;
+		// 	Bundle bundle = new Bundle();
+		// 	bundle.putIntArray("bp", result);
+		// 	message.obj = bundle;
+		// 	handler.sendMessage(message);
+		// } catch (Exception e) {
+		// 	// TODO: handle exception
+		// }
+	}
 
 	@Override
 	public void msgPowerOff() {
