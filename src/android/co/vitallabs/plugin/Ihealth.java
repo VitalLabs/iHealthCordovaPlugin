@@ -116,8 +116,8 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
       Log.i(TAG, "mAddress:" + mAddress);
       deviceManager = DeviceManager.getInstance();
 
-      bpControl = deviceManager.getBpDevice(mAddress);
-
+      bpControl = deviceManager.getBpDevice("8C:DE:52:41:FE:3A");
+      Log.i(TAG, "bpControl "+bpControl);
       String clientID = "bbcb0a015545402c8c5683b485009045";
       String clientSecret = "278702abdb2041d0bcc0e7b1bbc43b86";
             
