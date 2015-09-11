@@ -41,10 +41,12 @@
       <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
       <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
       <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <activity 
          android:name="co.vitallabs.plugin.IhealthActivity" >
       </activity>
-
     </config-file>
     
     <source-file src="src/android/co/vitallabs/plugin/Ihealth.java"
