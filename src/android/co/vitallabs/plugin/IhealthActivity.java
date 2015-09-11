@@ -27,13 +27,14 @@ public class IhealthActivity extends Activity implements Interface_Observer_BP {
 	private DeviceManager deviceManager;
 
   @Override
-	protected void onCreate(Bundle savedInstanceState, String mAdress) {
+	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-    this.mAddress = mAddress;
-		super.onCreate(savedInstanceState);
+    mAddress = getIntent().getStringExtra("mac");
+    Log.i(TAG, "Are we receiving the mac address?: " + mAddress);
+    super.onCreate(savedInstanceState);
 		//this.initListener();
     deviceManager = DeviceManager.getInstance();
-    bpControl = deviceManager.getBpDevice(mAdress);
+    bpControl = deviceManager.getBpDevice(mAddress);
 	}
 
   protected void onStop() {

@@ -76,12 +76,13 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
               Context context = cordova.getActivity()
                     .getApplicationContext();
               Intent intent = new Intent(context, IhealthActivity.class);
-              cordova.getActivity().startActivity(intent, "8C:DE:52:41:FE:3A");
+              intent.putExtra("mac", "8C:DE:52:41:FE:3A");
+              cordova.getActivity().startActivity(intent);
             }
           });
         
         //this.iActivity = iActivity();
-        Log.i(TAG, "After Activity")
+        Log.i(TAG, "After Activity");
 
           
         deviceManager = DeviceManager.getInstance();
