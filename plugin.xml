@@ -20,6 +20,7 @@
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="iHealthPlugin">
         <param name="android-package" value="co.vitallabs.plugin.Ihealth" />
+        <param name="android-package" value="co.vitallabs.plugin.IhealthActivity" />
       </feature>
     </config-file>
 

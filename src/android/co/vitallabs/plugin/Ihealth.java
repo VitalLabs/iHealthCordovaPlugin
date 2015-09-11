@@ -32,15 +32,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import co.vitallabs.plugin.IhealthActivity;
+
 /**
  * This class echoes a string called from JavaScript.
  */
 public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
 
   private BPControl bpControl;
-  private String TAG = "BPtest_MainActivity";
+  private String TAG = "BPtest_Plugin";
   private String mAddress;
   private DeviceManager deviceManager;
+  private IhealthActivity iActivity;
   protected Context context;
   
   @Override
@@ -65,7 +68,22 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
         Log.i(TAG, "pluginInitialize");
         
         this.context = this.cordova.getActivity().getApplicationContext();
-      
+
+        Log.i(TAG, "before Activity");
+        cordova.getActivity().runUiThread(new Runnable() {
+            @Override
+            public void run() {
+              Context context = cordova.getActivity()
+                    .getApplicationContext();
+              Intent intent = new Intent(context, IhealthActivity.class);
+              cordova.getActivity().startActivity(intent, "8C:DE:52:41:FE:3A");
+            }
+          });
+        
+        //this.iActivity = iActivity();
+        Log.i(TAG, "After Activity")
+
+          
         deviceManager = DeviceManager.getInstance();
         Log.i(TAG, "deviceManager "+ deviceManager);
         //Log.i(TAG, "deviceManager2 "+ deviceManager.scanDevice());
