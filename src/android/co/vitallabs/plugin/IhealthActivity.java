@@ -34,8 +34,16 @@ public class IhealthActivity extends Activity implements Interface_Observer_BP {
     super.onCreate(savedInstanceState);
 		//this.initListener();
     deviceManager = DeviceManager.getInstance();
+    Log.i(TAG, "getInstance");
+    deviceManager.initDeviceManager(this, "devops@vitallabs.co");
+    Log.i(TAG, "initDeviceManager");
+    deviceManager.initReceiver();
+    Log.i(TAG, "initReceiver");
+    //deviceManager.initBpStateCallback(this);
+    //deviceManager.initABIStateCallback(this); deviceManager.scanDevice();
     bpControl = deviceManager.getBpDevice(mAddress);
     Log.i(TAG, "bpControl?: " + bpControl);
+    
     this.startMeasure();
   }
 
