@@ -35,7 +35,9 @@ public class IhealthActivity extends Activity implements Interface_Observer_BP {
 		//this.initListener();
     deviceManager = DeviceManager.getInstance();
     bpControl = deviceManager.getBpDevice(mAddress);
-	}
+    Log.i(TAG, "bpControl?: " + bpControl);
+    this.startMeansure();
+  }
 
   protected void onStop() {
     super.onStop();
