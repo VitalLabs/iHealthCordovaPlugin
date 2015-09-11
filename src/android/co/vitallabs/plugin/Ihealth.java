@@ -71,7 +71,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
         this.context = this.cordova.getActivity().getApplicationContext();
 
         Log.i(TAG, "before Activity");
-        cordova.getActivity().runUiThread(new Runnable() {
+        cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
               Context context = cordova.getActivity()

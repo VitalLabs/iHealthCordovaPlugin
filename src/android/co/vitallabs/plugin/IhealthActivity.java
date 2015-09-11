@@ -192,7 +192,7 @@ public class IhealthActivity extends Activity implements Interface_Observer_BP {
   public void startMeasure () {
     String clientID =  "bbcb0a015545402c8c5683b485009045";
     String clientSecret = "278702abdb2041d0bcc0e7b1bbc43b86";
-    Log.i("BeforeStart", clientID+" " + clientSecret + " " +BP5Activity.this);
+    Log.i("BeforeStart", clientID+" " + clientSecret + " " +IhealthActivity.this);
     bpControl.start(IhealthActivity.this, clientID, clientSecret);
   }
   
