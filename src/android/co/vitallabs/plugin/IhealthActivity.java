@@ -42,9 +42,14 @@ public class IhealthActivity extends Activity implements Interface_Observer_BP {
     //deviceManager.initBpStateCallback(this);
     //deviceManager.initABIStateCallback(this); deviceManager.scanDevice();
     bpControl = deviceManager.getBpDevice(mAddress);
-    Log.i(TAG, "bpControl?: " + bpControl);
+
+    if (bpControl != null) {
+      Log.i(TAG, "bpControl?: " + bpControl);
+      this.startMeasure();
+    } else {
+      Log.i(TAG, "bpControl is null ");
+    }
     
-    this.startMeasure();
   }
 
   protected void onStop() {
