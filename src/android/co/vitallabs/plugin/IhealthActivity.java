@@ -8,6 +8,10 @@ import java.util.Set;
 import com.jiuan.android.sdk.bp.bluetooth.BPCommManager;
 import com.jiuan.android.sdk.bp.bluetooth.BPControl;
 import com.jiuan.android.sdk.bp.observer_bp.Interface_Observer_BP;
+import com.jiuan.android.sdk.bg.observer.Interface_Observer_BG;
+import com.jiuan.android.sdk.bg.observer.Interface_Observer_BGCoomMsg;
+import com.jiuan.android.sdk.bp.observer_comm.Interface_Observer_CommMsg_BP;
+
 import com.jiuan.android.sdk.device.DeviceManager;
 
 import android.app.Activity;
@@ -19,12 +23,14 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 
-public class IhealthActivity extends Activity implements Interface_Observer_BP {
+public class IhealthActivity extends Activity implements
+                                                Interface_Observer_BP,
+                                                Interface_Observer_CommMsg_BP {
   private BPControl bpControl;
 	private String TAG = "BPIhealthActivity";
 	private boolean isOffline = false;
 	private String mAddress;
-	private DeviceManager deviceManager;
+	private DeviceManager deviceManager = DeviceManager.getInstance();
 
   @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +39,20 @@ public class IhealthActivity extends Activity implements Interface_Observer_BP {
     Log.i(TAG, "Are we receiving the mac address?: " + mAddress);
     super.onCreate(savedInstanceState);
 		//this.initListener();
-    deviceManager = DeviceManager.getInstance();
-    Log.i(TAG, "getInstance");
-    deviceManager.initDeviceManager(this, "devops@vitallabs.co");
-    Log.i(TAG, "initDeviceManager");
+    // Log.i(TAG, "getInstance");
+    // deviceManager.initDeviceManager(this, "devops@vitallabs.co");
+    // Log.i(TAG, "initDeviceManager");
+    // deviceManager.initReceiver();
+    // Log.i(TAG, "initReceiver");
+    // //deviceManager.initBpStateCallback(this);
+    // //deviceManager.initABIStateCallback(this); deviceManager.scanDevice();
+    // bpControl = deviceManager.getBpDevice(mAddress);
+    String userId = "devops@vitallabs.co";
+    deviceManager.initDeviceManager(this, userId);
     deviceManager.initReceiver();
-    Log.i(TAG, "initReceiver");
-    //deviceManager.initBpStateCallback(this);
-    //deviceManager.initABIStateCallback(this); deviceManager.scanDevice();
-    bpControl = deviceManager.getBpDevice(mAddress);
+    deviceManager.initBpStateCallback(this);
+    deviceManager.scanDevice();
+    
 
     if (bpControl != null) {
       Log.i(TAG, "bpControl?: " + bpControl);
@@ -210,5 +221,22 @@ public class IhealthActivity extends Activity implements Interface_Observer_BP {
     Log.i("BeforeStart", clientID+" " + clientSecret + " " +IhealthActivity.this);
     bpControl.start(IhealthActivity.this, clientID, clientSecret);
   }
+
+
+  // NEW OVERRIDES
+  @Override
+  public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
+    // deviceMap.put(deviceMac, deviceType);
+    //refresh();
+    Log.i(TAG, "msgDeviceConnect_Bp");
+    
+  }
   
+  @Override
+  public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
+    //deviceMap.remove(deviceMac);
+    //refresh();
+    Log.i(TAG, "msgDeviceDisconnect_Bp");
+  }
+   
 }
