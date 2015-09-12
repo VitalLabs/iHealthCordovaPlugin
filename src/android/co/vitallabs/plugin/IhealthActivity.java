@@ -228,7 +228,7 @@ public class IhealthActivity extends Activity implements
   public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
     // deviceMap.put(deviceMac, deviceType);
     //refresh();
-    Log.i(TAG, "msgDeviceConnect_Bp");
+    Log.i(TAG, "msgDeviceConnect_Bp " + deviceMac + " " + deviceType);
     
   }
   
@@ -236,7 +236,7 @@ public class IhealthActivity extends Activity implements
   public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
     //deviceMap.remove(deviceMac);
     //refresh();
-    Log.i(TAG, "msgDeviceDisconnect_Bp");
+    Log.i(TAG, "msgDeviceDisconnect_Bp" + deviceMac + " " + deviceType);
   }
    
 }
