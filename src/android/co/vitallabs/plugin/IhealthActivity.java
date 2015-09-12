@@ -102,12 +102,16 @@ public class IhealthActivity extends Activity implements
 	};
 
   private void getbpControl(){
-		bpControl = deviceManager.getBpDevice(mAddress);
+    Log.i(TAG, "inGetBpControl" + mAddress);
+    bpControl = deviceManager.getBpDevice(mAddress);
 		if(bpControl != null){
 			//showisOffLine.setVisibility(View.VISIBLE);
 			//isOffLine.setVisibility(View.VISIBLE);
 			//btn6.setVisibility(View.VISIBLE);
+      Log.i(TAG, "getbpControl " + bpControl);
 			bpControl.controlSubject.attach(this);
+      Log.i(TAG, "forceTakeMeasure");
+      startMeasure();
 		}else{
 			//Toast.makeText(BP5Activity.this, "noDevice", Toast.LENGTH_SHORT).show();
 			return;
@@ -229,6 +233,7 @@ public class IhealthActivity extends Activity implements
     // deviceMap.put(deviceMac, deviceType);
     //refresh();
     Log.i(TAG, "msgDeviceConnect_Bp " + deviceMac + " " + deviceType);
+    mAddress = deviceMac;
     
   }
   
