@@ -234,7 +234,7 @@ public class IhealthActivity extends Activity implements
     //refresh();
     Log.i(TAG, "msgDeviceConnect_Bp " + deviceMac + " " + deviceType);
     mAddress = deviceMac;
-    
+    getbpControl(); 
   }
   
   @Override
