@@ -121,7 +121,7 @@ public class Ihealth extends CordovaPlugin {
     String actionResult = intent.getStringExtra("action");
     switch (actionResult) {
       case "isBP5CuffAvailable":
-        if (intent.getBooleanExtra("result")) {
+        if (intent.getBooleanExtra("result", false)) {
           callbackContext.success();
         } else {
           callbackContext.error("Device not available");
