@@ -46,23 +46,26 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
   private DeviceManager deviceManager;
   private IhealthActivity iActivity;
   protected Context context;
+  private CallbackContext callbackContext;
   
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-        Log.i(TAG, "calling action:" + action);
-        if (action.equals("pluginInitialize")) {
-            this.pluginInitialize(callbackContext);
-            return true;
-        }
-
-        if (action.equals("DeviceConnectForBP5")) {
-            this.deviceConnectForBP5(callbackContext);
-            return true;
-        }
-        
-        return false;
+    this.callbackContext = callbackContext;
+    
+    Log.i(TAG, "calling action:" + action);
+    if (action.equals("pluginInitialize")) {
+      this.pluginInitialize(callbackContext);
+      return true;
     }
+
+    if (action.equals("DeviceConnectForBP5")) {
+      this.deviceConnectForBP5(callbackContext);
+      return true;
+    }
+        
+    return false;
+  }
 
     private void pluginInitialize(CallbackContext callbackContext) {
 
@@ -85,49 +88,9 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
       Intent intent = new Intent(context, IhealthActivity.class);
       intent.putExtra("mac", mAddress);
       //cordova.getActivity().startActivity(intent);
-      this.cordova.startActivityForResult((CordovaPlugin) this, intent);
+      this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
 
-      
-        
-      //this.iActivity = iActivity();
       Log.i(TAG, "After Activity");
-
-          
-        //deviceManager = DeviceManager.getInstance();
-        // Log.i(TAG, "deviceManager "+ deviceManager);
-        //Log.i(TAG, "deviceManager2 "+ deviceManager.scanDevice());
-        //Log.i(TAG, "deviceManager3 "+ deviceManager.initDeviceManager(this, "devops@vitallabs.co"));
-        
-        //deviceManager.initDeviceManager(this.context, "devops@vitallabs.co");
-        // Log.i(TAG, "initDeviceManager"+deviceManager);
-        // //deviceManager.initReceiver();
-        // Log.i(TAG, "initReceiver"+deviceManager);
-        // //deviceManager.initBpStateCallback(this.context);
-        // Log.i(TAG, "InitBPStateCB"+deviceManager);
-        // // deviceManager.scanDevice();
-
-        // BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        // Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-
-        // List<String> s = new ArrayList<String>();
-
-        // for(BluetoothDevice bt : pairedDevices) {
-        //   Log.i(TAG, "MyBT devices: "+bt.getName());
-        //   Log.i(TAG, "MyBT devices: "+bt.getAddress());
-        //   Log.i(TAG, "MyBT devices: "+bt.getType());
-        //   Log.i(TAG, "========");
-        //   s.add(bt.getName());
-        // }
-          
-
-        //Log.i(TAG, "myList"+s.toString());
-        
-        //callbackContext.success("true");
-        // if (message != null && message.length() > 0) {
-        //     callbackContext.success(message);
-        // } else {
-        //     callbackContext.error("Expected one non-empty string argument.");
-        // }
     }
 
   
@@ -168,6 +131,12 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
     //   Log.i(TAG, deviceMac + " " + deviceType);
     // }
 
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    //do something with the result
+    Log.i(TAG, "onActivityResult"+requestCode+" "+resultCode+" "+intent);
+    super.onActivityResult(requestCode, resultCode, intent);
+  }
   
     // Interface methods
     	@Override
