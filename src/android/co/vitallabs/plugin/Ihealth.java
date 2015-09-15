@@ -79,7 +79,7 @@ public class Ihealth extends CordovaPlugin {
       intent.putExtra("mac", mAddress);
       //cordova.getActivity().startActivity(intent);
       this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
-
+      
       Log.i(TAG, "After Activity");
     }
 
@@ -117,6 +117,13 @@ public class Ihealth extends CordovaPlugin {
     }
     Log.e(TAG, "Getting result from Activity"  + Arrays.toString(intent.getIntArrayExtra("result")));
     super.onActivityResult(requestCode, resultCode, intent);
+    JSONObject json = new JSONObject();
+    int[] result = intent.getIntArrayExtra("result");
+    json.put("SYS", result[0]);
+    json.put("DIA", result[1]);
+    json.put("heartRate", result[2]);
+    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
+
   }
   
 }
