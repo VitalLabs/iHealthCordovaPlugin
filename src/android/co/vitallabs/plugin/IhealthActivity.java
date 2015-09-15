@@ -237,7 +237,7 @@ public class IhealthActivity extends Activity implements
     intentResult.putExtra("result", result);
     
     setResult(RESULT_OK, intentResult);
-    this.deviceManager.unregisterReceiver();
+    //unregisterReceiver();
     finish();
 	}
 
