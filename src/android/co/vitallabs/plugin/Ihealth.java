@@ -1,5 +1,6 @@
 package co.vitallabs.plugin;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -138,7 +139,7 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
     if (resultCode == 1) {
       Log.e(TAG, "Getting result from Activity"  + intent.getIntArrayExtra("result"));
     }
-    Log.e(TAG, "Getting result from Activity"  + intent.getIntArrayExtra("result"));
+    Log.e(TAG, "Getting result from Activity"  + Arrays.toString(intent.getIntArrayExtra("result")));
     super.onActivityResult(requestCode, resultCode, intent);
   }
   

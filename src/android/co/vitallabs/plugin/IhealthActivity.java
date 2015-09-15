@@ -1,5 +1,6 @@
 package co.vitallabs.plugin;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -227,7 +228,7 @@ public class IhealthActivity extends Activity implements
 	@Override
 	public void msgResult(int[] result) {
 		// TODO Auto-generated method stub
-		Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+result);
+		Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
     Intent intentResult = new Intent();
     // intentResult.putExtra("RES0", result[0]);
     // intentResult.putExtra("RES1", result[1]);
@@ -236,6 +237,7 @@ public class IhealthActivity extends Activity implements
     intentResult.putExtra("result", result);
     
     setResult(RESULT_OK, intentResult);
+    this.deviceManager.unregisterReceiver();
     finish();
 	}
 
