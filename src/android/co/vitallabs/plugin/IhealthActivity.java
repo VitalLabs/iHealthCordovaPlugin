@@ -124,8 +124,10 @@ public class IhealthActivity extends Activity implements
         startMeasure();
       } else if (action == "isBP5CuffAvailable") {
         Intent intentResult = new Intent();
+
         intentResult.putExtra("result", true);
         intentResult.putExtra("action", action);
+        Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
         setResult(RESULT_OK, intentResult);
         finish();
       }
@@ -134,6 +136,8 @@ public class IhealthActivity extends Activity implements
 			Intent intentResult = new Intent();
       intentResult.putExtra("result", false);
       intentResult.putExtra("action", action);
+      Log.i(TAG, "wird state done? " + intentResult);
+        
       setResult(RESULT_OK, intentResult);
       finish();
       
@@ -227,6 +231,7 @@ public class IhealthActivity extends Activity implements
     intentResult.putExtra("result", result);
     intentResult.putExtra("action", action);
     setResult(RESULT_OK, intentResult);
+    Log.i(TAG, "Back from succesfull measure");
     //unregisterReceiver();
     finish();
 	}
