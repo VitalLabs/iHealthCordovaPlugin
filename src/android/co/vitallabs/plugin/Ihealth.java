@@ -79,10 +79,11 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
 
       Log.i(TAG, "Before running the thread");
       //final long duration = args.getLong(0);
+      Log.i(TAG, "pluginInitialize");
+      Context context = this.cordova.getActivity().getApplicationContext();
       cordova.getThreadPool().execute(new Runnable() {
+          @Override
           public void run() {
-            Log.i(TAG, "pluginInitialize");
-            Context context = this.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthActivity.class);
             intent.putExtra("mac", mAddress);
