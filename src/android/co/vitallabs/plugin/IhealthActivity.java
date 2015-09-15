@@ -38,6 +38,7 @@ public class IhealthActivity extends Activity implements
 	private DeviceManager deviceManager = DeviceManager.getInstance();
   private CordovaPlugin activityResultCallback;
   private boolean keepRunning;
+  private boolean activityResultKeepRunning;
   
   @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,6 @@ public class IhealthActivity extends Activity implements
   }
 
   // OnActivityResult stuff hopefully it will work
-  @Override
   public void setActivityResultCallback(CordovaPlugin plugin) {
     this.activityResultCallback = plugin;        
   }
