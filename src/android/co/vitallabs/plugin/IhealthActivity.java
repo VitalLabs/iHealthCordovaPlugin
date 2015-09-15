@@ -53,14 +53,6 @@ public class IhealthActivity extends Activity implements
     deviceManager.initBpStateCallback(this);
     deviceManager.scanDevice();
     
-
-    if (bpControl != null) {
-      Log.i(TAG, "bpControl?: " + bpControl);
-      this.startMeasure();
-    } else {
-      Log.i(TAG, "bpControl is null ");
-    }
-    
   }
 
   // OnActivityResult stuff hopefully it will work
@@ -95,14 +87,6 @@ public class IhealthActivity extends Activity implements
     super.onStop();
   }
 
-  private void initListener(){ 
-		// getBpControl bpcontrol = new getBpControl();
-		// getBatteryLevel batterylevel = new getBatteryLevel();
-		// getOffLine offline = new getOffLine();
-		// StartMeansure start = new StartMeansure();
-		// EndMeansure end = new EndMeansure();
-    
-	}
 
   private Handler handler = new Handler(){
 
@@ -230,10 +214,6 @@ public class IhealthActivity extends Activity implements
 		// TODO Auto-generated method stub
 		Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
     Intent intentResult = new Intent();
-    // intentResult.putExtra("RES0", result[0]);
-    // intentResult.putExtra("RES1", result[1]);
-    // intentResult.putExtra("RES2", result[2]);
-
     intentResult.putExtra("result", result);
     
     setResult(RESULT_OK, intentResult);
@@ -258,8 +238,6 @@ public class IhealthActivity extends Activity implements
   // NEW OVERRIDES
   @Override
   public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
-    // deviceMap.put(deviceMac, deviceType);
-    //refresh();
     Log.i(TAG, "msgDeviceConnect_Bp " + deviceMac + " " + deviceType);
     mAddress = deviceMac;
     getbpControl(); 
@@ -267,8 +245,6 @@ public class IhealthActivity extends Activity implements
   
   @Override
   public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
-    //deviceMap.remove(deviceMac);
-    //refresh();
     Log.i(TAG, "msgDeviceDisconnect_Bp" + deviceMac + " " + deviceType);
   }
    

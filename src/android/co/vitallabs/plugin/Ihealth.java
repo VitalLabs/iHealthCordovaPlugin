@@ -39,7 +39,7 @@ import co.vitallabs.plugin.IhealthActivity;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
+public class Ihealth extends CordovaPlugin {
 
   private BPControl bpControl;
   private String TAG = "BPtest_Plugin";
@@ -69,17 +69,6 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
   }
 
     private void pluginInitialize(CallbackContext callbackContext) {
-
-        // cordova.getActivity().runOnUiThread(new Runnable() {
-        //     @Override
-        //     public void run() {
-        //       Context context = cordova.getActivity()
-        //             .getApplicationContext();
-        //       Intent intent = new Intent(context, IhealthActivity.class);
-        //       intent.putExtra("mac", mAddress);
-        //       cordova.getActivity().startActivity(intent);
-        //      }
-        //   });
 
       Log.i(TAG, "Before running the thread");
       //final long duration = args.getLong(0);
@@ -118,19 +107,6 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
     }
 
 
-    //   @Override
-    // public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
-    //     //deviceMap.put(deviceMac, deviceType);
-    //     //refresh();
-    //     Log.i(TAG, deviceMac + " " + deviceType);
-    // }
-
-    // @Override
-    // public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
-    //   //deviceMap.remove(deviceMac);
-    //   // refresh();
-    //   Log.i(TAG, deviceMac + " " + deviceType);
-    // }
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -143,92 +119,4 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
     super.onActivityResult(requestCode, resultCode, intent);
   }
   
-    // Interface methods
-    	@Override
-	public void msgInden() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void msgBattery(int battery) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void msgUserStatus(int status) {
-		// TODO Auto-generated method stub
-		// Toast.makeText(getApplicationContext(), "user status "+status, Toast.LENGTH_SHORT).show();
-	}
-
-	@Override
-	public void msgError(int num) {
-		// TODO Auto-generated method stub
-    Log.e("error", ""+num);
-    // try {
-		// 	Message message = new Message();
-		// 	message.what = 2;
-		// 	Bundle bundle = new Bundle();
-		// 	bundle.putInt("error", num);
-		// 	message.obj = bundle;
-		// 	handler.sendMessage(message);
-		// } catch (Exception e) {
-		// 	// TODO: handle exception
-		// }
-	}
-
-	@Override
-	public void msgAngle(int angle) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void msgZeroIng() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void msgZeroOver() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void msgPressure(int pressure) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void msgMeasure(int pressure, int[] measure, boolean heart) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void msgResult(int[] result) {
-		// TODO Auto-generated method stub
-		Log.e("result", result[0]+" "+result[1]+" "+result[2]+" ");
-		// try {
-		// 	Message message = new Message();
-		// 	message.what = 1;
-		// 	Bundle bundle = new Bundle();
-		// 	bundle.putIntArray("bp", result);
-		// 	message.obj = bundle;
-		// 	handler.sendMessage(message);
-		// } catch (Exception e) {
-		// 	// TODO: handle exception
-		// }
-	}
-
-	@Override
-	public void msgPowerOff() {
-		// TODO Auto-generated method stub
-
-	}
-
-
 }
