@@ -126,7 +126,7 @@ public class IhealthActivity extends Activity implements
       } else if (action == "isBP5CuffAvailable") {
         Intent intentResult = new Intent();
         intentResult.putExtra("result", true);
-        intentResult.putExtra("action" action);
+        intentResult.putExtra("action", action);
         setResult(RESULT_OK, intentResult);
         finish();
       }
@@ -134,7 +134,7 @@ public class IhealthActivity extends Activity implements
 		} else {
 			Intent intentResult = new Intent();
       intentResult.putExtra("result", false);
-      intentResult.putExtra("action" action);
+      intentResult.putExtra("action", action);
       setResult(RESULT_OK, intentResult);
       finish();
       
@@ -226,7 +226,7 @@ public class IhealthActivity extends Activity implements
 		Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
     Intent intentResult = new Intent();
     intentResult.putExtra("result", result);
-    intentResult.putExtra("action" action);
+    intentResult.putExtra("action", action);
     setResult(RESULT_OK, intentResult);
     //unregisterReceiver();
     finish();
