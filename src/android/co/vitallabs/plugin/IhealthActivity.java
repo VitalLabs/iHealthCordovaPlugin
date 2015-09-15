@@ -227,7 +227,7 @@ public class IhealthActivity extends Activity implements
 	@Override
 	public void msgResult(int[] result) {
 		// TODO Auto-generated method stub
-		Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" ");
+		Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+result);
 		// try {
 		// 	Message message = new Message();
 		// 	message.what = 1;
@@ -238,6 +238,8 @@ public class IhealthActivity extends Activity implements
 		// } catch (Exception e) {
 		// 	// TODO: handle exception
 		// }
+    setResult(RESULT_OK, result);
+    finish();
 	}
 
 	@Override
