@@ -66,56 +66,68 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
 
     private void pluginInitialize(CallbackContext callbackContext) {
 
-        Log.i(TAG, "pluginInitialize");
-        
-        this.context = this.cordova.getActivity().getApplicationContext();
+        // cordova.getActivity().runOnUiThread(new Runnable() {
+        //     @Override
+        //     public void run() {
+        //       Context context = cordova.getActivity()
+        //             .getApplicationContext();
+        //       Intent intent = new Intent(context, IhealthActivity.class);
+        //       intent.putExtra("mac", mAddress);
+        //       cordova.getActivity().startActivity(intent);
+        //      }
+        //   });
 
-        Log.i(TAG, "before Activity");
-        cordova.getActivity().runOnUiThread(new Runnable() {
-            @Override
+      Log.i(TAG, "Before running the thread");
+        final long duration = args.getLong(0);
+        cordova.getThreadPool().execute(new Runnable() {
             public void run() {
+              Log.i(TAG, "pluginInitialize");
+              this.context = this.cordova.getActivity().getApplicationContext();
+              Log.i(TAG, "before Activity");
               Context context = cordova.getActivity()
-                    .getApplicationContext();
+                .getApplicationContext();
               Intent intent = new Intent(context, IhealthActivity.class);
               intent.putExtra("mac", mAddress);
               cordova.getActivity().startActivity(intent);
+             
             }
-          });
+        });
+        return true;
         
         //this.iActivity = iActivity();
         Log.i(TAG, "After Activity");
 
           
-        deviceManager = DeviceManager.getInstance();
-        Log.i(TAG, "deviceManager "+ deviceManager);
+        //deviceManager = DeviceManager.getInstance();
+        // Log.i(TAG, "deviceManager "+ deviceManager);
         //Log.i(TAG, "deviceManager2 "+ deviceManager.scanDevice());
         //Log.i(TAG, "deviceManager3 "+ deviceManager.initDeviceManager(this, "devops@vitallabs.co"));
         
         //deviceManager.initDeviceManager(this.context, "devops@vitallabs.co");
-        Log.i(TAG, "initDeviceManager"+deviceManager);
-        //deviceManager.initReceiver();
-        Log.i(TAG, "initReceiver"+deviceManager);
-        //deviceManager.initBpStateCallback(this.context);
-        Log.i(TAG, "InitBPStateCB"+deviceManager);
-        // deviceManager.scanDevice();
+        // Log.i(TAG, "initDeviceManager"+deviceManager);
+        // //deviceManager.initReceiver();
+        // Log.i(TAG, "initReceiver"+deviceManager);
+        // //deviceManager.initBpStateCallback(this.context);
+        // Log.i(TAG, "InitBPStateCB"+deviceManager);
+        // // deviceManager.scanDevice();
 
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+        // BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        // Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 
-        List<String> s = new ArrayList<String>();
+        // List<String> s = new ArrayList<String>();
 
-        for(BluetoothDevice bt : pairedDevices) {
-          Log.i(TAG, "MyBT devices: "+bt.getName());
-          Log.i(TAG, "MyBT devices: "+bt.getAddress());
-          Log.i(TAG, "MyBT devices: "+bt.getType());
-          Log.i(TAG, "========");
-          s.add(bt.getName());
-        }
+        // for(BluetoothDevice bt : pairedDevices) {
+        //   Log.i(TAG, "MyBT devices: "+bt.getName());
+        //   Log.i(TAG, "MyBT devices: "+bt.getAddress());
+        //   Log.i(TAG, "MyBT devices: "+bt.getType());
+        //   Log.i(TAG, "========");
+        //   s.add(bt.getName());
+        // }
           
 
-        Log.i(TAG, "myList"+s.toString());
+        //Log.i(TAG, "myList"+s.toString());
         
-        callbackContext.success("true");
+        //callbackContext.success("true");
         // if (message != null && message.length() > 0) {
         //     callbackContext.success(message);
         // } else {
