@@ -36,7 +36,9 @@ public class IhealthActivity extends Activity implements
 	private boolean isOffline = false;
 	private String mAddress;
 	private DeviceManager deviceManager = DeviceManager.getInstance();
-
+  private CordovaPlugin activityResultCallback;
+  private boolean keepRunning;
+  
   @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
