@@ -135,6 +135,9 @@ public class Ihealth extends CordovaPlugin implements Interface_Observer_BP {
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     //do something with the result
     Log.i(TAG, "onActivityResult"+requestCode+" "+resultCode+" "+intent);
+    if (resultCode == RESULT_OK) {
+      Log.e(TAG, "Getting result from Activity"  + intent.getExtra("result"));
+    }
     super.onActivityResult(requestCode, resultCode, intent);
   }
   

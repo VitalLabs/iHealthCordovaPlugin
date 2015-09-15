@@ -228,17 +228,14 @@ public class IhealthActivity extends Activity implements
 	public void msgResult(int[] result) {
 		// TODO Auto-generated method stub
 		Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+result);
-		// try {
-		// 	Message message = new Message();
-		// 	message.what = 1;
-		// 	Bundle bundle = new Bundle();
-		// 	bundle.putIntArray("bp", result);
-		// 	message.obj = bundle;
-		// 	handler.sendMessage(message);
-		// } catch (Exception e) {
-		// 	// TODO: handle exception
-		// }
-    setResult(RESULT_OK, result);
+    Intent intentResult = new Intent();
+    // intentResult.putExtra("RES0", result[0]);
+    // intentResult.putExtra("RES1", result[1]);
+    // intentResult.putExtra("RES2", result[2]);
+
+    intentResult.putExtra("result", result);
+    
+    setResult(RESULT_OK, intentResult);
     finish();
 	}
 
