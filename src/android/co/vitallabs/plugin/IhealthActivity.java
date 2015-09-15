@@ -40,11 +40,12 @@ public class IhealthActivity extends Activity implements
   private CordovaPlugin activityResultCallback;
   private boolean keepRunning;
   private boolean activityResultKeepRunning;
+  private String action;
   
   @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-    mAddress = getIntent().getStringExtra("mac");
+    action = getIntent().getStringExtra("action");
     Log.i(TAG, "Are we receiving the mac address?: " + mAddress);
     super.onCreate(savedInstanceState);
     String userId = "devops@vitallabs.co";
@@ -117,16 +118,26 @@ public class IhealthActivity extends Activity implements
     Log.i(TAG, "inGetBpControl" + mAddress);
     bpControl = deviceManager.getBpDevice(mAddress);
 		if(bpControl != null){
-			//showisOffLine.setVisibility(View.VISIBLE);
-			//isOffLine.setVisibility(View.VISIBLE);
-			//btn6.setVisibility(View.VISIBLE);
-      Log.i(TAG, "getbpControl " + bpControl);
+			Log.i(TAG, "getbpControl " + bpControl);
 			bpControl.controlSubject.attach(this);
       Log.i(TAG, "forceTakeMeasure");
-      startMeasure();
-		}else{
-			//Toast.makeText(BP5Activity.this, "noDevice", Toast.LENGTH_SHORT).show();
-			return;
+      if (action == "deviceConnectForBP5") {
+        startMeasure();
+      } else if (action == "isBP5CuffAvailable") {
+        Intent intentResult = new Intent();
+        intentResult.putExtra("result", true);
+        intentResult.putExtra("action" action);
+        setResult(RESULT_OK, intentResult);
+        finish();
+      }
+      
+		} else {
+			Intent intentResult = new Intent();
+      intentResult.putExtra("result", false);
+      intentResult.putExtra("action" action);
+      setResult(RESULT_OK, intentResult);
+      finish();
+      
 		}
 	}
 
@@ -215,7 +226,7 @@ public class IhealthActivity extends Activity implements
 		Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
     Intent intentResult = new Intent();
     intentResult.putExtra("result", result);
-    
+    intentResult.putExtra("action" action);
     setResult(RESULT_OK, intentResult);
     //unregisterReceiver();
     finish();

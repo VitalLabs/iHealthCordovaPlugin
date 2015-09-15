@@ -43,7 +43,7 @@ public class Ihealth extends CordovaPlugin {
 
   private BPControl bpControl;
   private String TAG = "BPtest_Plugin";
-  private String mAddress = "8CDE5241FE3A";
+  //private String mAddress = "8CDE5241FE3A";
   private DeviceManager deviceManager;
   private IhealthActivity iActivity;
   protected Context context;
@@ -64,70 +64,83 @@ public class Ihealth extends CordovaPlugin {
       this.deviceConnectForBP5(callbackContext);
       return true;
     }
+
+    if (action.equals("isBP5CuffAvailable")) {
+      this.isBP5CuffAvailable(callbackContext);
+      return true;
+    }
         
     return false;
   }
 
     private void pluginInitialize(CallbackContext callbackContext) {
-
-      Log.i(TAG, "Before running the thread");
-      //final long duration = args.getLong(0);
-      Log.i(TAG, "pluginInitialize");
-      Context context = this.cordova.getActivity().getApplicationContext();
-      Log.i(TAG, "before Activity");
-      Intent intent = new Intent(context, IhealthActivity.class);
-      intent.putExtra("mac", mAddress);
-      //cordova.getActivity().startActivity(intent);
-      this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
-      
-      Log.i(TAG, "After Activity");
+      callbackContext.success("Plugin Initialized");
     }
 
   
-  
+    private void isBP5CuffAvailable(CallbackContext callbackContext) {
+    
+        Log.i(TAG, "Before running the thread");
+        //final long duration = args.getLong(0);
+        Log.i(TAG, "isBP5CuffAvailable");
+        Context context = this.cordova.getActivity().getApplicationContext();
+        Log.i(TAG, "before Activity");
+        Intent intent = new Intent(context, IhealthActivity.class);
+        intent.putExtra("action", "isBP5CuffAvailable");
+        this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
+      
+        Log.i(TAG, "After Activity");
+    
+    }
 
     private void deviceConnectForBP5(CallbackContext callbackContext) {
 
+        Log.i(TAG, "Before running the thread");
+        //final long duration = args.getLong(0);
+        Log.i(TAG, "pluginInitialize");
+        Context context = this.cordova.getActivity().getApplicationContext();
+        Log.i(TAG, "before Activity");
+        Intent intent = new Intent(context, IhealthActivity.class);
+        intent.putExtra("action", "deviceConnectForBP5");
+        this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
       
-      //mAddress = getIntent().getStringExtra("mac");
-
-      mAddress = this.cordova.getActivity().getIntent().getStringExtra("mac");
-
-      Log.i(TAG, "mAddress:" + mAddress);
-      deviceManager = DeviceManager.getInstance();
-
-      bpControl = deviceManager.getBpDevice(mAddress);
-      Log.i(TAG, "bpControl "+bpControl);
-      String clientID = "b42e648c6c224f9a890e7d9323dc5b6a";
-      String clientSecret = "ce7a64efe52e446990f1c696e864d3a7";
-            
-      bpControl.start(this.context, clientID, clientSecret);
-
-      callbackContext.success("Returning from deviceConnectFroBP5");
+        Log.i(TAG, "After Activity");
+    
     }
 
 
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    //do something with the result
-    Log.i(TAG, "onActivityResult "+requestCode+" "+resultCode+" "+intent);
-    if (resultCode == 1) {
-      Log.e(TAG, "Getting result from Activity"  + intent.getIntArrayExtra("result"));
-    }
-    Log.e(TAG, "Getting result from Activity"  + Arrays.toString(intent.getIntArrayExtra("result")));
-    super.onActivityResult(requestCode, resultCode, intent);
-    try {
-      JSONObject json = new JSONObject();
-      int[] result = intent.getIntArrayExtra("result");
-      json.put("SYS", result[0]);
-      json.put("DIA", result[1]);
-      json.put("heartRate", result[2]);
-      callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
-    } catch (JSONException e) {
-      callbackContext.error("Error" + e.toString());
-    }
 
+    super.onActivityResult(requestCode, resultCode, intent);
+    
+    Log.i(TAG, "onActivityResult "+requestCode+" "+resultCode+" "+intent);
+    Log.e(TAG, "Getting result from Activity"  + intent);
+    
+    String actionResult = intent.getStringExtra("action");
+    switch (actionResult) {
+      case "isBP5CuffAvailable":
+        if (intent.getBooleanExtra("result")) {
+          callbackContext.success();
+        } else {
+          callbackContext.error("Device not available");
+        }
+        break;
+
+      case "deviceConnectForBP5":
+        try {
+          JSONObject json = new JSONObject();
+          int[] result = intent.getIntArrayExtra("result");
+          json.put("SYS", result[0]);
+          json.put("DIA", result[1]);
+          json.put("heartRate", result[2]);
+          callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
+        } catch (JSONException e) {
+          callbackContext.error("Error" + e.toString());
+        }
+        break;
+    }
+    
   }
-  
 }
