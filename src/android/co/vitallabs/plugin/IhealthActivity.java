@@ -46,7 +46,6 @@ public class IhealthActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
     action = getIntent().getStringExtra("action");
-    Log.i(TAG, "Are we receiving the mac address?: " + mAddress);
     super.onCreate(savedInstanceState);
     String userId = "devops@vitallabs.co";
     deviceManager.initDeviceManager(this, userId);
@@ -120,7 +119,7 @@ public class IhealthActivity extends Activity implements
 		if(bpControl != null){
 			Log.i(TAG, "getbpControl " + bpControl);
 			bpControl.controlSubject.attach(this);
-      Log.i(TAG, "forceTakeMeasure");
+      Log.i(TAG, "forceTakeMeasure " + action);
       if (action == "deviceConnectForBP5") {
         startMeasure();
       } else if (action == "isBP5CuffAvailable") {
