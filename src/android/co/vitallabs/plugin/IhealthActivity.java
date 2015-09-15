@@ -14,7 +14,12 @@ import com.jiuan.android.sdk.bp.observer_comm.Interface_Observer_CommMsg_BP;
 
 import com.jiuan.android.sdk.device.DeviceManager;
 
+import org.apache.cordova.CordovaPlugin;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.content.Context;
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
@@ -38,15 +43,6 @@ public class IhealthActivity extends Activity implements
     mAddress = getIntent().getStringExtra("mac");
     Log.i(TAG, "Are we receiving the mac address?: " + mAddress);
     super.onCreate(savedInstanceState);
-		//this.initListener();
-    // Log.i(TAG, "getInstance");
-    // deviceManager.initDeviceManager(this, "devops@vitallabs.co");
-    // Log.i(TAG, "initDeviceManager");
-    // deviceManager.initReceiver();
-    // Log.i(TAG, "initReceiver");
-    // //deviceManager.initBpStateCallback(this);
-    // //deviceManager.initABIStateCallback(this); deviceManager.scanDevice();
-    // bpControl = deviceManager.getBpDevice(mAddress);
     String userId = "devops@vitallabs.co";
     deviceManager.initDeviceManager(this, userId);
     deviceManager.initReceiver();
@@ -63,6 +59,35 @@ public class IhealthActivity extends Activity implements
     
   }
 
+  // OnActivityResult stuff hopefully it will work
+  @Override
+  public void setActivityResultCallback(CordovaPlugin plugin) {
+    this.activityResultCallback = plugin;        
+  }
+
+  public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode) {
+    this.activityResultCallback = command;
+    this.activityResultKeepRunning = this.keepRunning;
+
+    // If multitasking turned on, then disable it for activities that return results
+    if (command != null) {
+      this.keepRunning = false;
+    }
+
+    // Start activity
+    super.startActivityForResult(intent, requestCode);
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    super.onActivityResult(requestCode, resultCode, intent);
+    CordovaPlugin callback = this.activityResultCallback;
+    if (callback != null) {
+      callback.onActivityResult(requestCode, resultCode, intent);
+    }
+  }
+  // EOF OnActivityResult
+  
   protected void onStop() {
     super.onStop();
   }
