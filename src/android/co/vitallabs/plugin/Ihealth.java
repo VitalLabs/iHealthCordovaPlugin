@@ -66,7 +66,7 @@ public class Ihealth extends CordovaPlugin {
     if (action.equals("DeviceConnectForBP5")) {
       cordova.getThreadPool().execute(new Runnable() {
           public void run () {
-            this.deviceConnectForBP5(callbackContext);
+            this.deviceConnectForBP5(this.callbackContext);
           }
         });
       
@@ -76,7 +76,7 @@ public class Ihealth extends CordovaPlugin {
     if (action.equals("isBP5CuffAvailable")) {
       cordova.getThreadPool().execute(new Runnable() {
           public void run () {
-            this.isBP5CuffAvailable(callbackContext);
+            this.isBP5CuffAvailable(this.callbackContext);
           }
         });
       return true;
