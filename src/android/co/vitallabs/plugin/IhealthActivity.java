@@ -50,13 +50,8 @@ public class IhealthActivity extends Activity implements
   @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-    action = getIntent().getIntExtra("action", 1);
     super.onCreate(savedInstanceState);
-    String userId = "devops@vitallabs.co";
-    deviceManager.initDeviceManager(this, userId);
-    deviceManager.initReceiver();
-    deviceManager.initBpStateCallback(this);
-    deviceManager.scanDevice();
+    
     
   }
 
@@ -76,6 +71,13 @@ public class IhealthActivity extends Activity implements
 
     // Start activity
     Log.i(TAG, "startActivityForResult"+requestCode);
+    action = getIntent().getIntExtra("action", 1);
+    String userId = "devops@vitallabs.co";
+    deviceManager.initDeviceManager(this, userId);
+    deviceManager.initReceiver();
+    deviceManager.initBpStateCallback(this);
+    deviceManager.scanDevice();
+
     super.startActivityForResult(intent, requestCode);
   }
 
