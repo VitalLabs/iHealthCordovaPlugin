@@ -75,6 +75,7 @@ public class IhealthActivity extends Activity implements
     }
 
     // Start activity
+    Log.i(TAG, "startActivityForResult"+requestCode);
     super.startActivityForResult(intent, requestCode);
   }
 
@@ -89,9 +90,12 @@ public class IhealthActivity extends Activity implements
   // EOF OnActivityResult
   
   protected void onStop() {
+    Log.i(TAG, "onStopActivity");
     super.onStop();
   }
 
+  
+  
   @Override
   protected void onDestroy() {
     if (deviceManager != null) {
