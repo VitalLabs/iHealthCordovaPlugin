@@ -120,9 +120,9 @@ public class IhealthActivity extends Activity implements
 			Log.i(TAG, "getbpControl " + bpControl);
 			bpControl.controlSubject.attach(this);
       Log.i(TAG, "forceTakeMeasure " + action);
-      if (action == "deviceConnectForBP5") {
+      if (action.equals("deviceConnectForBP5")) {
         startMeasure();
-      } else if (action == "isBP5CuffAvailable") {
+      } else if (action.equals("isBP5CuffAvailable")) {
         Intent intentResult = new Intent();
 
         intentResult.putExtra("result", true);
