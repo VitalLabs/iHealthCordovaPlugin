@@ -47,6 +47,10 @@ public class Ihealth extends CordovaPlugin {
   private IhealthActivity iActivity;
   protected Context context;
   private CallbackContext callbackContext;
+
+  final int IHEALTH_INITIALIZE_PLUGIN = 0;
+  final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
+  final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
   
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -85,8 +89,8 @@ public class Ihealth extends CordovaPlugin {
         Context context = this.cordova.getActivity().getApplicationContext();
         Log.i(TAG, "before Activity");
         Intent intent = new Intent(context, IhealthActivity.class);
-        intent.putExtra("action", "isBP5CuffAvailable");
-        this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
+        intent.putExtra("action", this.IHEALTH_IS_BP5_CUFF_AVAILABLE);
+        this.cordova.startActivityForResult((CordovaPlugin) this, intent, this.IHEALTH_IS_BP5_CUFF_AVAILABLE);
       
         Log.i(TAG, "After Activity");
     
@@ -100,8 +104,8 @@ public class Ihealth extends CordovaPlugin {
         Context context = this.cordova.getActivity().getApplicationContext();
         Log.i(TAG, "before Activity");
         Intent intent = new Intent(context, IhealthActivity.class);
-        intent.putExtra("action", "deviceConnectForBP5");
-        this.cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
+        intent.putExtra("action", this.IHEALTH_DEVICE_CONNECT_FOR_BP5);
+        this.cordova.startActivityForResult((CordovaPlugin) this, intent, this.IHEALTH_DEVICE_CONNECT_FOR_BP5);
       
         Log.i(TAG, "After Activity");
     
@@ -117,9 +121,9 @@ public class Ihealth extends CordovaPlugin {
     Log.i(TAG, "onActivityResult "+requestCode+" "+resultCode+" "+intent);
     Log.e(TAG, "Getting result from Activity"  + intent);
     
-    String actionResult = intent.getStringExtra("action");
+    int actionResult = intent.getIntExtra("action", 1);
     switch (actionResult) {
-      case "isBP5CuffAvailable":
+      case IHEALTH_IS_BP5_CUFF_AVAILABLE:
         Log.i(TAG, "case BP available");
         if (intent.getBooleanExtra("result", false)) {
           callbackContext.success();
@@ -128,7 +132,7 @@ public class Ihealth extends CordovaPlugin {
         }
         break;
 
-      case "deviceConnectForBP5":
+      case IHEALTH_DEVICE_CONNECT_FOR_BP5:
         Log.i(TAG, "deviceConnect case");
         try {
           JSONObject json = new JSONObject();

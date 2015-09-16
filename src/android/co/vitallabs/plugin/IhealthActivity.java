@@ -41,12 +41,16 @@ public class IhealthActivity extends Activity implements
   private CordovaPlugin activityResultCallback;
   private boolean keepRunning;
   private boolean activityResultKeepRunning;
-  private String action;
+  private int action;
+
+  final int IHEALTH_INITIALIZE_PLUGIN = 0;
+  final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
+  final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
   
   @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-    action = getIntent().getStringExtra("action");
+    action = getIntent().getIntExtra("action", 1);
     super.onCreate(savedInstanceState);
     String userId = "devops@vitallabs.co";
     deviceManager.initDeviceManager(this, userId);
@@ -64,7 +68,7 @@ public class IhealthActivity extends Activity implements
   public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode) {
     this.activityResultCallback = command;
     this.activityResultKeepRunning = this.keepRunning;
-
+    intent.putExtra("action", requestCode);
     // If multitasking turned on, then disable it for activities that return results
     if (command != null) {
       this.keepRunning = false;
@@ -144,9 +148,9 @@ public class IhealthActivity extends Activity implements
 			Log.i(TAG, "getbpControl " + bpControl);
 			bpControl.controlSubject.attach(this);
       Log.i(TAG, "forceTakeMeasure " + action);
-      if (action.equals("deviceConnectForBP5")) {
+      if (action == this.IHEALTH_DEVICE_CONNECT_FOR_BP5) {
         startMeasure();
-      } else if (action.equals("isBP5CuffAvailable")) {
+      } else if (action == this.IHEALTH_IS_BP5_CUFF_AVAILABLE) {
         Intent intentResult = new Intent();
 
         intentResult.putExtra("result", true);
