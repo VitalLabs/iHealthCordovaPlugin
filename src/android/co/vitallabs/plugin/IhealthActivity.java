@@ -169,18 +169,7 @@ public class IhealthActivity extends Activity implements
 	}
 
 	private void getFunctionInfo(){
-		// if(bpControl != null){
-		// 	bpControl.FunctionInfo(1);
-		// 	if(bpControl.offLinedata){
-		// 		//showisOffLine.setText("allow offline test");
-		// 		isOffline = true;
-		// 		isOffLine.setBackgroundResource(R.drawable.iseveryday);
-		// 	}else{
-		// 		showisOffLine.setText("not allow offline test");
-		// 		isOffline = false;
-		// 		isOffLine.setBackgroundResource(R.drawable.isnoteveryday);
-		// 	}
-		// }
+		
 	}
 
 	@Override
@@ -205,16 +194,7 @@ public class IhealthActivity extends Activity implements
 	public void msgError(int num) {
 		// TODO Auto-generated method stub
     Log.e(TAG, "error, " + num);
-    // try {
-		// 	Message message = new Message();
-		// 	message.what = 2;
-		// 	Bundle bundle = new Bundle();
-		// 	bundle.putInt("error", num);
-		// 	message.obj = bundle;
-		// 	handler.sendMessage(message);
-		// } catch (Exception e) {
-		// 	// TODO: handle exception
-		// }
+    
 	}
 
 	@Override

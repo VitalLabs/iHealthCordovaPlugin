@@ -43,7 +43,6 @@ public class Ihealth extends CordovaPlugin {
 
   private BPControl bpControl;
   private String TAG = "BPtest_Plugin";
-  //private String mAddress = "8CDE5241FE3A";
   private DeviceManager deviceManager;
   private IhealthActivity iActivity;
   protected Context context;
@@ -134,7 +133,7 @@ public class Ihealth extends CordovaPlugin {
         try {
           JSONObject json = new JSONObject();
           int[] result = intent.getIntArrayExtra("result");
-          json.put("SYS", result[0]);
+          json.put("SYS", result[0] + result[1]);
           json.put("DIA", result[1]);
           json.put("heartRate", result[2]);
           callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
