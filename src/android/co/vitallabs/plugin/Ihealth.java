@@ -121,6 +121,7 @@ public class Ihealth extends CordovaPlugin {
     String actionResult = intent.getStringExtra("action");
     switch (actionResult) {
       case "isBP5CuffAvailable":
+        Log.i(TAG, "case BP available");
         if (intent.getBooleanExtra("result", false)) {
           callbackContext.success();
         } else {
@@ -129,6 +130,7 @@ public class Ihealth extends CordovaPlugin {
         break;
 
       case "deviceConnectForBP5":
+        Log.i(TAG, "deviceConnect case");
         try {
           JSONObject json = new JSONObject();
           int[] result = intent.getIntArrayExtra("result");

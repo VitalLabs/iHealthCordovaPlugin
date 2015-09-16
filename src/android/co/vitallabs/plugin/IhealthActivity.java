@@ -87,7 +87,27 @@ public class IhealthActivity extends Activity implements
     super.onStop();
   }
 
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    if (deviceManager != null) {
+      deviceManager.unReceiver();
+    }
+    unReceiver();
+  }
 
+  private void unReceiver() {
+    unregisterReceiver(mReceiver);
+  }
+
+  BroadcastReceiver mReceiver = new BroadcastReceiver() {
+      public void onReceive(Context context, Intent intent) {
+        String action = intent.getAction();
+        Log.i(TAG, "onReceive"+action);
+      }
+    };
+
+  
   private Handler handler = new Handler(){
 
 		@Override
