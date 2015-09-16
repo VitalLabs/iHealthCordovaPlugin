@@ -91,7 +91,9 @@ public class IhealthActivity extends Activity implements
   @Override
   protected void onDestroy() {
     if (deviceManager != null) {
+      Log.i(TAG, "before unReceiver");
       deviceManager.unReceiver();
+      Log.i(TAG, "after unReceiver");
     }
     super.onDestroy();
     
