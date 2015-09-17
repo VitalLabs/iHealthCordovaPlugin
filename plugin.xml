@@ -50,6 +50,7 @@
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <activity 
           android:name="co.vitallabs.plugin.IhealthActivity"
+          android:noHistory="true"
           android:theme = "@android:style/Theme.NoDisplay">
       </activity>
     </config-file>

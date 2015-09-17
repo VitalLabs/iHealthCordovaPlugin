@@ -118,7 +118,7 @@ public class Ihealth extends CordovaPlugin {
     private void deviceConnectForBP5(CallbackContext callbackContext) {
       final CordovaPlugin plugin = (CordovaPlugin) this;
       
-      cordova.getActivity().runOnUiThread(new Runnable() {
+      cordova.getThreadPool().execute(new Runnable() {
           @Override
           public void run () {
             Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable + " - " +isTakingMeasure);
@@ -242,6 +242,8 @@ public class Ihealth extends CordovaPlugin {
           }
         } else {
           int errorCode = intent.getIntExtra("error", -1);
+          isCuffAvailable = false;
+          isTakingMeasure = false;
           Log.e(TAG, "Error: " + bpGetErrorMessage(errorCode));
           this.callbackContext.error("Error: " + bpGetErrorMessage(errorCode));
         }
