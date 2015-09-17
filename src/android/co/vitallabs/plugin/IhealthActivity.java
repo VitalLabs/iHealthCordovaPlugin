@@ -62,7 +62,6 @@ public class IhealthActivity extends Activity implements
   }
 
   // OnActivityResult stuff hopefully it will work
-  @Override
   public void setActivityResultCallback(CordovaPlugin plugin) {
     Log.i(TAG, "setActivityResultCallback");
     this.activityResultCallback = plugin;        
