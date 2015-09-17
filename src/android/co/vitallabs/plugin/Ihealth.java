@@ -53,6 +53,7 @@ public class Ihealth extends CordovaPlugin {
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
 
   private boolean isCuffAvailable;
+  private boolean isTakingMeasure;
   
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -61,7 +62,6 @@ public class Ihealth extends CordovaPlugin {
     
     Log.i(TAG, "calling action:" + action);
     if (action.equals("pluginInitialize")) {
-      isCuffAvailable = false;
       Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
       this.pluginInitialize(callbackContext);
       return true;
@@ -76,8 +76,11 @@ public class Ihealth extends CordovaPlugin {
     if (action.equals("isBP5CuffAvailable")) {
        
       Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
-      isBP5CuffAvailable(callbackContext);
-          
+      if (!isTakingMeasure && !isCuffAvailable) {
+        isBP5CuffAvailable(callbackContext);
+      } else {
+        callbackContext.success();
+      }
       return true;
     }
         
@@ -86,6 +89,8 @@ public class Ihealth extends CordovaPlugin {
 
     private void pluginInitialize(CallbackContext callbackContext) {
       callbackContext.success("Plugin Initialized");
+      isCuffAvailable = false;
+      isTakingMeasure = false;
     }
 
   
@@ -166,6 +171,8 @@ public class Ihealth extends CordovaPlugin {
           json.put("heartRate", result[2]);
           this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
         } catch (JSONException e) {
+          isCuffAvailable = false;
+          isTakingMeasure = false;
           this.callbackContext.error("Error" + e.toString());
         }
         break;
