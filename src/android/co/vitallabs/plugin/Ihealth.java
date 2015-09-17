@@ -62,7 +62,7 @@ public class Ihealth extends CordovaPlugin {
     
     Log.i(TAG, "calling action:" + action);
     if (action.equals("pluginInitialize")) {
-      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
+      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable + " - " +isTakingMeasure);
       this.pluginInitialize(callbackContext);
       return true;
     }
@@ -75,7 +75,7 @@ public class Ihealth extends CordovaPlugin {
 
     if (action.equals("isBP5CuffAvailable")) {
        
-      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
+      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable+ " - " +isTakingMeasure);
       if (!isTakingMeasure && !isCuffAvailable) {
         isBP5CuffAvailable(callbackContext);
       } else {
@@ -103,7 +103,7 @@ public class Ihealth extends CordovaPlugin {
             Log.i(TAG, "Before running the thread");
             //final long duration = args.getLong(0);
             cordova.setActivityResultCallback(plugin);
-            Log.i(TAG, "isBP5CuffAvailable");
+            Log.i(TAG, "isBP5CuffAvailable" + " - " +isTakingMeasure);
             Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthActivity.class);
@@ -121,7 +121,7 @@ public class Ihealth extends CordovaPlugin {
       cordova.getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run () {
-            Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
+            Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable + " - " +isTakingMeasure);
             cordova.setActivityResultCallback(plugin);
             Log.i(TAG, "Before running the thread");
             //final long duration = args.getLong(0);
@@ -151,7 +151,7 @@ public class Ihealth extends CordovaPlugin {
     int actionResult = intent.getIntExtra("action", 1);
     switch (actionResult) {
       case IHEALTH_IS_BP5_CUFF_AVAILABLE:
-        Log.i(TAG, "case BP available");
+        Log.i(TAG, "case BP available " + intent.getBooleanExtra("result", false));
         if (intent.getBooleanExtra("result", false)) {
           isCuffAvailable = intent.getBooleanExtra("result", false);
           this.callbackContext.success();
