@@ -47,10 +47,12 @@ public class Ihealth extends CordovaPlugin {
   private IhealthActivity iActivity;
   protected Context context;
   private CallbackContext callbackContext;
-
+  
   final int IHEALTH_INITIALIZE_PLUGIN = 0;
   final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
+
+  private boolean isCuffAvailable;
   
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -59,6 +61,8 @@ public class Ihealth extends CordovaPlugin {
     
     Log.i(TAG, "calling action:" + action);
     if (action.equals("pluginInitialize")) {
+      isCuffAvailable = false;
+      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
       this.pluginInitialize(callbackContext);
       return true;
     }
@@ -67,6 +71,7 @@ public class Ihealth extends CordovaPlugin {
       //cordova.getThreadPool().execute(new Runnable() {
       //    @Override
       //    public void run () {
+      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
       this.deviceConnectForBP5(callbackContext);
       //    }
       //  });
@@ -78,7 +83,13 @@ public class Ihealth extends CordovaPlugin {
       // cordova.getThreadPool().execute(new Runnable() {
       //    @Override
       //    public void run () {
-      this.isBP5CuffAvailable(callbackContext);
+      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
+      if (isCuffAvailable) {
+        callbackContext.success();
+      } else {
+        this.isBP5CuffAvailable(callbackContext);
+      }
+      
       //    }
       //  });
       return true;
@@ -137,8 +148,10 @@ public class Ihealth extends CordovaPlugin {
       case IHEALTH_IS_BP5_CUFF_AVAILABLE:
         Log.i(TAG, "case BP available");
         if (intent.getBooleanExtra("result", false)) {
+          isCuffAvailable = intent.getBooleanExtra("result", false);
           this.callbackContext.success();
         } else {
+          isCuffAvailable = false;
           this.callbackContext.error("Device not available");
         }
         break;
