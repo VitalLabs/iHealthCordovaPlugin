@@ -209,7 +209,7 @@ public class IhealthActivity extends Activity implements
     intentResult.putExtra("error", num);
     intentResult.putExtra("action", action);
     setResult(RESULT_CANCELLED, intentResult);
-    Log.i(TAG, "Back from unsuccesfull measure " num);
+    Log.i(TAG, "Back from unsuccesfull measure " + num);
     finish();
 	}
 
