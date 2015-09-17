@@ -90,17 +90,19 @@ public class Ihealth extends CordovaPlugin {
 
   
     private void isBP5CuffAvailable(CallbackContext callbackContext) {
+      final CordovaPlugin plugin = (CordovaPlugin) this;
+      
       cordova.getThreadPool().execute(new Runnable() {
           @Override
           public void run () {
             Log.i(TAG, "Before running the thread");
             //final long duration = args.getLong(0);
             Log.i(TAG, "isBP5CuffAvailable");
-            Context context = this.cordova.getActivity().getApplicationContext();
+            Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthActivity.class);
-            intent.putExtra("action", this.IHEALTH_IS_BP5_CUFF_AVAILABLE);
-            this.cordova.startActivityForResult((CordovaPlugin) this, intent, this.IHEALTH_IS_BP5_CUFF_AVAILABLE);
+            intent.putExtra("action", plugin.IHEALTH_IS_BP5_CUFF_AVAILABLE);
+            plugin.cordova.startActivityForResult(plugin, intent, plugin.IHEALTH_IS_BP5_CUFF_AVAILABLE);
       
             Log.i(TAG, "After Activity");
           }
@@ -108,6 +110,8 @@ public class Ihealth extends CordovaPlugin {
     }
 
     private void deviceConnectForBP5(CallbackContext callbackContext) {
+      final CordovaPlugin plugin = (CordovaPlugin) this;
+      
       cordova.getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run () {
@@ -116,11 +120,11 @@ public class Ihealth extends CordovaPlugin {
             Log.i(TAG, "Before running the thread");
             //final long duration = args.getLong(0);
             Log.i(TAG, "pluginInitialize");
-            Context context = this.cordova.getActivity().getApplicationContext();
+            Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthActivity.class);
-            intent.putExtra("action", this.IHEALTH_DEVICE_CONNECT_FOR_BP5);
-            this.cordova.startActivityForResult((CordovaPlugin) this, intent, this.IHEALTH_DEVICE_CONNECT_FOR_BP5);
+            intent.putExtra("action", plugin.IHEALTH_DEVICE_CONNECT_FOR_BP5);
+            plugin.cordova.startActivityForResult(plugin, intent, plugin.IHEALTH_DEVICE_CONNECT_FOR_BP5);
       
             Log.i(TAG, "After Activity");
             }
