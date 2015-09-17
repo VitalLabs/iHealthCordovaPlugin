@@ -64,23 +64,23 @@ public class Ihealth extends CordovaPlugin {
     }
 
     if (action.equals("DeviceConnectForBP5")) {
-      cordova.getThreadPool().execute(new Runnable() {
-          @Override
-          public void run () {
-            deviceConnectForBP5();
-          }
-        });
+      //cordova.getThreadPool().execute(new Runnable() {
+      //    @Override
+      //    public void run () {
+      this.deviceConnectForBP5(callbackContext);
+      //    }
+      //  });
       
       return true;
     }
 
     if (action.equals("isBP5CuffAvailable")) {
-      cordova.getThreadPool().execute(new Runnable() {
-          @Override
-          public void run () {
-            isBP5CuffAvailable();
-          }
-        });
+      // cordova.getThreadPool().execute(new Runnable() {
+      //    @Override
+      //    public void run () {
+      this.isBP5CuffAvailable(callbackContext);
+      //    }
+      //  });
       return true;
     }
         
@@ -92,7 +92,7 @@ public class Ihealth extends CordovaPlugin {
     }
 
   
-    private void isBP5CuffAvailable() {
+    private void isBP5CuffAvailable(CallbackContext callbackContext) {
     
         Log.i(TAG, "Before running the thread");
         //final long duration = args.getLong(0);
@@ -107,7 +107,7 @@ public class Ihealth extends CordovaPlugin {
     
     }
 
-    private void deviceConnectForBP5() {
+    private void deviceConnectForBP5(CallbackContext callbackContext) {
 
         Log.i(TAG, "Before running the thread");
         //final long duration = args.getLong(0);
@@ -137,9 +137,9 @@ public class Ihealth extends CordovaPlugin {
       case IHEALTH_IS_BP5_CUFF_AVAILABLE:
         Log.i(TAG, "case BP available");
         if (intent.getBooleanExtra("result", false)) {
-          callbackContext.success();
+          this.callbackContext.success();
         } else {
-          callbackContext.error("Device not available");
+          this.callbackContext.error("Device not available");
         }
         break;
 
@@ -151,9 +151,9 @@ public class Ihealth extends CordovaPlugin {
           json.put("SYS", result[0] + result[1]);
           json.put("DIA", result[1]);
           json.put("heartRate", result[2]);
-          callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
+          this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
         } catch (JSONException e) {
-          callbackContext.error("Error" + e.toString());
+          this.callbackContext.error("Error" + e.toString());
         }
         break;
     }
