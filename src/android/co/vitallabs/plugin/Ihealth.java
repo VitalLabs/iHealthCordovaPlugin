@@ -101,8 +101,8 @@ public class Ihealth extends CordovaPlugin {
             Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthActivity.class);
-            intent.putExtra("action", plugin.IHEALTH_IS_BP5_CUFF_AVAILABLE);
-            plugin.cordova.startActivityForResult(plugin, intent, plugin.IHEALTH_IS_BP5_CUFF_AVAILABLE);
+            intent.putExtra("action", IHEALTH_IS_BP5_CUFF_AVAILABLE);
+            plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_IS_BP5_CUFF_AVAILABLE);
       
             Log.i(TAG, "After Activity");
           }
@@ -123,8 +123,8 @@ public class Ihealth extends CordovaPlugin {
             Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthActivity.class);
-            intent.putExtra("action", plugin.IHEALTH_DEVICE_CONNECT_FOR_BP5);
-            plugin.cordova.startActivityForResult(plugin, intent, plugin.IHEALTH_DEVICE_CONNECT_FOR_BP5);
+            intent.putExtra("action", IHEALTH_DEVICE_CONNECT_FOR_BP5);
+            plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_DEVICE_CONNECT_FOR_BP5);
       
             Log.i(TAG, "After Activity");
             }
