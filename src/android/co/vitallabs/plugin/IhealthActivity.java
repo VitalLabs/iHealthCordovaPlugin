@@ -285,7 +285,7 @@ public class IhealthActivity extends Activity implements
     intentResult.putExtra("result", false);
     intentResult.putExtra("action", action);
     Log.i(TAG, "wird state done? " + intentResult);
-    setResult(RESULT_OK, intentResult);
+    setResult(RESULT_CANCELED, intentResult);
     finish();
       
   }

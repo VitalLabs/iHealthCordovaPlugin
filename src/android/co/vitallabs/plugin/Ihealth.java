@@ -226,25 +226,26 @@ public class Ihealth extends CordovaPlugin {
       case IHEALTH_DEVICE_CONNECT_FOR_BP5:
         Log.i(TAG, "deviceConnect case result");
         if (resultCode == Activity.RESULT_OK) {
-          
+          try {
+            Log.i(TAG, "Success!!!");
+            JSONObject json = new JSONObject();
+            int[] result = intent.getIntArrayExtra("result");
+            json.put("SYS", result[0] + result[1]);
+            json.put("DIA", result[1]);
+            json.put("heartRate", result[2]);
+            isTakingMeasure = false;
+            this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
+          } catch (JSONException e) {
+            isCuffAvailable = false;
+            isTakingMeasure = false;
+            this.callbackContext.error("Error" + e.toString());
+          }
         } else {
           int errorCode = intent.getIntExtra("error", -1);
           Log.e(TAG, "Error: " + bpGetErrorMessage(errorCode));
           this.callbackContext.error("Error: " + bpGetErrorMessage(errorCode));
         }
-        try {
-          JSONObject json = new JSONObject();
-          int[] result = intent.getIntArrayExtra("result");
-          json.put("SYS", result[0] + result[1]);
-          json.put("DIA", result[1]);
-          json.put("heartRate", result[2]);
-          isTakingMeasure = false;
-          this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
-        } catch (JSONException e) {
-          isCuffAvailable = false;
-          isTakingMeasure = false;
-          this.callbackContext.error("Error" + e.toString());
-        }
+        
         break;
     }
     
