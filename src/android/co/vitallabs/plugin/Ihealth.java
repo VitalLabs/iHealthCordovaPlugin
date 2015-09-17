@@ -97,6 +97,7 @@ public class Ihealth extends CordovaPlugin {
           public void run () {
             Log.i(TAG, "Before running the thread");
             //final long duration = args.getLong(0);
+            cordova.setActivityResultCallback(plugin);
             Log.i(TAG, "isBP5CuffAvailable");
             Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
@@ -116,7 +117,7 @@ public class Ihealth extends CordovaPlugin {
           @Override
           public void run () {
             Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
-            
+            cordova.setActivityResultCallback(plugin);
             Log.i(TAG, "Before running the thread");
             //final long duration = args.getLong(0);
             Log.i(TAG, "pluginInitialize");
