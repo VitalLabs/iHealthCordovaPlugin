@@ -160,7 +160,6 @@ public class IhealthActivity extends Activity implements
         startMeasure();
       } else if (action == this.IHEALTH_IS_BP5_CUFF_AVAILABLE) {
         Intent intentResult = new Intent();
-
         intentResult.putExtra("result", true);
         intentResult.putExtra("action", action);
         Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
@@ -206,7 +205,12 @@ public class IhealthActivity extends Activity implements
 	public void msgError(int num) {
 		// TODO Auto-generated method stub
     Log.e(TAG, "error, " + num);
-    
+    Intent intentResult = new Intent();
+    intentResult.putExtra("error", num);
+    intentResult.putExtra("action", action);
+    setResult(RESULT_CANCELLED, intentResult);
+    Log.i(TAG, "Back from unsuccesfull measure " num);
+    finish();
 	}
 
 	@Override
@@ -277,6 +281,13 @@ public class IhealthActivity extends Activity implements
   @Override
   public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
     Log.i(TAG, "msgDeviceDisconnect_Bp" + deviceMac + " " + deviceType);
+    Intent intentResult = new Intent();
+    intentResult.putExtra("result", false);
+    intentResult.putExtra("action", action);
+    Log.i(TAG, "wird state done? " + intentResult);
+    setResult(RESULT_OK, intentResult);
+    finish();
+      
   }
    
 }

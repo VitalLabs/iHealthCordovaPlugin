@@ -139,6 +139,68 @@ public class Ihealth extends CordovaPlugin {
     }
 
 
+  private String bpGetErrorMessage (int errorCode) {
+    String errorMessage = "Unknown Error";
+
+    switch (errorCode) {
+      case 0:
+        errorMessage = "Pressure system is unstable before measurement";
+        break;
+      case 1:
+        errorMessage = "Fail to detect systolic pressure";
+        break;
+      case 2:
+        errorMessage = "Fail to detect diastolic pressure";
+        break;
+      case 3:
+        errorMessage = "Pneumatic system blocked or cuff is too tight during inflation";
+        break;
+      case 4:
+        errorMessage = "Pneumatic system leakage or cuff is too loose during inflation";
+        break;
+      case 5:
+        errorMessage = "Cuff pressure above 300mmHg";
+        break;
+      case 6:
+        errorMessage = "More than 160 seconds with cuff pressure above 15 mmHg";
+        break;
+      case 7:
+        errorMessage = "EEPROM accessing error";
+        break;
+      case 8:
+        errorMessage = "Device parameter checking error";
+        break;
+      case 9:
+        errorMessage = "Span Error";
+        break;
+      case 10:
+        errorMessage = "Span Error";
+        break;
+      case 11:
+        errorMessage = "N/A 11";
+        break;
+      case 12:
+        errorMessage = "Communication error";
+        break;
+      case 13:
+        errorMessage = "Low Battery";
+        break;
+      case 15:
+        errorMessage = "Systolic exceeds 260mmHg or diastolic exceeds 199mmHg";
+        break;
+      case 16:
+        errorMessage = "Systolic below 60mmHg or diastolic below 40mmHg";
+        break;
+      case 17:
+        errorMessage = "Arm/wrist movement beyond range";
+        break;
+      case 18:
+        errorMessage = "N/A 18";
+        break;
+    }
+
+    return errorMessage;
+  }
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -162,7 +224,14 @@ public class Ihealth extends CordovaPlugin {
         break;
 
       case IHEALTH_DEVICE_CONNECT_FOR_BP5:
-        Log.i(TAG, "deviceConnect case");
+        Log.i(TAG, "deviceConnect case result");
+        if (resultCode == Activity.RESULT_OK) {
+          
+        } else {
+          int errorCode = intent.getIntExtra("error", -1);
+          Log.e(TAG, "Error: " + bpGetErrorMessage(errorCode));
+          this.callbackContext.error("Error: " + bpGetErrorMessage(errorCode));
+        }
         try {
           JSONObject json = new JSONObject();
           int[] result = intent.getIntArrayExtra("result");
