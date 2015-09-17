@@ -68,25 +68,16 @@ public class Ihealth extends CordovaPlugin {
     }
 
     if (action.equals("DeviceConnectForBP5")) {
-      cordova.getActivity().runOnUiThread(new Runnable() {
-          @Override
-          public void run () {
-            Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
-            this.deviceConnectForBP5(callbackContext);
-          }
-        });
+      this.deviceConnectForBP5(callbackContext);
       
       return true;
     }
 
     if (action.equals("isBP5CuffAvailable")) {
-       cordova.getThreadPool().execute(new Runnable() {
-          @Override
-          public void run () {
-            Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
-            isBP5CuffAvailable(callbackContext);
-          }
-        });
+       
+      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
+      isBP5CuffAvailable(callbackContext);
+          
       return true;
     }
         
@@ -99,33 +90,42 @@ public class Ihealth extends CordovaPlugin {
 
   
     private void isBP5CuffAvailable(CallbackContext callbackContext) {
-    
-        Log.i(TAG, "Before running the thread");
-        //final long duration = args.getLong(0);
-        Log.i(TAG, "isBP5CuffAvailable");
-        Context context = this.cordova.getActivity().getApplicationContext();
-        Log.i(TAG, "before Activity");
-        Intent intent = new Intent(context, IhealthActivity.class);
-        intent.putExtra("action", this.IHEALTH_IS_BP5_CUFF_AVAILABLE);
-        this.cordova.startActivityForResult((CordovaPlugin) this, intent, this.IHEALTH_IS_BP5_CUFF_AVAILABLE);
+      cordova.getThreadPool().execute(new Runnable() {
+          @Override
+          public void run () {
+            Log.i(TAG, "Before running the thread");
+            //final long duration = args.getLong(0);
+            Log.i(TAG, "isBP5CuffAvailable");
+            Context context = this.cordova.getActivity().getApplicationContext();
+            Log.i(TAG, "before Activity");
+            Intent intent = new Intent(context, IhealthActivity.class);
+            intent.putExtra("action", this.IHEALTH_IS_BP5_CUFF_AVAILABLE);
+            this.cordova.startActivityForResult((CordovaPlugin) this, intent, this.IHEALTH_IS_BP5_CUFF_AVAILABLE);
       
-        Log.i(TAG, "After Activity");
-    
+            Log.i(TAG, "After Activity");
+          }
+        });
     }
 
     private void deviceConnectForBP5(CallbackContext callbackContext) {
-
-        Log.i(TAG, "Before running the thread");
-        //final long duration = args.getLong(0);
-        Log.i(TAG, "pluginInitialize");
-        Context context = this.cordova.getActivity().getApplicationContext();
-        Log.i(TAG, "before Activity");
-        Intent intent = new Intent(context, IhealthActivity.class);
-        intent.putExtra("action", this.IHEALTH_DEVICE_CONNECT_FOR_BP5);
-        this.cordova.startActivityForResult((CordovaPlugin) this, intent, this.IHEALTH_DEVICE_CONNECT_FOR_BP5);
+      cordova.getActivity().runOnUiThread(new Runnable() {
+          @Override
+          public void run () {
+            Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
+            
+            Log.i(TAG, "Before running the thread");
+            //final long duration = args.getLong(0);
+            Log.i(TAG, "pluginInitialize");
+            Context context = this.cordova.getActivity().getApplicationContext();
+            Log.i(TAG, "before Activity");
+            Intent intent = new Intent(context, IhealthActivity.class);
+            intent.putExtra("action", this.IHEALTH_DEVICE_CONNECT_FOR_BP5);
+            this.cordova.startActivityForResult((CordovaPlugin) this, intent, this.IHEALTH_DEVICE_CONNECT_FOR_BP5);
       
-        Log.i(TAG, "After Activity");
-    
+            Log.i(TAG, "After Activity");
+            }
+        });
+      
     }
 
 
