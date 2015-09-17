@@ -169,6 +169,7 @@ public class Ihealth extends CordovaPlugin {
           json.put("SYS", result[0] + result[1]);
           json.put("DIA", result[1]);
           json.put("heartRate", result[2]);
+          isTakingMeasure = false;
           this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
         } catch (JSONException e) {
           isCuffAvailable = false;
