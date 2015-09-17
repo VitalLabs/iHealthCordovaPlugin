@@ -67,7 +67,7 @@ public class Ihealth extends CordovaPlugin {
       cordova.getThreadPool().execute(new Runnable() {
           @Override
           public void run () {
-            deviceConnectForBP5(callbackContext);
+            deviceConnectForBP5();
           }
         });
       
@@ -78,7 +78,7 @@ public class Ihealth extends CordovaPlugin {
       cordova.getThreadPool().execute(new Runnable() {
           @Override
           public void run () {
-            isBP5CuffAvailable(callbackContext);
+            isBP5CuffAvailable();
           }
         });
       return true;
@@ -92,7 +92,7 @@ public class Ihealth extends CordovaPlugin {
     }
 
   
-    private void isBP5CuffAvailable(CallbackContext callbackContext) {
+    private void isBP5CuffAvailable() {
     
         Log.i(TAG, "Before running the thread");
         //final long duration = args.getLong(0);
@@ -107,7 +107,7 @@ public class Ihealth extends CordovaPlugin {
     
     }
 
-    private void deviceConnectForBP5(CallbackContext callbackContext) {
+    private void deviceConnectForBP5() {
 
         Log.i(TAG, "Before running the thread");
         //final long duration = args.getLong(0);
