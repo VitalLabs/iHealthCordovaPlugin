@@ -62,11 +62,14 @@ public class IhealthActivity extends Activity implements
   }
 
   // OnActivityResult stuff hopefully it will work
+  @Override
   public void setActivityResultCallback(CordovaPlugin plugin) {
+    Log.i(TAG, "setActivityResultCallback");
     this.activityResultCallback = plugin;        
   }
 
   public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode) {
+    Log.i(TAG, "startActivityForResult first");
     this.activityResultCallback = command;
     this.activityResultKeepRunning = this.keepRunning;
     intent.putExtra("action", requestCode);
@@ -82,6 +85,7 @@ public class IhealthActivity extends Activity implements
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    Log.i(TAG, "onActivityResult");
     super.onActivityResult(requestCode, resultCode, intent);
     CordovaPlugin callback = this.activityResultCallback;
     if (callback != null) {
