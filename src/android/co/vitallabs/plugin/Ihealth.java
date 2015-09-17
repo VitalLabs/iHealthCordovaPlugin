@@ -92,7 +92,7 @@ public class Ihealth extends CordovaPlugin {
     private void isBP5CuffAvailable(CallbackContext callbackContext) {
       final CordovaPlugin plugin = (CordovaPlugin) this;
       
-      cordova.getThreadPool().execute(new Runnable() {
+      cordova.getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run () {
             Log.i(TAG, "Before running the thread");
