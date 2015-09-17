@@ -68,30 +68,25 @@ public class Ihealth extends CordovaPlugin {
     }
 
     if (action.equals("DeviceConnectForBP5")) {
-      //cordova.getThreadPool().execute(new Runnable() {
-      //    @Override
-      //    public void run () {
-      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
-      this.deviceConnectForBP5(callbackContext);
-      //    }
-      //  });
+      cordova.getActivity().runOnUiThread(new Runnable() {
+          @Override
+          public void run () {
+            Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
+            this.deviceConnectForBP5(callbackContext);
+          }
+        });
       
       return true;
     }
 
     if (action.equals("isBP5CuffAvailable")) {
-      // cordova.getThreadPool().execute(new Runnable() {
-      //    @Override
-      //    public void run () {
-      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
-      if (isCuffAvailable) {
-        callbackContext.success();
-      } else {
-        this.isBP5CuffAvailable(callbackContext);
-      }
-      
-      //    }
-      //  });
+       cordova.getThreadPool().execute(new Runnable() {
+          @Override
+          public void run () {
+            Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable);
+            isBP5CuffAvailable(callbackContext);
+          }
+        });
       return true;
     }
         
