@@ -208,7 +208,7 @@ public class IhealthActivity extends Activity implements
     Intent intentResult = new Intent();
     intentResult.putExtra("error", num);
     intentResult.putExtra("action", action);
-    setResult(RESULT_CANCELLED, intentResult);
+    setResult(RESULT_CANCELED, intentResult);
     Log.i(TAG, "Back from unsuccesfull measure " + num);
     finish();
 	}
