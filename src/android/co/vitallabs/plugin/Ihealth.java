@@ -203,6 +203,11 @@ public class Ihealth extends CordovaPlugin {
     return errorMessage;
   }
 
+  private void resetPluginState() {
+    isTakingMeasure = false;
+    isCuffAvailable = false;
+  }
+  
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
@@ -234,17 +239,15 @@ public class Ihealth extends CordovaPlugin {
             json.put("SYS", result[0] + result[1]);
             json.put("DIA", result[1]);
             json.put("heartRate", result[2]);
-            isTakingMeasure = false;
+            resetPluginState();
             this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
           } catch (JSONException e) {
-            isCuffAvailable = false;
-            isTakingMeasure = false;
+            resetPluginState();
             this.callbackContext.error("Error" + e.toString());
           }
         } else {
           int errorCode = intent.getIntExtra("error", -1);
-          isCuffAvailable = false;
-          isTakingMeasure = false;
+          resetPluginState();
           Log.e(TAG, "Error: " + bpGetErrorMessage(errorCode));
           this.callbackContext.error("Error: " + bpGetErrorMessage(errorCode));
         }

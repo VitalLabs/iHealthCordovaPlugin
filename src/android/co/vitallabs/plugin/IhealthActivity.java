@@ -131,7 +131,13 @@ public class IhealthActivity extends Activity implements
   protected void onDestroy() {
     if (deviceManager != null) {
       Log.i(TAG, "before unReceiver");
-      deviceManager.unReceiver();
+      
+      try {
+        deviceManager.unReceiver();
+      } except (Exception e) {
+        Log.i(TAG, "Device not registered never");
+      }
+      
       Log.i(TAG, "after unReceiver");
     }
     super.onDestroy();
