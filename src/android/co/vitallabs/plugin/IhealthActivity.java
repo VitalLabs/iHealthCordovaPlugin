@@ -80,7 +80,7 @@ public class IhealthActivity extends Activity implements
   public void setTimeoutHandler() {
     Log.i(TAG, "setTimeoutHandler");
     myHandler = new Handler();
-    myHandler.postDelayed(mRunnable, 2000);
+    myHandler.postDelayed(mRunnable, 3000);
   }
 
   public void removeTimeoutHandler() {
@@ -147,13 +147,6 @@ public class IhealthActivity extends Activity implements
   @Override
   protected void onStop() {
     Log.i(TAG, "onStopActivity");
-    super.onStop();
-  }
-
-
-  
-  @Override
-  protected void onDestroy() {
     if (deviceManager != null) {
       Log.i(TAG, "before unReceiver");
       
@@ -165,9 +158,16 @@ public class IhealthActivity extends Activity implements
       
       Log.i(TAG, "after unReceiver");
     }
+    super.onStop();
+  }
+
+
+  
+  @Override
+  protected void onDestroy() {
+    Log.i(TAG, "onDestroy");
     super.onDestroy();
     
-    //unReceiver();
   }
 
   private void unReceiver() {
