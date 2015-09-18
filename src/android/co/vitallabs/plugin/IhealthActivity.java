@@ -80,7 +80,12 @@ public class IhealthActivity extends Activity implements
   public void setTimeoutHandler() {
     Log.i(TAG, "setTimeoutHandler");
     myHandler = new Handler();
-    myHandler.postDelayed(mRunnable, 3000);
+    if (action == IHEALTH_IS_BP5_CUFF_AVAILABLE) {
+      myHandler.postDelayed(mRunnable, 1000);
+    } else {
+      myHandler.postDelayed(mRunnable, 3000);
+    }
+    
   }
 
   public void removeTimeoutHandler() {
