@@ -163,7 +163,9 @@ public class IhealthActivity extends Activity implements
       
       Log.i(TAG, "after unReceiver");
     }
+    
     super.onStop();
+    unReceiver();
   }
 
 
@@ -176,7 +178,13 @@ public class IhealthActivity extends Activity implements
   }
 
   private void unReceiver() {
-    unregisterReceiver(mReceiver);
+    try {
+      unregisterReceiver(mReceiver);
+    } catch (Exception e) {
+      Log.i(TAG, "Exception in unReceiver " + e.toString());
+    }
+    
+    
   }
 
   BroadcastReceiver mReceiver = new BroadcastReceiver() {
