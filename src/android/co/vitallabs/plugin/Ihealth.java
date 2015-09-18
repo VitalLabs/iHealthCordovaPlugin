@@ -225,7 +225,7 @@ public class Ihealth extends CordovaPlugin {
           this.callbackContext.success();
         } else {
           isCuffAvailable = false;
-          this.callbackContext.error("Device not available");
+          this.callbackContext.error(new PluginResult(PluginResult.Status.ERROR, false));
         }
         break;
 
