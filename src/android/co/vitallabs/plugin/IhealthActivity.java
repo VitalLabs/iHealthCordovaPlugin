@@ -134,7 +134,7 @@ public class IhealthActivity extends Activity implements
       
       try {
         deviceManager.unReceiver();
-      } except (Exception e) {
+      } catch (Exception e) {
         Log.i(TAG, "Device not registered never");
       }
       
