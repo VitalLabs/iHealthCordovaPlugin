@@ -46,6 +46,8 @@ public class IhealthActivity extends Activity implements
   final int IHEALTH_INITIALIZE_PLUGIN = 0;
   final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
+  Handler myHandler;
+
   
   @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +60,34 @@ public class IhealthActivity extends Activity implements
     deviceManager.initReceiver();
     deviceManager.initBpStateCallback(this);
     deviceManager.scanDevice();
-    
+    setTimeoutHandler();
   }
 
+  private Runnable mRunnable = new Runnable() {
+
+    @Override
+    public void run() {
+      Log.e(TAG, "Handler is being called by Runnable");
+      Intent intentResult = new Intent();
+      intentResult.putExtra("error", -1);
+      intentResult.putExtra("action", action);
+      setResult(RESULT_CANCELED, intentResult);
+      Log.i(TAG, "TimeOut Activity!!!");
+      finish();
+    }
+  };
+  
+  public void setTimeoutHandler() {
+    Log.i(TAG, "setTimeoutHandler");
+    myHandler = new Handler();
+    myHandler.postDelayed(mRunnable, 2000);
+  }
+
+  public void removeTimeoutHandler() {
+    Log.i(TAG, "removeTimeoutHandler");
+    myHandler.removeCallbacks(mRunnable);
+  }
+  
   // OnActivityResult stuff hopefully it will work
   public void setActivityResultCallback(CordovaPlugin plugin) {
     Log.i(TAG, "setActivityResultCallback");
@@ -152,7 +179,8 @@ public class IhealthActivity extends Activity implements
   private void getbpControl(){
     Log.i(TAG, "inGetBpControl" + mAddress);
     bpControl = deviceManager.getBpDevice(mAddress);
-		if(bpControl != null){
+    removeTimeoutHandler();
+    if(bpControl != null){
 			Log.i(TAG, "getbpControl " + bpControl);
 			bpControl.controlSubject.attach(this);
       Log.i(TAG, "forceTakeMeasure " + action);
@@ -172,7 +200,6 @@ public class IhealthActivity extends Activity implements
       intentResult.putExtra("result", false);
       intentResult.putExtra("action", action);
       Log.i(TAG, "wird state done? " + intentResult);
-        
       setResult(RESULT_OK, intentResult);
       finish();
       
@@ -204,6 +231,7 @@ public class IhealthActivity extends Activity implements
 	@Override
 	public void msgError(int num) {
 		// TODO Auto-generated method stub
+    removeTimeoutHandler();  
     Log.e(TAG, "error, " + num);
     Intent intentResult = new Intent();
     intentResult.putExtra("error", num);
@@ -246,7 +274,8 @@ public class IhealthActivity extends Activity implements
 	@Override
 	public void msgResult(int[] result) {
 		// TODO Auto-generated method stub
-		Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
+    removeTimeoutHandler();
+    Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
     Intent intentResult = new Intent();
     intentResult.putExtra("result", result);
     intentResult.putExtra("action", action);
@@ -280,6 +309,7 @@ public class IhealthActivity extends Activity implements
   
   @Override
   public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
+    removeTimeoutHandler();
     Log.i(TAG, "msgDeviceDisconnect_Bp" + deviceMac + " " + deviceType);
     Intent intentResult = new Intent();
     intentResult.putExtra("result", false);

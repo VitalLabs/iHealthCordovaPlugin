@@ -55,6 +55,7 @@ public class Ihealth extends CordovaPlugin {
   private boolean isCuffAvailable;
   private boolean isTakingMeasure;
   
+  
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
@@ -118,7 +119,7 @@ public class Ihealth extends CordovaPlugin {
     private void deviceConnectForBP5(CallbackContext callbackContext) {
       final CordovaPlugin plugin = (CordovaPlugin) this;
       
-      cordova.getThreadPool().execute(new Runnable() {
+      cordova.getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run () {
             Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable + " - " +isTakingMeasure);
