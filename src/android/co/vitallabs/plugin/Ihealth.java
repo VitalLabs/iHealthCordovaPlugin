@@ -55,7 +55,6 @@ public class Ihealth extends CordovaPlugin {
   private boolean isCuffAvailable;
   private boolean isTakingMeasure;
   
-  
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
@@ -69,6 +68,7 @@ public class Ihealth extends CordovaPlugin {
     }
 
     if (action.equals("DeviceConnectForBP5")) {
+      isTakingMeasure = true;
       this.deviceConnectForBP5(callbackContext);
       
       return true;
