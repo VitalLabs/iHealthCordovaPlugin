@@ -56,10 +56,10 @@ public class IhealthDeviceManagerActivity extends Activity implements
     action = getIntent().getIntExtra("action", 1);
     super.onCreate(savedInstanceState);
 
-    if (getIntent().getBooleanExtra("checkForDevice") &&
+    if (getIntent().getBooleanExtra("checkForDevice", false) &&
         getIntent().getStringExtra("predefinedMac") != null) {
       String predefinedMac = getIntent().getStringExtra("predefinedMac");
-      bpControl = devicemanager.getBpDevice(predefinedMac);
+      bpControl = deviceManager.getBpDevice(predefinedMac);
       
       if (bpControl != null) {
         Intent intentResult = new Intent();
