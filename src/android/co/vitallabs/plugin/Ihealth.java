@@ -124,7 +124,7 @@ public class Ihealth extends CordovaPlugin {
             Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthBP5Activity.class);
             intent.putExtra("action", IHEALTH_DEVICE_CONNECT_FOR_BP5);
-            intent.putExtra("mAdress", mac);
+            intent.putExtra("mAddress", mac);
             plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_DEVICE_CONNECT_FOR_BP5);
       
             Log.i(TAG, "After Activity");

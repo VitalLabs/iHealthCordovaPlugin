@@ -53,7 +53,7 @@ public class IhealthBP5Activity extends Activity implements
 		// TODO Auto-generated method stub
     Log.i(TAG, "onCreate");
     action = getIntent().getIntExtra("action", 1);
-    mAddress = getIntent().getStringExtra("mac");
+    mAddress = getIntent().getStringExtra("mAddress");
     super.onCreate(savedInstanceState);
     String userId = "devops@vitallabs.co";
     //deviceManager.initDeviceManager(this, userId);
