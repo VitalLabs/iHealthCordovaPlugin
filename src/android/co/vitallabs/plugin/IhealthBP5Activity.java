@@ -167,7 +167,7 @@ public class IhealthBP5Activity extends Activity implements
     // }
     
     super.onStop();
-    unReceiver();
+    //unReceiver();
   }
 
 

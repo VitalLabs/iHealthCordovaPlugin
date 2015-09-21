@@ -160,7 +160,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     }
     
     super.onStop();
-    unReceiver();
+    //unReceiver();
   }
 
 
