@@ -82,7 +82,10 @@ public class IhealthDeviceManagerActivity extends Activity implements
         //deviceManager.unReceiver();
         try {
           Log.i(TAG, "Unregister deviceManager");
-          deviceManager.unReceiver();
+          if (deviceManager != null) {
+            deviceManager.unReceiver();
+          }
+          
         } catch (Exception e) {
           Log.i(TAG, "Device not registered never");
         }
@@ -94,6 +97,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     } else {
       Log.i(TAG, "First time looking for a device");
       initDeviceManager();
+      setTimeoutHandler();
     }
     
   }
@@ -114,10 +118,21 @@ public class IhealthDeviceManagerActivity extends Activity implements
     public void run() {
       Log.e(TAG, "Handler is being called by Runnable");
       Intent intentResult = new Intent();
-      intentResult.putExtra("error", -1);
+      intentResult.putExtra("result", false);
       intentResult.putExtra("action", action);
       setResult(RESULT_CANCELED, intentResult);
       Log.i(TAG, "TimeOut Activity!!!");
+      try {
+        Log.i(TAG, "Unregister deviceManager");
+        if (deviceManager != null) {
+          deviceManager.unReceiver();
+        }
+          
+      } catch (Exception e) {
+        Log.i(TAG, "Device not registered never");
+      }
+      unReceiver();
+      deviceManager.cancelScanDevice();
       finish();
     }
   };
@@ -125,7 +140,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   public void setTimeoutHandler() {
     Log.i(TAG, "setTimeoutHandler");
     myHandler = new Handler();
-    myHandler.postDelayed(mRunnable, 2000);
+    myHandler.postDelayed(mRunnable, 3000);
     
   }
 
@@ -307,11 +322,11 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
 	// }
 
-	// @Override
-	// public void msgUserStatus(int status) {
-	// 	// TODO Auto-generated method stub
-	// 	Log.e(TAG, "User status " + status);
-	// }
+	@Override
+	public void msgUserStatus(int status) {
+		// TODO Auto-generated method stub
+		Log.e(TAG, "User status " + status);
+	}
 
 	// @Override
 	// public void msgError(int num) {
