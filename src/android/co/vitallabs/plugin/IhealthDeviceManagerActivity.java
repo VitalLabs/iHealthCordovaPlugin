@@ -72,7 +72,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
         setResult(RESULT_OK, intentResult);
         finish();
       } else {
-        Log.i(TAG, "bpControl is null so we lost previous paired device...")
+        Log.i(TAG, "bpControl is null so we lost previous paired device...");
         initDeviceManager();
       }
         
