@@ -73,7 +73,20 @@ public class IhealthDeviceManagerActivity extends Activity implements
         finish();
       } else {
         Log.i(TAG, "bpControl is null so we lost previous paired device...");
-        initDeviceManager();
+        Intent intentResult = new Intent();
+        intentResult.putExtra("result", false);
+        intentResult.putExtra("action", action);
+        Log.i(TAG, "wird state done? " + intentResult);
+        setResult(RESULT_CANCELED, intentResult);
+        //deviceManager.unReceiver();
+        try {
+          Log.i(TAG, "Unregister deviceManager");
+          deviceManager.unReceiver();
+        } catch (Exception e) {
+          Log.i(TAG, "Device not registered never");
+        }
+      
+        finish();
       }
         
     } else {
@@ -387,7 +400,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   @Override
   public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
     //removeTimeoutHandler();
-    Log.i(TAG, "msgDeviceDisconnect_Bp" + deviceMac + " " + deviceType);
+    Log.i(TAG, "msgDeviceDisconnect_BP");
     Intent intentResult = new Intent();
     intentResult.putExtra("result", false);
     intentResult.putExtra("action", action);
