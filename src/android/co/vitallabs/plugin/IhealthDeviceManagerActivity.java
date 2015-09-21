@@ -97,7 +97,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     } else {
       Log.i(TAG, "First time looking for a device");
       initDeviceManager();
-      setTimeoutHandler();
+      //setTimeoutHandler();
     }
     
   }
@@ -229,6 +229,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   @Override
   protected void onDestroy() {
     Log.i(TAG, "onDestroy");
+    unReceiver();
     super.onDestroy();
     
   }
