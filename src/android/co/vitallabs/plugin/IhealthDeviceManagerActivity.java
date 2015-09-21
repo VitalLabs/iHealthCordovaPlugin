@@ -322,11 +322,11 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
 	// }
 
-	@Override
-	public void msgUserStatus(int status) {
-		// TODO Auto-generated method stub
-		Log.e(TAG, "User status " + status);
-	}
+	// @Override
+	// public void msgUserStatus(int status) {
+	// 	// TODO Auto-generated method stub
+	// 	Log.e(TAG, "User status " + status);
+	// }
 
 	// @Override
 	// public void msgError(int num) {
