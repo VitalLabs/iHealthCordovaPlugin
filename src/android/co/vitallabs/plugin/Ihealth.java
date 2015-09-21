@@ -208,6 +208,7 @@ public class Ihealth extends CordovaPlugin {
   private void resetPluginState() {
     isTakingMeasure = false;
     isCuffAvailable = false;
+    isChecking = false;
   }
   
   @Override
