@@ -70,6 +70,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
         intentResult.putExtra("action", action);
         Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
         setResult(RESULT_OK, intentResult);
+        deviceManager.cancelScanDevice();
         finish();
       } else {
         Log.i(TAG, "bpControl is null so we lost previous paired device...");
@@ -86,6 +87,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
           Log.i(TAG, "Device not registered never");
         }
         unReceiver();
+        deviceManager.cancelScanDevice();
         finish();
       }
         
@@ -407,6 +409,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     intentResult.putExtra("action", action);
     Log.i(TAG, "wird state done? " + intentResult);
     setResult(RESULT_CANCELED, intentResult);
+    deviceManager.cancelScanDevice();
     finish();
       
   }
