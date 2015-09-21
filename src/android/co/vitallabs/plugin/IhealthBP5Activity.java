@@ -36,7 +36,7 @@ public class IhealthBP5Activity extends Activity implements
 	private String TAG = "IhealthBP5Activity";
 	private boolean isOffline = false;
 	private String mAddress;
-	private DeviceManager deviceManager = DeviceManager.getInstance();
+	private DeviceManager deviceManager;
   private CordovaPlugin activityResultCallback;
   private boolean keepRunning;
   private boolean activityResultKeepRunning;
@@ -154,17 +154,17 @@ public class IhealthBP5Activity extends Activity implements
   @Override
   protected void onStop() {
     Log.i(TAG, "onStopActivity");
-    if (deviceManager != null) {
-      Log.i(TAG, "before unReceiver");
+    // if (deviceManager != null) {
+    //   Log.i(TAG, "before unReceiver");
       
-      try {
-        deviceManager.unReceiver();
-      } catch (Exception e) {
-        Log.i(TAG, "Device not registered never");
-      }
+    //   try {
+    //     deviceManager.unReceiver();
+    //   } catch (Exception e) {
+    //     Log.i(TAG, "Device not registered never");
+    //   }
       
-      Log.i(TAG, "after unReceiver");
-    }
+    //   Log.i(TAG, "after unReceiver");
+    // }
     
     super.onStop();
     unReceiver();
