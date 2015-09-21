@@ -56,6 +56,8 @@ public class IhealthDeviceManagerActivity extends Activity implements
     action = getIntent().getIntExtra("action", 1);
     super.onCreate(savedInstanceState);
 
+    // Init receiver
+    initReceiver();
     if (getIntent().getBooleanExtra("checkForDevice", false) &&
         getIntent().getStringExtra("predefinedMac") != null) {
       String predefinedMac = getIntent().getStringExtra("predefinedMac");
@@ -97,11 +99,16 @@ public class IhealthDeviceManagerActivity extends Activity implements
     } else {
       Log.i(TAG, "First time looking for a device");
       initDeviceManager();
+      
       //setTimeoutHandler();
     }
     
   }
 
+  private void initReceiver() {
+    IntentFilter intentFilter = new IntentFilter();
+    registerReceiver(mReceiver, intentFilter);
+  }
 
   private void initDeviceManager() {
     Log.i(TAG, "initDeviceManager");
