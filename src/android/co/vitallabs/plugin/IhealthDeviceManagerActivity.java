@@ -125,7 +125,8 @@ public class IhealthDeviceManagerActivity extends Activity implements
           try {
             deviceManager.scanDevice();
           } catch (Exception e) {
-            Log.e(TAG, "EXCEPTION!!!!!!" + e.printStackTrace());
+            e.printStackTrace();
+            Log.e(TAG, "EXCEPTION!!!!!!");
           }
           
         }
