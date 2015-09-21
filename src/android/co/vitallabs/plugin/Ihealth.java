@@ -8,13 +8,6 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import com.jiuan.android.sdk.bp.bluetooth.BPCommManager;
-import com.jiuan.android.sdk.bp.bluetooth.BPControl;
-import com.jiuan.android.sdk.bp.observer_bp.Interface_Observer_BP;
-import com.jiuan.android.sdk.bp.observer_comm.Interface_Observer_CommMsg_BP;
-import com.jiuan.android.sdk.device.DeviceManager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
@@ -34,7 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import co.vitallabs.plugin.IhealthActivity;
+// import co.vitallabs.plugin.IhealthActivity;
+import co.vitallabs.plugin.IhealthDeviceManagerActivity;
+import co.vitallabs.plugin.IhealthBP5Activity;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -54,6 +49,7 @@ public class Ihealth extends CordovaPlugin {
 
   private boolean isCuffAvailable;
   private boolean isTakingMeasure;
+  private String mac;
   
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -107,7 +103,7 @@ public class Ihealth extends CordovaPlugin {
             Log.i(TAG, "isBP5CuffAvailable" + " - " +isTakingMeasure);
             Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
-            Intent intent = new Intent(context, IhealthActivity.class);
+            Intent intent = new Intent(context, IhealthDeviceManagerActivity.class);
             intent.putExtra("action", IHEALTH_IS_BP5_CUFF_AVAILABLE);
             plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_IS_BP5_CUFF_AVAILABLE);
       
@@ -129,8 +125,9 @@ public class Ihealth extends CordovaPlugin {
             Log.i(TAG, "pluginInitialize");
             Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
-            Intent intent = new Intent(context, IhealthActivity.class);
+            Intent intent = new Intent(context, IhealthBP5Activity.class);
             intent.putExtra("action", IHEALTH_DEVICE_CONNECT_FOR_BP5);
+            intent.putExtra("mAdress", mac);
             plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_DEVICE_CONNECT_FOR_BP5);
       
             Log.i(TAG, "After Activity");
@@ -219,9 +216,10 @@ public class Ihealth extends CordovaPlugin {
     int actionResult = intent.getIntExtra("action", 1);
     switch (actionResult) {
       case IHEALTH_IS_BP5_CUFF_AVAILABLE:
-        Log.i(TAG, "case BP available " + intent.getBooleanExtra("result", false));
-        if (intent.getBooleanExtra("result", false)) {
-          isCuffAvailable = intent.getBooleanExtra("result", false);
+        Log.i(TAG, "case BP available with mac:" + intent.getStringExtra("result"));
+        if (resultCode == Activity.RESULT_OK) {
+          isCuffAvailable = true
+          mac =  intent.getStringExtra("result");
           this.callbackContext.success();
         } else {
           isCuffAvailable = false;

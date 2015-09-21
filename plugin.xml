@@ -48,8 +48,18 @@
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <!-- <activity  -->
+      <!--     android:name="co.vitallabs.plugin.IhealthActivity" -->
+      <!--     android:noHistory="true" -->
+      <!--     android:theme = "@android:style/Theme.NoDisplay"> -->
+      <!-- </activity> -->
       <activity 
-          android:name="co.vitallabs.plugin.IhealthActivity"
+          android:name="co.vitallabs.plugin.IhealthDeviceManagerActivity"
+          android:noHistory="true"
+          android:theme = "@android:style/Theme.NoDisplay">
+      </activity>
+      <activity 
+          android:name="co.vitallabs.plugin.IhealthBP5Activity"
           android:noHistory="true"
           android:theme = "@android:style/Theme.NoDisplay">
       </activity>
@@ -58,7 +68,13 @@
     <source-file src="src/android/co/vitallabs/plugin/Ihealth.java"
                  target-dir="src/co/vitallabs/plugin" />
 
-    <source-file src="src/android/co/vitallabs/plugin/IhealthActivity.java"
+    <!-- <source-file src="src/android/co/vitallabs/plugin/IhealthActivity.java" -->
+    <!--              target-dir="src/co/vitallabs/plugin" /> -->
+
+    <source-file src="src/android/co/vitallabs/plugin/IhealthDeviceManagerActivity.java"
+                 target-dir="src/co/vitallabs/plugin" />
+
+    <source-file src="src/android/co/vitallabs/plugin/IhealthBP5Activity.java"
                  target-dir="src/co/vitallabs/plugin" />
 
     <service
