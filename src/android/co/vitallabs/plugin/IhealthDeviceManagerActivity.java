@@ -106,6 +106,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   }
 
   private void initReceiver() {
+    Log.i(TAG, "initReceiver with IntentFilter");
     IntentFilter intentFilter = new IntentFilter();
     registerReceiver(mReceiver, intentFilter);
   }
