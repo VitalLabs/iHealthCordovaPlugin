@@ -40,7 +40,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
   private CordovaPlugin activityResultCallback;
   private boolean keepRunning;
   private boolean activityResultKeepRunning;
-  private boolean
   private int action;
 
   final int IHEALTH_INITIALIZE_PLUGIN = 0;
