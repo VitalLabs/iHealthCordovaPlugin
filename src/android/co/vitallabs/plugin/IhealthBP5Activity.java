@@ -269,7 +269,7 @@ public class IhealthBP5Activity extends Activity implements
 	@Override
 	public void msgError(int num) {
 		// TODO Auto-generated method stub
-    removeTimeoutHandler();  
+    //removeTimeoutHandler();  
     Log.e(TAG, "error, " + num);
     Intent intentResult = new Intent();
     intentResult.putExtra("error", num);
@@ -312,7 +312,7 @@ public class IhealthBP5Activity extends Activity implements
 	@Override
 	public void msgResult(int[] result) {
 		// TODO Auto-generated method stub
-    removeTimeoutHandler();
+    //removeTimeoutHandler();
     Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
     Intent intentResult = new Intent();
     intentResult.putExtra("result", result);

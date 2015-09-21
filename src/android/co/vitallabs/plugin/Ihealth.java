@@ -46,6 +46,7 @@ public class Ihealth extends CordovaPlugin {
 
   private boolean isCuffAvailable;
   private boolean isTakingMeasure;
+  private boolean isChecking;
   private String mac;
   
   @Override
@@ -70,7 +71,7 @@ public class Ihealth extends CordovaPlugin {
     if (action.equals("isBP5CuffAvailable")) {
        
       Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable+ " - " +isTakingMeasure);
-      if (!isTakingMeasure && !isCuffAvailable) {
+      if (!isTakingMeasure && !isCuffAvailable && !isChecking) {
         isBP5CuffAvailable(callbackContext);
       } else {
         callbackContext.success();
@@ -85,15 +86,18 @@ public class Ihealth extends CordovaPlugin {
       callbackContext.success("Plugin Initialized");
       isCuffAvailable = false;
       isTakingMeasure = false;
+      isChecking = false;
     }
 
   
     private void isBP5CuffAvailable(CallbackContext callbackContext) {
-      final CordovaPlugin plugin = (CordovaPlugin) this;
       
-      cordova.getThreadPool().execute(new Runnable() {
+      if (!isChecking) {
+        final CordovaPlugin plugin = (CordovaPlugin) this;
+        cordova.getThreadPool().execute(new Runnable() {
           @Override
           public void run () {
+            isChecking = true;
             Log.i(TAG, "Before running the thread");
             //final long duration = args.getLong(0);
             cordova.setActivityResultCallback(plugin);
@@ -103,10 +107,14 @@ public class Ihealth extends CordovaPlugin {
             Intent intent = new Intent(context, IhealthDeviceManagerActivity.class);
             intent.putExtra("action", IHEALTH_IS_BP5_CUFF_AVAILABLE);
             plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_IS_BP5_CUFF_AVAILABLE);
-      
+            
             Log.i(TAG, "After Activity");
           }
         });
+      } else {
+        Log.i(TAG, "is already checking our monitor...")
+      }
+      
     }
 
     private void deviceConnectForBP5(CallbackContext callbackContext) {
@@ -220,6 +228,7 @@ public class Ihealth extends CordovaPlugin {
           this.callbackContext.success();
         } else {
           isCuffAvailable = false;
+          isChecking = false;
           this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, false));
         }
         break;

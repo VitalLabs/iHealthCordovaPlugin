@@ -59,7 +59,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     deviceManager.initReceiver();
     deviceManager.initBpStateCallback(this);
     deviceManager.scanDevice();
-    setTimeoutHandler();
+    //setTimeoutHandler();
   }
 
   private Runnable mRunnable = new Runnable() {
@@ -355,7 +355,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   
   @Override
   public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
-    removeTimeoutHandler();
+    //removeTimeoutHandler();
     Log.i(TAG, "msgDeviceDisconnect_Bp" + deviceMac + " " + deviceType);
     Intent intentResult = new Intent();
     intentResult.putExtra("result", false);
