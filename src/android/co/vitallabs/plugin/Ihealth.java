@@ -112,7 +112,7 @@ public class Ihealth extends CordovaPlugin {
           }
         });
       } else {
-        Log.i(TAG, "is already checking our monitor...")
+        Log.i(TAG, "is already checking our monitor...");
       }
       
     }
