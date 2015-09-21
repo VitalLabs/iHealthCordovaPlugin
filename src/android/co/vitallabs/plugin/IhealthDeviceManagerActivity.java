@@ -118,7 +118,13 @@ public class IhealthDeviceManagerActivity extends Activity implements
     deviceManager.initDeviceManager(this, userId);
     deviceManager.initReceiver();
     deviceManager.initBpStateCallback(this);
-    deviceManager.scanDevice();
+    Thread myt = new Thread(new Runnable () {
+
+        @Override
+        public void run() {
+          deviceManager.scanDevice();
+        }
+      }).start();
   }
   
   private Runnable mRunnable = new Runnable() {
