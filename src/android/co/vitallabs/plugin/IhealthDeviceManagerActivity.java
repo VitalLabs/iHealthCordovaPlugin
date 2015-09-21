@@ -79,11 +79,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   public void setTimeoutHandler() {
     Log.i(TAG, "setTimeoutHandler");
     myHandler = new Handler();
-    if (action == IHEALTH_IS_BP5_CUFF_AVAILABLE) {
-      myHandler.postDelayed(mRunnable, 1000);
-    } else {
-      myHandler.postDelayed(mRunnable, 3000);
-    }
+    myHandler.postDelayed(mRunnable, 2000);
     
   }
 
