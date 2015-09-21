@@ -38,8 +38,6 @@ public class Ihealth extends CordovaPlugin {
 
   private BPControl bpControl;
   private String TAG = "BPtest_Plugin";
-  private DeviceManager deviceManager;
-  private IhealthActivity iActivity;
   protected Context context;
   private CallbackContext callbackContext;
   

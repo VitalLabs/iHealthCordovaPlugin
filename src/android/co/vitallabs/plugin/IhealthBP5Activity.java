@@ -30,10 +30,10 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 
-public class IhealthActivity extends Activity implements
+public class IhealthBP5Activity extends Activity implements
                                                 Interface_Observer_BP {
   private BPControl bpControl;
-	private String TAG = "BPIhealthActivity";
+	private String TAG = "IhealthBP5Activity";
 	private boolean isOffline = false;
 	private String mAddress;
 	private DeviceManager deviceManager = DeviceManager.getInstance();
@@ -60,7 +60,7 @@ public class IhealthActivity extends Activity implements
     //deviceManager.initReceiver();
     //deviceManager.initBpStateCallback(this);
     //deviceManager.scanDevice();
-    deviceManager = Devicemanager.getInstance();
+    deviceManager = DeviceManager.getInstance();
     //setTimeoutHandler();
     getbpControl();
   }
