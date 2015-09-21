@@ -40,6 +40,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   private CordovaPlugin activityResultCallback;
   private boolean keepRunning;
   private boolean activityResultKeepRunning;
+  private boolean
   private int action;
 
   final int IHEALTH_INITIALIZE_PLUGIN = 0;
@@ -52,16 +53,41 @@ public class IhealthDeviceManagerActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
     Log.i(TAG, "onCreate");
+    mAddress = null;
     action = getIntent().getIntExtra("action", 1);
     super.onCreate(savedInstanceState);
+
+    if (getIntent().getBooleanExtra("checkForDevice") &&
+        getIntent().getStringExtra("predefinedMac") != null) {
+      String predefinedMac = getIntent().getStringExtra("predefinedMac");
+      bpControl = devicemanager.getBpDevice(predefinedMac);
+      
+      if (bpControl != null) {
+        Intent intentResult = new Intent();
+        intentResult.putExtra("result", predefinedMac);
+        intentResult.putExtra("action", action);
+        Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
+        setResult(RESULT_OK, intentResult);
+        finish();
+      } else {
+        initDeviceManager();
+      }
+        
+    }
+    
+    initDeviceManager();
+  }
+
+
+  private void initDeviceManager() {
+    Log.i(TAG, "initDeviceManager");
     String userId = "devops@vitallabs.co";
     deviceManager.initDeviceManager(this, userId);
     deviceManager.initReceiver();
     deviceManager.initBpStateCallback(this);
     deviceManager.scanDevice();
-    //setTimeoutHandler();
   }
-
+  
   private Runnable mRunnable = new Runnable() {
 
     @Override
