@@ -218,6 +218,7 @@ public class Ihealth extends CordovaPlugin {
     isTakingMeasure = false;
     isCuffAvailable = false;
     isChecking = false;
+    // xsmac = null;
   }
   
   @Override
@@ -239,6 +240,7 @@ public class Ihealth extends CordovaPlugin {
         } else {
           isCuffAvailable = false;
           isChecking = false;
+          mac = null;
           this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, false));
         }
         break;
