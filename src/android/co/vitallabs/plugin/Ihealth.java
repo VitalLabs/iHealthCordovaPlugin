@@ -108,11 +108,13 @@ public class Ihealth extends CordovaPlugin {
             intent.putExtra("action", IHEALTH_IS_BP5_CUFF_AVAILABLE);
 
             if (mac != null && !mac.equals("")) {
+              Log.i(TAG, "We already have a device? " + mac);
               intent.putExtra("checkForDevice", true);
               intent.putExtra("predefinedMac", IHEALTH_IS_BP5_CUFF_AVAILABLE);
+            } else {
+              intent.putExtra("checkForDevice", false);
             }
 
-            intent.putExtra("checkForDevice", false);
             plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_IS_BP5_CUFF_AVAILABLE);
             
             Log.i(TAG, "After Activity");

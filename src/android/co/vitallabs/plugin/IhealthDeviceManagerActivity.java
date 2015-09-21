@@ -59,9 +59,12 @@ public class IhealthDeviceManagerActivity extends Activity implements
     if (getIntent().getBooleanExtra("checkForDevice", false) &&
         getIntent().getStringExtra("predefinedMac") != null) {
       String predefinedMac = getIntent().getStringExtra("predefinedMac");
+      Log.i(TAG, "Get a predefinedMac address check if is available:" + predefinedMac);
+
       bpControl = deviceManager.getBpDevice(predefinedMac);
       
       if (bpControl != null) {
+        Log.i(TAG, "bpControl show that we already hace a Cuff available!");
         Intent intentResult = new Intent();
         intentResult.putExtra("result", predefinedMac);
         intentResult.putExtra("action", action);
@@ -69,12 +72,15 @@ public class IhealthDeviceManagerActivity extends Activity implements
         setResult(RESULT_OK, intentResult);
         finish();
       } else {
+        Log.i(TAG, "bpControl is null so we lost previous paired device...")
         initDeviceManager();
       }
         
+    } else {
+      Log.i(TAG, "First time looking for a device");
+      initDeviceManager();
     }
     
-    initDeviceManager();
   }
 
 
