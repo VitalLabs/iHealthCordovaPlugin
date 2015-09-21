@@ -122,7 +122,12 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
         @Override
         public void run() {
-          deviceManager.scanDevice();
+          try {
+            deviceManager.scanDevice();
+          } catch (Exception e) {
+            Log.e(TAG, "EXCEPTION!!!!!!" + e.printStackTrace());
+          }
+          
         }
       });
     myt.start();
@@ -323,9 +328,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
 	// 	}
 	// }
 
-	private void getFunctionInfo(){
-		
-	}
 
 	// @Override
 	// public void msgInden() {
