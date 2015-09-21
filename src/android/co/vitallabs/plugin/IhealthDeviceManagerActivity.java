@@ -125,7 +125,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
           deviceManager.scanDevice();
         }
       });
-    myt..start();
+    myt.start();
   }
   
   private Runnable mRunnable = new Runnable() {
