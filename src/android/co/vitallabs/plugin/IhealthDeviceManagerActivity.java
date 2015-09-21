@@ -394,6 +394,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     intentResult.putExtra("action", action);
     Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
     setResult(RESULT_OK, intentResult);
+    deviceManager.cancelScanDevice();
     finish();
   }
   
