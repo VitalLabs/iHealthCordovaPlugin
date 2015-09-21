@@ -36,7 +36,6 @@ import co.vitallabs.plugin.IhealthBP5Activity;
  */
 public class Ihealth extends CordovaPlugin {
 
-  private BPControl bpControl;
   private String TAG = "BPtest_Plugin";
   protected Context context;
   private CallbackContext callbackContext;

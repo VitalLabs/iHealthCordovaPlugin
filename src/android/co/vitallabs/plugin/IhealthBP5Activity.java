@@ -53,7 +53,7 @@ public class IhealthBP5Activity extends Activity implements
 		// TODO Auto-generated method stub
     Log.i(TAG, "onCreate");
     action = getIntent().getIntExtra("action", 1);
-    mAddress = getIntent().getExtra("mac");
+    mAddress = getIntent().getStringExtra("mac");
     super.onCreate(savedInstanceState);
     String userId = "devops@vitallabs.co";
     //deviceManager.initDeviceManager(this, userId);
@@ -332,8 +332,8 @@ public class IhealthBP5Activity extends Activity implements
   public void startMeasure () {
     String clientID =  "b42e648c6c224f9a890e7d9323dc5b6a";
     String clientSecret = "ce7a64efe52e446990f1c696e864d3a7";
-    Log.i("BeforeStart", clientID+" " + clientSecret + " " +IhealthActivity.this);
-    bpControl.start(IhealthActivity.this, clientID, clientSecret);
+    Log.i("BeforeStart", clientID+" " + clientSecret + " " +IhealthBP5Activity.this);
+    bpControl.start(IhealthBP5Activity.this, clientID, clientSecret);
   }
 
 
