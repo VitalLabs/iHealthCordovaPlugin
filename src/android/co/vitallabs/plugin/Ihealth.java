@@ -110,7 +110,7 @@ public class Ihealth extends CordovaPlugin {
             if (mac != null && !mac.equals("")) {
               Log.i(TAG, "We already have a device? " + mac);
               intent.putExtra("checkForDevice", true);
-              intent.putExtra("predefinedMac", IHEALTH_IS_BP5_CUFF_AVAILABLE);
+              intent.putExtra("predefinedMac", mac);
             } else {
               intent.putExtra("checkForDevice", false);
             }
