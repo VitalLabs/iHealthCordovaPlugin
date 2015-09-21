@@ -85,7 +85,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
         } catch (Exception e) {
           Log.i(TAG, "Device not registered never");
         }
-      
+        unReceiver();
         finish();
       }
         
