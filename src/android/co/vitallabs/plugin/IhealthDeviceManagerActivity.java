@@ -53,7 +53,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
                                                              Interface_Observer_CommMsg_PO,
                                                              Interface_Observer_BG,
                                                              Interface_Observer_CommMsg_ABI {
-  private BPControl bpControl;
+  //private BPControl bpControl;
 	private String TAG = "IhealthDevicemanagerActivity";
 	private boolean isOffline = false;
 	private String mAddress;
