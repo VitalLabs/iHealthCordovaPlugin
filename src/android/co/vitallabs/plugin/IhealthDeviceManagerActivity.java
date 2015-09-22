@@ -248,7 +248,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
       setTimeoutHandler();
     }
 
-    initReceiver();
 
     
   }
@@ -262,6 +261,8 @@ public class IhealthDeviceManagerActivity extends Activity implements
   @Override
   protected void onResume() {
     Log.i(TAG, "onResume");
+    initReceiver();
+
     super.onResume();
   }
 
@@ -269,12 +270,12 @@ public class IhealthDeviceManagerActivity extends Activity implements
   protected void onPause() {
     Log.i(TAG, "onPause");
     super.onPause();
+    unReceiver();
   }
   
   @Override
   protected void onStop() {
     Log.i(TAG, "onStopActivity");
-    unReceiver();
     // if (deviceManager != null) {
     //   Log.i(TAG, "before unReceiver");
       
