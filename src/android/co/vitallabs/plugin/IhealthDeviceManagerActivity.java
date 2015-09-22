@@ -201,6 +201,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     // Now onStart
 
     // Init receiver
+    initReceiver();
 
     
     if (getIntent().getBooleanExtra("checkForDevice", false) &&
@@ -261,7 +262,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
   @Override
   protected void onResume() {
     Log.i(TAG, "onResume");
-    initReceiver();
 
     super.onResume();
   }
