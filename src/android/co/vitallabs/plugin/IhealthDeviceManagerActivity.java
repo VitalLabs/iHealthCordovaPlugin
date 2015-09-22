@@ -108,6 +108,13 @@ public class IhealthDeviceManagerActivity extends Activity implements
         @Override
         public void run() {
           try {
+            Thread.sleep(500);
+          } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+
+          try {
             deviceManager.scanDevice();
           } catch (Exception e) {
             e.printStackTrace();
