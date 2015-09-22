@@ -105,8 +105,8 @@ public class Ihealth extends CordovaPlugin {
             Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthDeviceManagerActivity.class);
-            // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | );
+            intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
             intent.putExtra("action", IHEALTH_IS_BP5_CUFF_AVAILABLE);
 
             if (mac != null && !mac.equals("")) {
@@ -142,7 +142,7 @@ public class Ihealth extends CordovaPlugin {
             Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthBP5Activity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
             intent.putExtra("action", IHEALTH_DEVICE_CONNECT_FOR_BP5);
             intent.putExtra("mAddress", mac);
             plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_DEVICE_CONNECT_FOR_BP5);
