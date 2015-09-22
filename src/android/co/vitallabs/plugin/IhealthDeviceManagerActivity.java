@@ -188,7 +188,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   public void setTimeoutHandler() {
     Log.i(TAG, "setTimeoutHandler");
     myHandler = new Handler();
-    myHandler.postDelayed(mRunnable, 1000);
+    myHandler.postDelayed(mRunnable, 500);
     
   }
 
