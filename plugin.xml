@@ -57,6 +57,10 @@
           android:name="co.vitallabs.plugin.IhealthDeviceManagerActivity"
           android:noHistory="true"
           android:theme = "@android:style/Theme.NoDisplay">
+
+        <intent-filter>
+          <action android:name="android.intent.action.VIEW" />
+        </intent-filter>
       </activity>
       <activity 
           android:name="co.vitallabs.plugin.IhealthBP5Activity"
