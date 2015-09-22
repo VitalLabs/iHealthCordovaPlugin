@@ -273,7 +273,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     //   // }
       
     //   Log.i(TAG, "after unReceiver");
-    }
+    // }
     
     super.onStop();
     
