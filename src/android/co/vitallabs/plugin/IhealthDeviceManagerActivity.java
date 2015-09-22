@@ -121,7 +121,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
       Log.i(TAG, "First time looking for a device");
       initDeviceManager();
       
-      //setTimeoutHandler();
+      setTimeoutHandler();
     }
     
   }
@@ -159,30 +159,36 @@ public class IhealthDeviceManagerActivity extends Activity implements
     @Override
     public void run() {
       Log.e(TAG, "Handler is being called by Runnable");
-      Intent intentResult = new Intent();
-      intentResult.putExtra("result", false);
-      intentResult.putExtra("action", action);
-      setResult(RESULT_CANCELED, intentResult);
-      Log.i(TAG, "TimeOut Activity!!!");
-      try {
-        Log.i(TAG, "Unregister deviceManager");
-        if (deviceManager != null) {
-          deviceManager.unReceiver();
-        }
+      if (mAddress == null) {
+        Intent intentResult = new Intent();
+        intentResult.putExtra("result", false);
+        intentResult.putExtra("action", action);
+        setResult(RESULT_CANCELED, intentResult);
+        Log.i(TAG, "TimeOut Activity!!!");
+        try {
+          Log.i(TAG, "Unregister deviceManager");
+          if (deviceManager != null) {
+            deviceManager.unReceiver();
+          }
           
-      } catch (Exception e) {
-        Log.i(TAG, "Device not registered never");
+        } catch (Exception e) {
+          Log.i(TAG, "Device not registered never");
+        }
+        //unReceiver();
+        Log.i(TAG, "Aborting");
+        deviceManager.cancelScanDevice();
+        finish();
+      } else {
+        Log.i(TAG, "We can't abort the mission now!");
       }
-      //unReceiver();
-      deviceManager.cancelScanDevice();
-      finish();
+      
     }
   };
   
   public void setTimeoutHandler() {
     Log.i(TAG, "setTimeoutHandler");
     myHandler = new Handler();
-    myHandler.postDelayed(mRunnable, 3000);
+    myHandler.postDelayed(mRunnable, 1500);
     
   }
 
