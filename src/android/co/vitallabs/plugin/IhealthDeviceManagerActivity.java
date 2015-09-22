@@ -300,8 +300,9 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
   BroadcastReceiver mReceiver = new BroadcastReceiver() {
       public void onReceive(Context context, Intent intent) {
+        Log.i(TAG, "onReceive");
         String action = intent.getAction();
-        Log.i(TAG, "onReceive"+action);
+        Log.i(TAG, "Action of onReceive" + action);
       }
     };
 
