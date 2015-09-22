@@ -55,13 +55,13 @@
       <!-- </activity> -->
       <activity 
           android:name="co.vitallabs.plugin.IhealthDeviceManagerActivity"
-          android:noHistory="true"
-          android:theme = "@android:style/Theme.NoDisplay">
+          <!-- android:noHistory="true" -->
+          <!-- android:theme = "@android:style/Theme.NoDisplay" -->>
       </activity>
       <activity 
           android:name="co.vitallabs.plugin.IhealthBP5Activity"
-          android:noHistory="true"
-          android:theme = "@android:style/Theme.NoDisplay">
+          <!-- android:noHistory="true" -->
+          <!-- android:theme = "@android:style/Theme.NoDisplay" -->>
       </activity>
     </config-file>
     
