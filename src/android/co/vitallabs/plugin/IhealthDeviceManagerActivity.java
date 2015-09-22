@@ -262,20 +262,21 @@ public class IhealthDeviceManagerActivity extends Activity implements
   @Override
   protected void onStop() {
     Log.i(TAG, "onStopActivity");
-    if (deviceManager != null) {
-      Log.i(TAG, "before unReceiver");
+    unReceiver();
+    // if (deviceManager != null) {
+    //   Log.i(TAG, "before unReceiver");
       
-      // try {
-      //   deviceManager.unReceiver();
-      // } catch (Exception e) {
-      //   Log.i(TAG, "Device not registered never");
-      // }
+    //   // try {
+    //   //   deviceManager.unReceiver();
+    //   // } catch (Exception e) {
+    //   //   Log.i(TAG, "Device not registered never");
+    //   // }
       
-      Log.i(TAG, "after unReceiver");
+    //   Log.i(TAG, "after unReceiver");
     }
     
     super.onStop();
-    //unReceiver();
+    
   }
 
 
@@ -283,14 +284,15 @@ public class IhealthDeviceManagerActivity extends Activity implements
   @Override
   protected void onDestroy() {
     Log.i(TAG, "onDestroy");
-    unReceiver();
     super.onDestroy();
     
   }
 
   private void unReceiver() {
+    Log.i(TAG, "Calling unreceiver");
     try {
       unregisterReceiver(mReceiver);
+      Log.i(TAG, "unregister success!");
     } catch (Exception e) {
       Log.i(TAG, "Exception in unReceiver " + e.toString());
     }
