@@ -253,7 +253,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
       Log.i(TAG, "First time looking for a device");
       initDeviceManager();
       
-      setTimeoutHandler();
+      // setTimeoutHandler();
     }
 
 
@@ -359,7 +359,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   // NEW OVERRIDES
   @Override
   public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
-    removeTimeoutHandler();
+    //removeTimeoutHandler();
     Log.i(TAG, "msgDeviceConnect_Bp " + deviceMac + " " + deviceType);
     mAddress = deviceMac;
 
@@ -375,7 +375,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   
   @Override
   public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
-    removeTimeoutHandler();
+    //removeTimeoutHandler();
     Log.i(TAG, "msgDeviceDisconnect_BP");
     Intent intentResult = new Intent();
     intentResult.putExtra("result", false);

@@ -91,13 +91,14 @@ public class Ihealth extends CordovaPlugin {
 
   
     private void isBP5CuffAvailable(CallbackContext callbackContext) {
-      
+      Log.i(TAG, "uscheckign" + isChecking);
+      isChecking = true;
+      Log.i(TAG, "uscheckign" + isChecking);            
       if (!isChecking) {
         final CordovaPlugin plugin = (CordovaPlugin) this;
         cordova.getThreadPool().execute(new Runnable() {
           @Override
           public void run () {
-            isChecking = true;
             Log.i(TAG, "Before running the thread");
             //final long duration = args.getLong(0);
             cordova.setActivityResultCallback(plugin);
