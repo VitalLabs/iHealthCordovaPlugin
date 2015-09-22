@@ -73,62 +73,21 @@ public class IhealthDeviceManagerActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
     Log.i(TAG, "onCreate");
+    super.onCreate(savedInstanceState);
+    
     mAddress = null;
     action = getIntent().getIntExtra("action", 1);
-    super.onCreate(savedInstanceState);
+    
 
-    // Init receiver
-    initReceiver();
-    if (getIntent().getBooleanExtra("checkForDevice", false) &&
-        getIntent().getStringExtra("predefinedMac") != null) {
-      String predefinedMac = getIntent().getStringExtra("predefinedMac");
-      Log.i(TAG, "Get a predefinedMac address check if is available:" + predefinedMac);
-
-      bpControl = deviceManager.getBpDevice(predefinedMac);
-      
-      if (bpControl != null) {
-        Log.i(TAG, "bpControl show that we already hace a Cuff available!");
-        Intent intentResult = new Intent();
-        intentResult.putExtra("result", predefinedMac);
-        intentResult.putExtra("action", action);
-        Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
-        setResult(RESULT_OK, intentResult);
-        deviceManager.cancelScanDevice();
-        finish();
-      } else {
-        Log.i(TAG, "bpControl is null so we lost previous paired device...");
-        Intent intentResult = new Intent();
-        intentResult.putExtra("result", false);
-        intentResult.putExtra("action", action);
-        Log.i(TAG, "wird state done? " + intentResult);
-        setResult(RESULT_CANCELED, intentResult);
-        //deviceManager.unReceiver();
-        try {
-          Log.i(TAG, "Unregister deviceManager");
-          if (deviceManager != null) {
-            deviceManager.unReceiver();
-          }
-          
-        } catch (Exception e) {
-          Log.i(TAG, "Device not registered never");
-        }
-        //unReceiver();
-        deviceManager.cancelScanDevice();
-        finish();
-      }
-        
-    } else {
-      Log.i(TAG, "First time looking for a device");
-      initDeviceManager();
-      
-      setTimeoutHandler();
-    }
+    
     
   }
 
   private void initReceiver() {
     Log.i(TAG, "initReceiver with IntentFilter");
     IntentFilter intentFilter = new IntentFilter();
+    intentFilter.addAction(Hs4sControl.MSG_HS4S_CONNECTED);
+    intentFilter.addAction(Hs4sControl.MSG_HS4S_DISCONNECT);
     registerReceiver(mReceiver, intentFilter);
   }
 
@@ -239,6 +198,59 @@ public class IhealthDeviceManagerActivity extends Activity implements
   protected void onStart() {
     Log.i(TAG, "onStart");
     super.onStart();
+    // Now onStart
+
+    // Init receiver
+
+    
+    if (getIntent().getBooleanExtra("checkForDevice", false) &&
+        getIntent().getStringExtra("predefinedMac") != null) {
+      String predefinedMac = getIntent().getStringExtra("predefinedMac");
+      Log.i(TAG, "Get a predefinedMac address check if is available:" + predefinedMac);
+
+      bpControl = deviceManager.getBpDevice(predefinedMac);
+      
+      if (bpControl != null) {
+        Log.i(TAG, "bpControl show that we already hace a Cuff available!");
+        Intent intentResult = new Intent();
+        intentResult.putExtra("result", predefinedMac);
+        intentResult.putExtra("action", action);
+        Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
+        setResult(RESULT_OK, intentResult);
+        deviceManager.cancelScanDevice();
+        finish();
+      } else {
+        Log.i(TAG, "bpControl is null so we lost previous paired device...");
+        Intent intentResult = new Intent();
+        intentResult.putExtra("result", false);
+        intentResult.putExtra("action", action);
+        Log.i(TAG, "wird state done? " + intentResult);
+        setResult(RESULT_CANCELED, intentResult);
+        //deviceManager.unReceiver();
+        try {
+          Log.i(TAG, "Unregister deviceManager");
+          if (deviceManager != null) {
+            deviceManager.unReceiver();
+          }
+          
+        } catch (Exception e) {
+          Log.i(TAG, "Device not registered never");
+        }
+        //unReceiver();
+        deviceManager.cancelScanDevice();
+        finish();
+      }
+        
+    } else {
+      Log.i(TAG, "First time looking for a device");
+      initDeviceManager();
+      
+      setTimeoutHandler();
+    }
+
+    initReceiver();
+
+    
   }
 
   @Override
