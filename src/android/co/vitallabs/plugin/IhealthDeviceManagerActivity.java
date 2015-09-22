@@ -6,14 +6,26 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import com.jiuan.android.sdk.bp.bluetooth.BPCommManager;
-import com.jiuan.android.sdk.bp.bluetooth.BPControl;
-import com.jiuan.android.sdk.bp.observer_bp.Interface_Observer_BP;
+// import com.jiuan.android.sdk.bp.bluetooth.BPCommManager;
+// import com.jiuan.android.sdk.bp.bluetooth.BPControl;
+// import com.jiuan.android.sdk.bp.observer_bp.Interface_Observer_BP;
+// import com.jiuan.android.sdk.bg.observer.Interface_Observer_BG;
+// import com.jiuan.android.sdk.bg.observer.Interface_Observer_BGCoomMsg;
+// import com.jiuan.android.sdk.bp.observer_comm.Interface_Observer_CommMsg_BP;
+
+// import com.jiuan.android.sdk.device.DeviceManager;
+
+import com.jiuan.android.sdk.abi.bluetooth.ABICommManager;
+import com.jiuan.android.sdk.abi.observer_comm.Interface_Observer_CommMsg_ABI;
+import com.jiuan.android.sdk.am.observer_comm.Interface_Observer_CommMsg_AM;
+import com.jiuan.android.sdk.bg.audio.BG1Control;
 import com.jiuan.android.sdk.bg.observer.Interface_Observer_BG;
 import com.jiuan.android.sdk.bg.observer.Interface_Observer_BGCoomMsg;
 import com.jiuan.android.sdk.bp.observer_comm.Interface_Observer_CommMsg_BP;
-
 import com.jiuan.android.sdk.device.DeviceManager;
+import com.jiuan.android.sdk.hs.bluetooth.Hs4sControl;
+import com.jiuan.android.sdk.hs.observer_comm.Interface_Observer_CommMsg_HS;
+import com.jiuan.android.sdk.po.observer_comm.Interface_Observer_CommMsg_PO;
 
 import org.apache.cordova.CordovaPlugin;
 
@@ -22,6 +34,8 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
+
+import android.media.AudioManager;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -32,7 +46,13 @@ import android.os.SystemClock;
 import android.util.Log;
 
 public class IhealthDeviceManagerActivity extends Activity implements
-                                                             Interface_Observer_CommMsg_BP {
+                                                             Interface_Observer_BGCoomMsg,
+                                                             Interface_Observer_CommMsg_BP,
+                                                             Interface_Observer_CommMsg_AM,
+                                                             Interface_Observer_CommMsg_HS,
+                                                             Interface_Observer_CommMsg_PO,
+                                                             Interface_Observer_BG,
+                                                             Interface_Observer_CommMsg_ABI {
   private BPControl bpControl;
 	private String TAG = "IhealthDevicemanagerActivity";
 	private boolean isOffline = false;
@@ -299,124 +319,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
 		}
 	};
 
-  // private void getbpControl(){
-  //   Log.i(TAG, "inGetBpControl" + mAddress);
-  //   bpControl = deviceManager.getBpDevice(mAddress);
-  //   removeTimeoutHandler();
-  //   if(bpControl != null){
-	// 		Log.i(TAG, "getbpControl " + bpControl);
-	// 		bpControl.controlSubject.attach(this);
-  //     Log.i(TAG, "forceTakeMeasure " + action);
-  //     if (action == this.IHEALTH_DEVICE_CONNECT_FOR_BP5) {
-  //       startMeasure();
-  //     } else if (action == this.IHEALTH_IS_BP5_CUFF_AVAILABLE) {
-  //       Intent intentResult = new Intent();
-  //       intentResult.putExtra("result", true);
-  //       intentResult.putExtra("action", action);
-  //       Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
-  //       setResult(RESULT_OK, intentResult);
-  //       finish();
-  //     }
-      
-	// 	} else {
-	// 		Intent intentResult = new Intent();
-  //     intentResult.putExtra("result", false);
-  //     intentResult.putExtra("action", action);
-  //     Log.i(TAG, "wird state done? " + intentResult);
-  //     setResult(RESULT_OK, intentResult);
-  //     finish();
-      
-	// 	}
-	// }
-
-
-	// @Override
-	// public void msgInden() {
-	// 	// TODO Auto-generated method stub
-
-	// }
-
-	// @Override
-	// public void msgBattery(int battery) {
-	// 	// TODO Auto-generated method stub
-
-	// }
-
-	// @Override
-	// public void msgUserStatus(int status) {
-	// 	// TODO Auto-generated method stub
-	// 	Log.e(TAG, "User status " + status);
-	// }
-
-	// @Override
-	// public void msgError(int num) {
-	// 	// TODO Auto-generated method stub
-  //   removeTimeoutHandler();  
-  //   Log.e(TAG, "error, " + num);
-  //   Intent intentResult = new Intent();
-  //   intentResult.putExtra("error", num);
-  //   intentResult.putExtra("action", action);
-  //   setResult(RESULT_CANCELED, intentResult);
-  //   Log.i(TAG, "Back from unsuccesfull measure " + num);
-  //   finish();
-	// }
-
-	// @Override
-	// public void msgAngle(int angle) {
-	// 	// TODO Auto-generated method stub
-
-	// }
-
-	// @Override
-	// public void msgZeroIng() {
-	// 	// TODO Auto-generated method stub
-
-	// }
-
-	// @Override
-	// public void msgZeroOver() {
-	// 	// TODO Auto-generated method stub
-
-	// }
-
-	// @Override
-	// public void msgPressure(int pressure) {
-	// 	// TODO Auto-generated method stub
-
-	// }
-
-	// @Override
-	// public void msgMeasure(int pressure, int[] measure, boolean heart) {
-	// 	// TODO Auto-generated method stub
-
-	// }
-
-	// @Override
-	// public void msgResult(int[] result) {
-	// 	// TODO Auto-generated method stub
-  //   removeTimeoutHandler();
-  //   Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
-  //   Intent intentResult = new Intent();
-  //   intentResult.putExtra("result", result);
-  //   intentResult.putExtra("action", action);
-  //   setResult(RESULT_OK, intentResult);
-  //   Log.i(TAG, "Back from succesfull measure");
-  //   //unregisterReceiver();
-  //   finish();
-	// }
-
-	// @Override
-	// public void msgPowerOff() {
-	// 	// TODO Auto-generated method stub
-
-	// }
-
-  // public void startMeasure () {
-  //   String clientID =  "b42e648c6c224f9a890e7d9323dc5b6a";
-  //   String clientSecret = "ce7a64efe52e446990f1c696e864d3a7";
-  //   Log.i("BeforeStart", clientID+" " + clientSecret + " " +IhealthActivity.this);
-  //   bpControl.start(IhealthActivity.this, clientID, clientSecret);
-  // }
 
 
   // NEW OVERRIDES
@@ -448,5 +350,98 @@ public class IhealthDeviceManagerActivity extends Activity implements
     finish();
       
   }
-   
+
+  // All interface methods
+  @Override
+  public void msgHeadsetPluIn() {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgHeadsetPullOut() {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgDeviceConnect_Hs(String deviceMac, String deviceType) {
+  }
+
+  @Override
+  public void msgDeviceDisconnect_Hs(String deviceMac, String deviceType) {
+  }
+
+  @Override
+  public void msgDeviceConnect_Am(String deviceMac, String deviceType) {
+  }
+
+  @Override
+  public void msgDeviceDisconnect_Am(String deviceMac, String deviceType) {
+  }
+
+  @Override
+  public void msgDeviceConnect_Bg(String deviceMac, String deviceType) {
+  }
+
+  @Override
+  public void msgDeviceDisconnect_Bg(String deviceMac, String deviceType) {
+  }
+
+  @Override
+  public void msgDeviceConnect_Po(String deviceMac, String deviceType) {
+  }
+
+  @Override
+  public void msgDeviceDisconnect_Po(String deviceMac, String deviceType) {
+  }
+
+  @Override
+  public void msgUserStatus(int status) {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgBGError(int num) {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgBGStripIn() {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgBGGetBlood() {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgBGStripOut() {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgBGResult(int result) {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgBGPowerOff() {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgDeviceReady_new() {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgDeviceConnect_ABI(String deviceMac, String deviceType, int arg) {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  public void msgDeviceDisconnect_ABI(String deviceMac, String deviceType, int arg) {
+    // TODO Auto-generated method stub
+  }
+  
 }
