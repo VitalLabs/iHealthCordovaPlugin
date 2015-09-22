@@ -132,6 +132,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     public void run() {
       Log.e(TAG, "Handler is being called by Runnable");
       if (mAddress == null) {
+        deviceManager.cancelScanDevice();
         Intent intentResult = new Intent();
         intentResult.putExtra("result", false);
         intentResult.putExtra("action", action);
@@ -148,7 +149,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
         }
         //unReceiver();
         Log.i(TAG, "Aborting");
-        deviceManager.cancelScanDevice();
         finish();
       } else {
         Log.i(TAG, "We can't abort the mission now!");
