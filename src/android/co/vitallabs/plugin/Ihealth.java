@@ -92,9 +92,10 @@ public class Ihealth extends CordovaPlugin {
   
     private void isBP5CuffAvailable(CallbackContext callbackContext) {
       Log.i(TAG, "uscheckign" + isChecking);
-      isChecking = true;
-      Log.i(TAG, "uscheckign" + isChecking);            
+      
       if (!isChecking) {
+        isChecking = true;
+        Log.i(TAG, "uscheckign" + isChecking);
         final CordovaPlugin plugin = (CordovaPlugin) this;
         cordova.getThreadPool().execute(new Runnable() {
           @Override
