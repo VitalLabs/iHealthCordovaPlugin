@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 // import com.jiuan.android.sdk.bp.bluetooth.BPCommManager;
-// import com.jiuan.android.sdk.bp.bluetooth.BPControl;
+import com.jiuan.android.sdk.bp.bluetooth.BPControl;
 // import com.jiuan.android.sdk.bp.observer_bp.Interface_Observer_BP;
 // import com.jiuan.android.sdk.bg.observer.Interface_Observer_BG;
 // import com.jiuan.android.sdk.bg.observer.Interface_Observer_BGCoomMsg;
@@ -53,7 +53,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
                                                              Interface_Observer_CommMsg_PO,
                                                              Interface_Observer_BG,
                                                              Interface_Observer_CommMsg_ABI {
-  //private BPControl bpControl;
+  private BPControl bpControl;
 	private String TAG = "IhealthDevicemanagerActivity";
 	private boolean isOffline = false;
 	private String mAddress;
