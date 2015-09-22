@@ -135,9 +135,15 @@ public class IhealthDeviceManagerActivity extends Activity implements
   private void initDeviceManager() {
     Log.i(TAG, "initDeviceManager");
     String userId = "devops@vitallabs.co";
-    deviceManager.initDeviceManager(this, userId);
-    deviceManager.initReceiver();
-    deviceManager.initBpStateCallback(this);
+    try {
+      deviceManager.initDeviceManager(this, userId);
+      deviceManager.initReceiver();
+      deviceManager.initBpStateCallback(this);
+    
+    } catch (Exception e) {
+      Log.e(TAG, "Exception in initDeviceManager??? " + e.toString());
+    }
+
     Thread myt = new Thread(new Runnable () {
 
         @Override
