@@ -82,7 +82,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     IntentFilter intentFilter = new IntentFilter();
     intentFilter.addAction(Hs4sControl.MSG_HS4S_CONNECTED);
     intentFilter.addAction(Hs4sControl.MSG_HS4S_DISCONNECT);
-    intentFilter.setPriority(Intentfilter.SYSTEM_HIGH_PRIORITY);
+    intentFilter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
     registerReceiver(mReceiver, intentFilter);
   }
 
