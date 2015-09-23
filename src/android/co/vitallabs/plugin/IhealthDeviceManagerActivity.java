@@ -208,7 +208,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     // Now onStart
 
     // Init receiver
-    initReceiver();
+    //initReceiver();
 
     
     if (getIntent().getBooleanExtra("checkForDevice", false) &&
@@ -277,7 +277,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   protected void onPause() {
     Log.i(TAG, "onPause");
     super.onPause();
-    unReceiver();
+    //unReceiver();
   }
   
   @Override
@@ -320,14 +320,14 @@ public class IhealthDeviceManagerActivity extends Activity implements
     
   }
 
-  BroadcastReceiver mReceiver = new BroadcastReceiver() {
-      public void onReceive(Context context, Intent intent) {
-        Log.i(TAG, "onReceive");
-        String action = intent.getAction();
-        Log.i(TAG, "Action of onReceive" + action);
-      }
-    };
-
+  BroadcastReceiver mReceiver; //= new BroadcastReceiver() {
+    //   public void onReceive(Context context, Intent intent) {
+    //     Log.i(TAG, "onReceive");
+    //     String action = intent.getAction();
+    //     Log.i(TAG, "Action of onReceive" + action);
+    //   }
+    // };
+  
   
   private Handler handler = new Handler(){
 
