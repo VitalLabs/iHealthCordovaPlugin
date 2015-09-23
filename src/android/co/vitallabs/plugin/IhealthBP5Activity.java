@@ -56,12 +56,7 @@ public class IhealthBP5Activity extends Activity implements
     mAddress = getIntent().getStringExtra("mAddress");
     super.onCreate(savedInstanceState);
     String userId = "devops@vitallabs.co";
-    //deviceManager.initDeviceManager(this, userId);
-    //deviceManager.initReceiver();
-    //deviceManager.initBpStateCallback(this);
-    //deviceManager.scanDevice();
     deviceManager = DeviceManager.getInstance();
-    //setTimeoutHandler();
     getbpControl();
   }
 
@@ -95,7 +90,6 @@ public class IhealthBP5Activity extends Activity implements
     myHandler.removeCallbacks(mRunnable);
   }
   
-  // OnActivityResult stuff hopefully it will work
   public void setActivityResultCallback(CordovaPlugin plugin) {
     Log.i(TAG, "setActivityResultCallback");
     this.activityResultCallback = plugin;        
@@ -154,20 +148,7 @@ public class IhealthBP5Activity extends Activity implements
   @Override
   protected void onStop() {
     Log.i(TAG, "onStopActivity");
-    // if (deviceManager != null) {
-    //   Log.i(TAG, "before unReceiver");
-      
-    //   try {
-    //     deviceManager.unReceiver();
-    //   } catch (Exception e) {
-    //     Log.i(TAG, "Device not registered never");
-    //   }
-      
-    //   Log.i(TAG, "after unReceiver");
-    // }
-    
     super.onStop();
-    //unReceiver();
   }
 
 
@@ -207,13 +188,11 @@ public class IhealthBP5Activity extends Activity implements
 			case 1:
 				Bundle bundle = (Bundle)msg.obj;
 				int[] result = bundle.getIntArray("bp");
-				//setText(result);
         Log.e(TAG, "Handler: "+result );
         break;
 			case 2:
 				Bundle bundle2 = (Bundle)msg.obj;
 				int errorNum = bundle2.getInt("error");
-				//Toast.makeText(BP5Activity.this, "error:"+errorNum, Toast.LENGTH_LONG).show();
         Log.e(TAG, "HandlerError: "+errorNum );
 				break;
 			default:
@@ -223,7 +202,6 @@ public class IhealthBP5Activity extends Activity implements
 	};
 
   private void getbpControl(){
-    //removeTimeoutHandler();
     Log.i(TAG, "inGetBpControl" + mAddress);
     bpControl = deviceManager.getBpDevice(mAddress);
     if(bpControl != null) {
@@ -231,8 +209,6 @@ public class IhealthBP5Activity extends Activity implements
 			bpControl.controlSubject.attach(this);
       Log.i(TAG, "forceTakeMeasure " + action);
       startMeasure();
-      
-      
 		} else {
 			Intent intentResult = new Intent();
       intentResult.putExtra("result", false);
@@ -269,7 +245,6 @@ public class IhealthBP5Activity extends Activity implements
 	@Override
 	public void msgError(int num) {
 		// TODO Auto-generated method stub
-    //removeTimeoutHandler();  
     Log.e(TAG, "error, " + num);
     Intent intentResult = new Intent();
     intentResult.putExtra("error", num);
@@ -312,14 +287,11 @@ public class IhealthBP5Activity extends Activity implements
 	@Override
 	public void msgResult(int[] result) {
 		// TODO Auto-generated method stub
-    //removeTimeoutHandler();
-    Log.e(TAG, "result:"+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
+    Log.e(TAG, "msgResult: "+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
     Intent intentResult = new Intent();
     intentResult.putExtra("result", result);
     intentResult.putExtra("action", action);
     setResult(RESULT_OK, intentResult);
-    Log.i(TAG, "Back from succesfull measure");
-    //unregisterReceiver();
     finish();
 	}
 
@@ -332,30 +304,7 @@ public class IhealthBP5Activity extends Activity implements
   public void startMeasure () {
     String clientID =  "b42e648c6c224f9a890e7d9323dc5b6a";
     String clientSecret = "ce7a64efe52e446990f1c696e864d3a7";
-    Log.i("BeforeStart", clientID+" " + clientSecret + " " +IhealthBP5Activity.this);
     bpControl.start(IhealthBP5Activity.this, clientID, clientSecret);
   }
 
-
-  // // NEW OVERRIDES
-  // @Override
-  // public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
-  //   Log.i(TAG, "msgDeviceConnect_Bp " + deviceMac + " " + deviceType);
-  //   mAddress = deviceMac;
-  //   getbpControl(); 
-  // }
-  
-  // @Override
-  // public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
-  //   removeTimeoutHandler();
-  //   Log.i(TAG, "msgDeviceDisconnect_Bp" + deviceMac + " " + deviceType);
-  //   Intent intentResult = new Intent();
-  //   intentResult.putExtra("result", false);
-  //   intentResult.putExtra("action", action);
-  //   Log.i(TAG, "wird state done? " + intentResult);
-  //   setResult(RESULT_CANCELED, intentResult);
-  //   finish();
-      
-  // }
-   
 }

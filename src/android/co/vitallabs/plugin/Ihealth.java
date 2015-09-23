@@ -91,28 +91,21 @@ public class Ihealth extends CordovaPlugin {
 
   
     private void isBP5CuffAvailable(CallbackContext callbackContext) {
-      Log.i(TAG, "uscheckign" + isChecking);
-      
+
       if (!isChecking) {
         isChecking = true;
-        Log.i(TAG, "uscheckign" + isChecking);
         final CordovaPlugin plugin = (CordovaPlugin) this;
         cordova.getThreadPool().execute(new Runnable() {
           @Override
           public void run () {
-            Log.i(TAG, "Before running the thread");
-            //final long duration = args.getLong(0);
             cordova.setActivityResultCallback(plugin);
-            Log.i(TAG, "isBP5CuffAvailable" + " - " +isTakingMeasure);
             Context context = plugin.cordova.getActivity().getApplicationContext();
-            Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthDeviceManagerActivity.class);
-            // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | );
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
             intent.putExtra("action", IHEALTH_IS_BP5_CUFF_AVAILABLE);
 
             if (mac != null && !mac.equals("")) {
-              Log.i(TAG, "We already have a device? " + mac);
+              Log.i(TAG, "Checking for previous paired device: " + mac);
               intent.putExtra("checkForDevice", true);
               intent.putExtra("predefinedMac", mac);
             } else {
@@ -121,7 +114,6 @@ public class Ihealth extends CordovaPlugin {
 
             plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_IS_BP5_CUFF_AVAILABLE);
             
-            Log.i(TAG, "After Activity");
           }
         });
       } else {
@@ -138,9 +130,6 @@ public class Ihealth extends CordovaPlugin {
           public void run () {
             Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable + " - " +isTakingMeasure);
             cordova.setActivityResultCallback(plugin);
-            Log.i(TAG, "Before running the thread");
-            //final long duration = args.getLong(0);
-            Log.i(TAG, "pluginInitialize");
             Context context = plugin.cordova.getActivity().getApplicationContext();
             Log.i(TAG, "before Activity");
             Intent intent = new Intent(context, IhealthBP5Activity.class);
@@ -148,9 +137,7 @@ public class Ihealth extends CordovaPlugin {
             intent.putExtra("action", IHEALTH_DEVICE_CONNECT_FOR_BP5);
             intent.putExtra("mAddress", mac);
             plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_DEVICE_CONNECT_FOR_BP5);
-      
-            Log.i(TAG, "After Activity");
-            }
+          }
         });
       
     }
@@ -223,7 +210,6 @@ public class Ihealth extends CordovaPlugin {
     isTakingMeasure = false;
     isCuffAvailable = false;
     isChecking = false;
-    // xsmac = null;
   }
   
   @Override
@@ -232,8 +218,6 @@ public class Ihealth extends CordovaPlugin {
     super.onActivityResult(requestCode, resultCode, intent);
     
     Log.i(TAG, "onActivityResult "+requestCode+" "+resultCode+" "+intent);
-    Log.e(TAG, "Getting result from Activity"  + intent);
-    
     int actionResult = intent.getIntExtra("action", 1);
     switch (actionResult) {
       case IHEALTH_IS_BP5_CUFF_AVAILABLE:
@@ -254,7 +238,6 @@ public class Ihealth extends CordovaPlugin {
         Log.i(TAG, "deviceConnect case result");
         if (resultCode == Activity.RESULT_OK) {
           try {
-            Log.i(TAG, "Success!!!");
             JSONObject json = new JSONObject();
             int[] result = intent.getIntArrayExtra("result");
             json.put("SYS", result[0] + result[1]);
@@ -272,7 +255,7 @@ public class Ihealth extends CordovaPlugin {
           Log.e(TAG, "Error: " + bpGetErrorMessage(errorCode));
           this.callbackContext.error("Error: " + bpGetErrorMessage(errorCode));
         }
-        
+
         break;
     }
     

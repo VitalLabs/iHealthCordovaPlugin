@@ -113,7 +113,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
             deviceManager.scanDevice();
           } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG, "EXCEPTION!!!!!!");
+            Log.e(TAG, "Exception in deviceManager.scanDevice");
           }
           
         }
@@ -142,7 +142,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
         } catch (Exception e) {
           Log.i(TAG, "Device not registered never");
         }
-        //unReceiver();
         Log.i(TAG, "Aborting");
         finish();
       } else {
@@ -200,7 +199,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
   protected void onStart() {
     Log.i(TAG, "onStart");
     super.onStart();
-    // Now onStart
     action = getIntent().getIntExtra("action", 1);
     
     // Init receiver
@@ -230,7 +228,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
         intentResult.putExtra("action", action);
         Log.i(TAG, "wird state done? " + intentResult);
         setResult(RESULT_CANCELED, intentResult);
-        //deviceManager.unReceiver();
+
         try {
           Log.i(TAG, "Unregister deviceManager");
           if (deviceManager != null) {
@@ -240,7 +238,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
         } catch (Exception e) {
           Log.i(TAG, "Device not registered never");
         }
-        //unReceiver();
         deviceManager.cancelScanDevice();
         finish();
       }
@@ -248,8 +245,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
     } else {
       Log.i(TAG, "First time looking for a device");
       initDeviceManager();
-      
-      // setTimeoutHandler();
     }
 
 
@@ -278,21 +273,8 @@ public class IhealthDeviceManagerActivity extends Activity implements
   
   @Override
   protected void onStop() {
-    Log.i(TAG, "onStopActivity");
-    // if (deviceManager != null) {
-    //   Log.i(TAG, "before unReceiver");
-      
-    //   // try {
-    //   //   deviceManager.unReceiver();
-    //   // } catch (Exception e) {
-    //   //   Log.i(TAG, "Device not registered never");
-    //   // }
-      
-    //   Log.i(TAG, "after unReceiver");
-    // }
-    
+    Log.i(TAG, "onStopActivity");    
     super.onStop();
-    
   }
 
 
@@ -355,11 +337,9 @@ public class IhealthDeviceManagerActivity extends Activity implements
   // NEW OVERRIDES
   @Override
   public void msgDeviceConnect_Bp(String deviceMac, String deviceType) {
-    //removeTimeoutHandler();
     Log.i(TAG, "msgDeviceConnect_Bp " + deviceMac + " " + deviceType);
     mAddress = deviceMac;
 
-    //getbpControl();
     Intent intentResult = new Intent();
     intentResult.putExtra("result", deviceMac);
     intentResult.putExtra("action", action);
@@ -371,7 +351,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
   
   @Override
   public void msgDeviceDisconnect_Bp(String deviceMac, String deviceType) {
-    //removeTimeoutHandler();
     Log.i(TAG, "msgDeviceDisconnect_BP");
     Intent intentResult = new Intent();
     intentResult.putExtra("result", false);
