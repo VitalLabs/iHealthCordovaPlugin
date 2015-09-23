@@ -298,7 +298,7 @@ public class IhealthBP5Activity extends Activity implements
 	@Override
 	public void msgPowerOff() {
 		// TODO Auto-generated method stub
-
+    Log.e(TAG, "Message POWER Off");
 	}
 
   public void startMeasure () {
