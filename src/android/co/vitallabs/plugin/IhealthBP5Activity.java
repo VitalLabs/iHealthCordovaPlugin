@@ -303,7 +303,7 @@ public class IhealthBP5Activity extends Activity implements
     intentResult.putExtra("error", -2);
     intentResult.putExtra("action", action);
     setResult(RESULT_CANCELED, intentResult);
-    Log.i(TAG, "Back from unsuccesfull measure " + num);
+    Log.i(TAG, "Back from unsuccesful measure iHealth is off ");
     finish();
 	}
 
