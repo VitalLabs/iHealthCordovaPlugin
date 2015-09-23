@@ -83,6 +83,13 @@
         </intent-filter>
       </receiver>
       
+      <service
+          android:name="com.jiuan.android.sdk.ble.manager.LPCBT422Service"
+          android:enabled="true" />
+      <service
+          android:name="com.jiuan.android.sdk.ble.manager.LPCBT43Service"
+          android:enabled="true" />
+
     </config-file>
     
     <source-file src="src/android/co/vitallabs/plugin/Ihealth.java"
@@ -95,12 +102,7 @@
     <source-file src="src/android/co/vitallabs/plugin/IhealthBP5Activity.java"
                  target-dir="src/co/vitallabs/plugin" />
 
-    <service
-        android:name="com.jiuan.android.sdk.ble.manager.LPCBT422Service"
-        android:enabled="true" />
-    <service
-        android:name="com.jiuan.android.sdk.ble.manager.LPCBT43Service"
-        android:enabled="true" />
+    
   </platform>
 
   <!-- ios -->
