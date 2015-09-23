@@ -74,13 +74,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
 		// TODO Auto-generated method stub
     Log.i(TAG, "onCreate");
     super.onCreate(savedInstanceState);
-    
-    mAddress = null;
-    action = getIntent().getIntExtra("action", 1);
-    
-
-    
-    
+    mAddress = null;    
   }
 
   private void initReceiver() {
@@ -88,6 +82,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     IntentFilter intentFilter = new IntentFilter();
     intentFilter.addAction(Hs4sControl.MSG_HS4S_CONNECTED);
     intentFilter.addAction(Hs4sControl.MSG_HS4S_DISCONNECT);
+    intentFilter.setPriority(Intentfilter.SYSTEM_HIGH_PRIORITY);
     registerReceiver(mReceiver, intentFilter);
   }
 
@@ -206,9 +201,10 @@ public class IhealthDeviceManagerActivity extends Activity implements
     Log.i(TAG, "onStart");
     super.onStart();
     // Now onStart
-
+    action = getIntent().getIntExtra("action", 1);
+    
     // Init receiver
-    //initReceiver();
+    initReceiver();
 
     
     if (getIntent().getBooleanExtra("checkForDevice", false) &&
@@ -320,13 +316,13 @@ public class IhealthDeviceManagerActivity extends Activity implements
     
   }
 
-  BroadcastReceiver mReceiver; //= new BroadcastReceiver() {
-    //   public void onReceive(Context context, Intent intent) {
-    //     Log.i(TAG, "onReceive");
-    //     String action = intent.getAction();
-    //     Log.i(TAG, "Action of onReceive" + action);
-    //   }
-    // };
+  BroadcastReceiver mReceiver = new BroadcastReceiver() {
+      public void onReceive(Context context, Intent intent) {
+        Log.i(TAG, "onReceive");
+        String action = intent.getAction();
+        Log.i(TAG, "Action of onReceive" + action);
+      }
+    };
   
   
   private Handler handler = new Handler(){
