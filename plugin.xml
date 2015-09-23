@@ -28,8 +28,6 @@
     <source-file src="src/android/libs/d2xx.jar" target-dir="libs" />
     <source-file src="src/android/libs/samsung_ble_sdk_200.jar" target-dir="libs" />
     
-    
-
     <config-file target="AndroidManifest.xml" parent="/manifest">
 
       <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -85,7 +83,6 @@
     <source-file src="src/android/co/vitallabs/plugin/IhealthBP5Activity.java"
                  target-dir="src/co/vitallabs/plugin" />
 
-    
   </platform>
 
   <!-- ios -->
