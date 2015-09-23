@@ -299,6 +299,12 @@ public class IhealthBP5Activity extends Activity implements
 	public void msgPowerOff() {
 		// TODO Auto-generated method stub
     Log.e(TAG, "Message POWER Off");
+    Intent intentResult = new Intent();
+    intentResult.putExtra("error", -2);
+    intentResult.putExtra("action", action);
+    setResult(RESULT_CANCELED, intentResult);
+    Log.i(TAG, "Back from unsuccesfull measure " + num);
+    finish();
 	}
 
   public void startMeasure () {
