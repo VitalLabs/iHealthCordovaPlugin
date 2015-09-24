@@ -263,6 +263,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     Log.i(TAG, "onResume");
 
     super.onResume();
+    Log.i(TAG, "Activity Height" + this.getWindow().getDecorView().getHeight());
   }
 
   @Override
