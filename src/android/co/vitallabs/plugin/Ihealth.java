@@ -81,8 +81,10 @@ public class Ihealth extends CordovaPlugin {
 
     if (action.equals("cleanPluginState")) {
       Log.i(TAG, "FinishActivity!!");
-      if (myIntent != null) {
-        finishActivity(IHEALTH_IS_BP5_CUFF_AVAILABLE);
+      try {
+        cordova.getActivity().finishActivity(IHEALTH_IS_BP5_CUFF_AVAILABLE);
+      } catch (Exception e) {
+        Log.e(TAG, "Exception in finishActivity");
       }
 
       callbackContext.success();
