@@ -90,7 +90,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     Log.i(TAG, "initDeviceManager");
     String userId = "devops@vitallabs.co";
     try {
-      setTimeoutHandler();
+      //setTimeoutHandler();
       deviceManager.initDeviceManager(this, userId);
       deviceManager.initReceiver();
       deviceManager.initBpStateCallback(this);
