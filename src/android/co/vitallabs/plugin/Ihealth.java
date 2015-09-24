@@ -86,7 +86,7 @@ public class Ihealth extends CordovaPlugin {
       } catch (Exception e) {
         Log.e(TAG, "Exception in finishActivity");
       }
-
+      resetPluginState();
       callbackContext.success();
     }
         
