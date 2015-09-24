@@ -48,7 +48,7 @@ public class Ihealth extends CordovaPlugin {
   private boolean isTakingMeasure;
   private boolean isChecking;
   private String mac;
-  
+
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
@@ -78,6 +78,15 @@ public class Ihealth extends CordovaPlugin {
       }
       return true;
     }
+
+    if (action.equals("cleanPluginState")) {
+      Log.i(TAG, "FinishActivity!!");
+      if (myIntent != null) {
+        finishActivity(IHEALTH_IS_BP5_CUFF_AVAILABLE);
+      }
+
+      callbackContext.success();
+    }
         
     return false;
   }
@@ -100,19 +109,19 @@ public class Ihealth extends CordovaPlugin {
           public void run () {
             cordova.setActivityResultCallback(plugin);
             Context context = plugin.cordova.getActivity().getApplicationContext();
-            Intent intent = new Intent(context, IhealthDeviceManagerActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-            intent.putExtra("action", IHEALTH_IS_BP5_CUFF_AVAILABLE);
+            Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
+            myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+            myIntent.putExtra("action", IHEALTH_IS_BP5_CUFF_AVAILABLE);
 
             if (mac != null && !mac.equals("")) {
               Log.i(TAG, "Checking for previous paired device: " + mac);
-              intent.putExtra("checkForDevice", true);
-              intent.putExtra("predefinedMac", mac);
+              myIntent.putExtra("checkForDevice", true);
+              myIntent.putExtra("predefinedMac", mac);
             } else {
-              intent.putExtra("checkForDevice", false);
+              myIntent.putExtra("checkForDevice", false);
             }
 
-            plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_IS_BP5_CUFF_AVAILABLE);
+            plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_IS_BP5_CUFF_AVAILABLE);
             
           }
         });

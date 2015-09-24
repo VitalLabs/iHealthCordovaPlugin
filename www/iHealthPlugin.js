@@ -35,3 +35,9 @@ window.pluginInitialize = function(callback) {
     }, "iHealthPlugin", "pluginInitialize", []);
 };
 
+window.cleanPluginState = function(callback) {
+    cordova.exec(callback, function(err) {
+        callback('Nothing to init. ' + err);
+    }, "iHealthPlugin", "cleanPluginState", []);
+};
+
