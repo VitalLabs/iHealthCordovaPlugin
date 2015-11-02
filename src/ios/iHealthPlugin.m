@@ -15,7 +15,7 @@ BP7Controller *bp7Controller = nil;
 BP5Controller *bp5Controller = nil;
 NSString * const BP5Cuff = @"BP5";
 NSString * const BP7Cuff = @"BP7";
-NSString available = nil;
+NSString *available = nil;
 
 @implementation iHealthPlugin
 
