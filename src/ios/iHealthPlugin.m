@@ -228,12 +228,12 @@ NSString available = nil;
 
 - (void) AnyDeviceConnect:(CDVInvokedUrlCommand*)command
 {
-  if ([available isEqualToString BP5Cuff]) {
+  if ([available isEqualToString:BP5Cuff]) {
     [self DeviceConnectForBP5:command];
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                      messageAsString:@"Device BP5"];
   } else {
-    if ([available isEqualToString BP7Cuff]) {
+    if ([available isEqualToString:BP7Cuff]) {
       [self DeviceConnectForBP7:command];
       pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                      messageAsString:@"Device BP7"];
