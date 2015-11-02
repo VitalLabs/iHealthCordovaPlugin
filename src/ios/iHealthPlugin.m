@@ -7,11 +7,15 @@
 // EOF Custom stuff
 
 #import "iHealthPlugin.h"
+#import "iHealthPluginConstants.h"
 #import <Cordova/CDV.h>
 
 CDVPluginResult* pluginResult = nil;
 BP7Controller *bp7Controller = nil;
 BP5Controller *bp5Controller = nil;
+NSString * const BP5Cuff = @"BP5";
+NSString * const BP7Cuff = @"BP7";
+NSString available = nil;
 
 @implementation iHealthPlugin
 
@@ -77,6 +81,34 @@ BP5Controller *bp5Controller = nil;
   [self.commandDelegate sendPluginResult:pluginResult
                                 callbackId:command.callbackId];
 }
+
+// Functions to make sure Cuffs are available
+- (void) isAnyCuffAvailable:(CDVInvokedUrlCommand*)command
+{
+
+  NSArray *bp7DeviceArray = [bp7Controller getAllCurrentBP7Instace];
+  NSArray *bp5DeviceArray = [bp5Controller getAllCurrentBP5Instace];
+
+
+  if(bp5DeviceArray.count) {
+    available = @"BP5";
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                       messageAsBool:true];
+  } else {
+    if(bp7DeviceArray.count) {
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                         messageAsBool:true];
+      available = @"BP7";
+    } else {
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                         messageAsBool:false];
+    }
+  }
+  
+  [self.commandDelegate sendPluginResult:pluginResult
+                                callbackId:command.callbackId];
+}
+
 
 // FUnctions to connect to Cuffs
 #pragma mark - BP7
@@ -194,6 +226,23 @@ BP5Controller *bp5Controller = nil;
     
 }
 
+- (void) AnyDeviceConnect:(CDVInvokedUrlCommand*)command
+{
+  if ([available isEqualToString BP5Cuff]) {
+    [self DeviceConnectForBP5:command];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                     messageAsString:@"Device BP5"];
+  } else {
+    if ([available isEqualToString BP7Cuff]) {
+      [self DeviceConnectForBP7:command];
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                     messageAsString:@"Device BP7"];
+    } else {
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                       messageAsString:@"Device NOT FOUND"];
+    }
+  }
+}
 
 // Functions for Disconnect Cuffs
 
