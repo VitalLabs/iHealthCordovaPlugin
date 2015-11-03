@@ -44,10 +44,15 @@ public class Ihealth extends CordovaPlugin {
   final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
 
+  final int IHEALTH_IS_BP7_CUFF_AVAILABLE = 3;
+  final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 4;
+
+  
   private boolean isCuffAvailable;
   private boolean isTakingMeasure;
   private boolean isChecking;
   private String mac;
+  private String cuffType;
 
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -79,6 +84,25 @@ public class Ihealth extends CordovaPlugin {
       return true;
     }
 
+    if (action.equals("DeviceConnectForBP7")) {
+      isTakingMeasure = true;
+      this.deviceConnectForBP7(callbackContext);
+      
+      return true;
+    }
+
+    if (action.equals("isBP7CuffAvailable")) {
+       
+      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable+ " - " +isTakingMeasure);
+      if (!isTakingMeasure && !isCuffAvailable && !isChecking) {
+        isBP7CuffAvailable(callbackContext);
+      } else {
+        callbackContext.success();
+      }
+      return true;
+    }
+    
+    
     if (action.equals("cleanPluginState")) {
       Log.i(TAG, "FinishActivity!!");
       try {
@@ -93,20 +117,23 @@ public class Ihealth extends CordovaPlugin {
     return false;
   }
 
-    private void pluginInitialize(CallbackContext callbackContext) {
-      callbackContext.success("Plugin Initialized");
-      isCuffAvailable = false;
-      isTakingMeasure = false;
-      isChecking = false;
-    }
-
+  private void pluginInitialize(CallbackContext callbackContext) {
+    callbackContext.success("Plugin Initialized");
+    isCuffAvailable = false;
+    isTakingMeasure = false;
+    isChecking = false;
+  }
   
-    private void isBP5CuffAvailable(CallbackContext callbackContext) {
+  // ===================
+  // BP5
+  // ===================
+  
+  private void isBP5CuffAvailable(CallbackContext callbackContext) {
 
-      if (!isChecking) {
-        isChecking = true;
-        final CordovaPlugin plugin = (CordovaPlugin) this;
-        cordova.getThreadPool().execute(new Runnable() {
+    if (!isChecking) {
+      isChecking = true;
+      final CordovaPlugin plugin = (CordovaPlugin) this;
+      cordova.getThreadPool().execute(new Runnable() {
           @Override
           public void run () {
             cordova.setActivityResultCallback(plugin);
@@ -114,7 +141,7 @@ public class Ihealth extends CordovaPlugin {
             Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
             myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
             myIntent.putExtra("action", IHEALTH_IS_BP5_CUFF_AVAILABLE);
-
+            
             if (mac != null && !mac.equals("")) {
               Log.i(TAG, "Checking for previous paired device: " + mac);
               myIntent.putExtra("checkForDevice", true);
@@ -122,41 +149,97 @@ public class Ihealth extends CordovaPlugin {
             } else {
               myIntent.putExtra("checkForDevice", false);
             }
-
+            
             plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_IS_BP5_CUFF_AVAILABLE);
             
           }
         });
-      } else {
-        Log.i(TAG, "is already checking our monitor...");
-      }
-      
+    } else {
+      Log.i(TAG, "is already checking our monitor...");
     }
+    
+  }
 
-    private void deviceConnectForBP5(CallbackContext callbackContext) {
+  private void deviceConnectForBP5(CallbackContext callbackContext) {
+    final CordovaPlugin plugin = (CordovaPlugin) this;
+    
+    cordova.getActivity().runOnUiThread(new Runnable() {
+        @Override
+        public void run () {
+          Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable + " - " +isTakingMeasure);
+          cordova.setActivityResultCallback(plugin);
+          Context context = plugin.cordova.getActivity().getApplicationContext();
+          Log.i(TAG, "before Activity");
+          Intent intent = new Intent(context, IhealthBP5Activity.class);
+          intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+          intent.putExtra("action", IHEALTH_DEVICE_CONNECT_FOR_BP5);
+          intent.putExtra("mAddress", mac);
+          plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_DEVICE_CONNECT_FOR_BP5);
+        }
+      });
+    
+  }
+
+  // ===================
+  // BP7
+  // ===================
+  
+  private void isBP7CuffAvailable(CallbackContext callbackContext) {
+
+    if (!isChecking) {
+      isChecking = true;
       final CordovaPlugin plugin = (CordovaPlugin) this;
-      
-      cordova.getActivity().runOnUiThread(new Runnable() {
+      cordova.getThreadPool().execute(new Runnable() {
           @Override
           public void run () {
-            Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable + " - " +isTakingMeasure);
             cordova.setActivityResultCallback(plugin);
             Context context = plugin.cordova.getActivity().getApplicationContext();
-            Log.i(TAG, "before Activity");
-            Intent intent = new Intent(context, IhealthBP5Activity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            intent.putExtra("action", IHEALTH_DEVICE_CONNECT_FOR_BP5);
-            intent.putExtra("mAddress", mac);
-            plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_DEVICE_CONNECT_FOR_BP5);
+            Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
+            myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+            myIntent.putExtra("action", IHEALTH_IS_BP7_CUFF_AVAILABLE);
+            
+            if (mac != null && !mac.equals("")) {
+              Log.i(TAG, "BP7: Checking for previous paired device: " + mac);
+              myIntent.putExtra("checkForDevice", true);
+              myIntent.putExtra("predefinedMac", mac);
+            } else {
+              myIntent.putExtra("checkForDevice", false);
+            }
+            
+            plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_IS_BP7_CUFF_AVAILABLE);
+            
           }
         });
-      
+    } else {
+      Log.i(TAG, "BP7 is already checking our monitor...");
     }
+    
+  }
 
-
+  private void deviceConnectForBP7(CallbackContext callbackContext) {
+    final CordovaPlugin plugin = (CordovaPlugin) this;
+    
+    cordova.getActivity().runOnUiThread(new Runnable() {
+        @Override
+        public void run () {
+          Log.i(TAG, "Var isBP7CuffAvailable " + isCuffAvailable + " - " +isTakingMeasure);
+          cordova.setActivityResultCallback(plugin);
+          Context context = plugin.cordova.getActivity().getApplicationContext();
+          Log.i(TAG, "BP7 before Activity");
+          Intent intent = new Intent(context, IhealthBP7Activity.class);
+          intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+          intent.putExtra("action", IHEALTH_DEVICE_CONNECT_FOR_BP7);
+          intent.putExtra("mAddress", mac);
+          plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_DEVICE_CONNECT_FOR_BP7);
+        }
+      });
+    
+  }
+  
+  
   private String bpGetErrorMessage (int errorCode) {
     String errorMessage = "Unknown Error";
-
+    
     switch (errorCode) {
       case 0:
         errorMessage = "Pressure system is unstable before measurement";
