@@ -358,7 +358,7 @@ public class Ihealth extends CordovaPlugin {
           isCuffAvailable = false;
           isChecking = false;
           mac = null;
-          deviceType = null;
+          deviceType = UNKNOWN_DEVICE;
           this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, false));
         }
         break;
