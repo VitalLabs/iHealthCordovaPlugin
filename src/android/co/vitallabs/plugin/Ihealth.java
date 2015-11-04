@@ -30,6 +30,7 @@ import org.json.JSONObject;
 // import co.vitallabs.plugin.IhealthActivity;
 import co.vitallabs.plugin.IhealthDeviceManagerActivity;
 import co.vitallabs.plugin.IhealthBP5Activity;
+import co.vitallabs.plugin.IhealthBP7Activity;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -45,7 +46,7 @@ public class Ihealth extends CordovaPlugin {
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
 
   final int IHEALTH_IS_BP7_CUFF_AVAILABLE = 3;
-  final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 4;
+  final int IHEALTH_DEVICE_CONNECT_FOR_BP7 = 4;
 
   final int IHEALTH_IS_ANY_CUFF_AVAILABLE = 5;
   final int IHEALTH_BP5 = 6;
@@ -254,19 +255,18 @@ public class Ihealth extends CordovaPlugin {
   }
 
   private void anyDeviceConnect(CallbackContext callbackContext) {
-    switch (deviceType) {
-      case IHEALTH_BP7:
-        Log.i(TAG, "anyDeviceConnect for BP7");
-        this.deviceConnectForBP7(callbackContext);
-        break;
-      case IHEALTH_BP5:
-        Log.i(TAG, "anyDeviceConnect for BP5");
-        this.deviceConnectForBP5(callbackContext);
-        break;
-      case UNKNOWN_DEVICE:
-        Log.i(TAG, "anyDeviceConnect for UNKNOWN_DEVICE");
-        resetPluginState();
-        callbackContext.error("Unknown Device");
+
+    if (deviceType == IHEALTH_BP5) {
+      Log.i(TAG, "anyDeviceConnect for BP5");
+      this.deviceConnectForBP5(callbackContext);
+        
+    } else if (deviceType == IHEALTH_BP7) {
+      Log.i(TAG, "anyDeviceConnect for BP7");
+      this.deviceConnectForBP7(callbackContext);
+      
+    } else {
+      resetPluginState();
+      callbackContext.error("Unknown Device");
     }
   }
   

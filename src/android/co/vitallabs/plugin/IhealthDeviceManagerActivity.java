@@ -69,11 +69,12 @@ public class IhealthDeviceManagerActivity extends Activity implements
   final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
   final int IHEALTH_IS_BP7_CUFF_AVAILABLE = 3;
-  final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 4;
+  final int IHEALTH_DEVICE_CONNECT_FOR_BP7 = 4;
 
   final int IHEALTH_IS_ANY_CUFF_AVAILABLE = 5;
   final int IHEALTH_BP5 = 6;
   final int IHEALTH_BP7 = 7;
+  final int UNKNOWN_DEVICE = 8;
   
   Handler myHandler;
 
