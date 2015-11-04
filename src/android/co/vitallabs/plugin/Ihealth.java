@@ -352,7 +352,7 @@ public class Ihealth extends CordovaPlugin {
         if (resultCode == Activity.RESULT_OK) {
           isCuffAvailable = true;
           mac =  intent.getStringExtra("result");
-          deviceType = intent.getIntExtra("type");
+          deviceType = intent.getIntExtra("type", UNKNOWN_DEVICE);
           this.callbackContext.success();
         } else {
           isCuffAvailable = false;
