@@ -118,7 +118,13 @@ public class Ihealth extends CordovaPlugin {
       }
       return true;
     }
-    
+
+    if (action.equals("AnyDeviceConnect")) {
+      isTakingMeasure = true;
+      this.anyDeviceConnect(callbackContext);
+
+      return true;
+    }
     
     if (action.equals("cleanPluginState")) {
       Log.i(TAG, "FinishActivity!!");
@@ -348,6 +354,8 @@ public class Ihealth extends CordovaPlugin {
     int actionResult = intent.getIntExtra("action", 1);
     switch (actionResult) {
       case IHEALTH_IS_ANY_CUFF_AVAILABLE:
+      case IHEALTH_IS_BP7_CUFF_AVAILABLE:
+      case IHEALTH_IS_BP5_CUFF_AVAILABLE:
         Log.i(TAG, "case BP available with mac:" + intent.getStringExtra("result"));
         if (resultCode == Activity.RESULT_OK) {
           isCuffAvailable = true;

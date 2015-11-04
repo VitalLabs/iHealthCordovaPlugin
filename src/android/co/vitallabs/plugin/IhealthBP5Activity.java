@@ -213,7 +213,7 @@ public class IhealthBP5Activity extends Activity implements
 			Intent intentResult = new Intent();
       intentResult.putExtra("result", false);
       intentResult.putExtra("action", action);
-      Log.i(TAG, "wird state done? " + intentResult);
+      Log.i(TAG, "weird state done? " + intentResult);
       setResult(RESULT_CANCELED, intentResult);
       finish();
       
