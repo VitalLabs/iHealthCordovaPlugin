@@ -58,7 +58,7 @@ public class Ihealth extends CordovaPlugin {
   private boolean isTakingMeasure;
   private boolean isChecking;
   private String mac;
-  private String deviceType;
+  private int deviceType;
 
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -352,7 +352,7 @@ public class Ihealth extends CordovaPlugin {
         if (resultCode == Activity.RESULT_OK) {
           isCuffAvailable = true;
           mac =  intent.getStringExtra("result");
-          deviceType = intent.getStringExtra("type");
+          deviceType = intent.getIntExtra("type");
           this.callbackContext.success();
         } else {
           isCuffAvailable = false;
