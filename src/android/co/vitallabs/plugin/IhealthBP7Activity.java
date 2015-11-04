@@ -218,7 +218,6 @@ public class IhealthBP7Activity extends Activity implements
 			Log.i(TAG, "getbpControl " + bpControl);
 			bpControl.controlSubject.attach(this);
       Log.i(TAG, "forceTakeMeasure " + action);
-      (if bp)
       startMeasure();
 		} else {
 			Intent intentResult = new Intent();
