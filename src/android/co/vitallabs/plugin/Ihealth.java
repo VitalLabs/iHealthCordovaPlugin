@@ -363,7 +363,8 @@ public class Ihealth extends CordovaPlugin {
         }
         break;
 
-      case IHEALTH_DEVICE_CONNECT_FOR_BP5:
+    case IHEALTH_DEVICE_CONNECT_FOR_BP5:
+    case IHEALTH_DEVICE_CONNECT_FOR_BP7:
         Log.i(TAG, "deviceConnect case result");
         if (resultCode == Activity.RESULT_OK) {
           try {
