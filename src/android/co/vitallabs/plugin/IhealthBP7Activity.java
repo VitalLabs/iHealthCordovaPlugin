@@ -33,7 +33,7 @@ import android.util.Log;
 public class IhealthBP7Activity extends Activity implements
                                                 Interface_Observer_BP {
   private BPControl bpControl;
-	private String TAG = "IhealthBP5Activity";
+	private String TAG = "IhealthBP7Activity";
 	private boolean isOffline = false;
 	private String mAddress;
 	private DeviceManager deviceManager;
@@ -250,6 +250,9 @@ public class IhealthBP7Activity extends Activity implements
 	public void msgUserStatus(int status) {
 		// TODO Auto-generated method stub
 		Log.e(TAG, "User status " + status);
+    if (status == 2) {
+      bpControl.angleIsOk();
+    }
 	}
 
 	@Override
