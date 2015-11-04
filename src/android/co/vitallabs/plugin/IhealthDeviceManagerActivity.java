@@ -63,12 +63,18 @@ public class IhealthDeviceManagerActivity extends Activity implements
   private boolean activityResultKeepRunning;
   private int action;
 
+  private int availableType;
+  
   final int IHEALTH_INITIALIZE_PLUGIN = 0;
   final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
   final int IHEALTH_IS_BP7_CUFF_AVAILABLE = 3;
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 4;
 
+  final int IHEALTH_IS_ANY_CUFF_AVAILABLE = 5;
+  final int IHEALTH_BP5 = 6;
+  final int IHEALTH_BP7 = 7;
+  
   Handler myHandler;
 
   
@@ -347,7 +353,14 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
     Intent intentResult = new Intent();
     intentResult.putExtra("result", deviceMac);
-    intentResult.putExtra("type", deviceType);
+    
+    if (deviceType.equals("BP5")) {
+      intentResult.putExtra("type", this.IHEALTH_BP5);
+    } else if (deviceType.equals("BP7")) {
+      intentResult.putExtra("type", this.IHEALTH_BP7);
+    } else  {
+      intentResult.putExtra("type", this.UNKNOWN_DEVICE);
+    }
     intentResult.putExtra("action", action);
     Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
     setResult(RESULT_OK, intentResult);
