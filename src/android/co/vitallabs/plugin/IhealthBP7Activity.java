@@ -320,7 +320,7 @@ public class IhealthBP7Activity extends Activity implements
   public void startMeasure () {
     String clientID =  "b42e648c6c224f9a890e7d9323dc5b6a";
     String clientSecret = "ce7a64efe52e446990f1c696e864d3a7";
-    bpControl.startk(IhealthBP7Activity.this, clientID, clientSecret);
+    bpControl.start(IhealthBP7Activity.this, clientID, clientSecret);
   }
 
 }

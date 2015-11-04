@@ -139,7 +139,7 @@ public class Ihealth extends CordovaPlugin {
     isCuffAvailable = false;
     isTakingMeasure = false;
     isChecking = false;
-    deviceType = null;
+    deviceType = UNKNOWN_DEVICE;
   }
   
   // ===================
