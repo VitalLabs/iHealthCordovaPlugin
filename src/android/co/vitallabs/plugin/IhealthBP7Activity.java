@@ -272,6 +272,7 @@ public class IhealthBP7Activity extends Activity implements
 		// TODO Auto-generated method stub
     Log.i(TAG, "We've got an angle stuff: " + angle);
     if (angle == 1) {
+      Log.i(TAG, "Angle is ok!");
       bpControl.angleIsOk();
     } else {
       Log.i(TAG, "Not the right angle: " + angle);
