@@ -250,9 +250,9 @@ public class IhealthBP7Activity extends Activity implements
 	public void msgUserStatus(int status) {
 		// TODO Auto-generated method stub
 		Log.e(TAG, "User status " + status);
-    if (status < 5 ) {
-      bpControl.angleIsOk();
-    }
+    // if (status < 5 ) {
+    //   bpControl.angleIsOk();
+    // }
 	}
 
 	@Override
@@ -271,6 +271,11 @@ public class IhealthBP7Activity extends Activity implements
 	public void msgAngle(int angle) {
 		// TODO Auto-generated method stub
     Log.i(TAG, "We've got an angle stuff: " + angle);
+    if (angle == 1) {
+      bpControl.angleIsOk();
+    } else {
+      Log.i(TAG, "Not the right angle: " + angle);
+    }
 	}
 
 	@Override
