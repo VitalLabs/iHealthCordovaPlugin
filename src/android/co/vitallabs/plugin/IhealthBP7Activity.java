@@ -270,7 +270,7 @@ public class IhealthBP7Activity extends Activity implements
 	@Override
 	public void msgAngle(int angle) {
 		// TODO Auto-generated method stub
-
+    Log.i(TAG, "We've got an angle stuff: " + angle);
 	}
 
 	@Override
