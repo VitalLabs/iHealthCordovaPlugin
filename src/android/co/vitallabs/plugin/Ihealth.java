@@ -246,7 +246,7 @@ public class Ihealth extends CordovaPlugin {
     cordova.getActivity().runOnUiThread(new Runnable() {
         @Override
         public void run () {
-          Log.i(TAG, "Var isBP7CuffAvailable " + isCuffAvailable + " - " +isTakingMeasure);
+          Log.i(TAG, "Var isBP7CuffAvailable " + isCuffAvailable + " - " +isTakingMeasure + " " + mac + " - " + IHEALTH_DEVICE_CONNECT_FOR_BP7);
           cordova.setActivityResultCallback(plugin);
           Context context = plugin.cordova.getActivity().getApplicationContext();
           Log.i(TAG, "BP7 before Activity");
@@ -343,6 +343,7 @@ public class Ihealth extends CordovaPlugin {
     isTakingMeasure = false;
     isCuffAvailable = false;
     isChecking = false;
+    deviceType = UNKNOWN_DEVICE;
   }
   
   @Override
