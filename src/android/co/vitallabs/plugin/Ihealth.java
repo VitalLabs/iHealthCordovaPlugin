@@ -166,10 +166,11 @@ public class Ihealth extends CordovaPlugin {
             myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
             myIntent.putExtra("action", IHEALTH_IS_ANY_CUFF_AVAILABLE);
             
-            if (mac != null && !mac.equals("")) {
+            if (mac != null && !mac.equals("") && deviceType != UNKNOWN_DEVICE) {
               Log.i(TAG, "Checking for previous paired device: " + mac);
               myIntent.putExtra("checkForDevice", true);
               myIntent.putExtra("predefinedMac", mac);
+              myIntent.putExtra("predefinedType", deviceType);
             } else {
               myIntent.putExtra("checkForDevice", false);
             }
