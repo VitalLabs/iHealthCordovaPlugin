@@ -41,6 +41,7 @@ public class IhealthBP7Activity extends Activity implements
   private boolean keepRunning;
   private boolean activityResultKeepRunning;
   private int action;
+  private boolean measureStarted;
 
   final int IHEALTH_INITIALIZE_PLUGIN = 0;
   final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
@@ -65,6 +66,7 @@ public class IhealthBP7Activity extends Activity implements
     action = getIntent().getIntExtra("action", 1);
     mAddress = getIntent().getStringExtra("mAddress");
     super.onCreate(savedInstanceState);
+    measureStarted = false;
     String userId = "devops@vitallabs.co";
     deviceManager = DeviceManager.getInstance();
     getbpControl();
@@ -272,8 +274,15 @@ public class IhealthBP7Activity extends Activity implements
 		// TODO Auto-generated method stub
     Log.i(TAG, "We've got an angle stuff: " + angle);
     if (angle == 1) {
-      Log.i(TAG, "Angle is ok!");
-      bpControl.angleIsOk();
+      
+      if (!measureStarted) {
+        Log.i(TAG, "Angle is ok!");
+        measureStarted = true;
+        bpControl.angleIsOk();
+      } else {
+        Log.i(TAG, "Angle is Ok but measure is in process");
+      }
+        
     } else {
       Log.i(TAG, "Not the right angle: " + angle);
     }
@@ -307,6 +316,7 @@ public class IhealthBP7Activity extends Activity implements
 	public void msgResult(int[] result) {
 		// TODO Auto-generated method stub
     Log.e(TAG, "msgResult: "+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
+    measureStarted = false;
     Intent intentResult = new Intent();
     intentResult.putExtra("result", result);
     intentResult.putExtra("action", action);
