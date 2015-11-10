@@ -343,8 +343,8 @@ public class Ihealth extends CordovaPlugin {
     isTakingMeasure = false;
     isCuffAvailable = false;
     isChecking = false;
-    deviceType = UNKNOWN_DEVICE;
-    mac = null;
+    //deviceType = UNKNOWN_DEVICE;
+    //mac = null;
   }
   
   @Override
