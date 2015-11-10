@@ -217,7 +217,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
     
     if (getIntent().getBooleanExtra("checkForDevice", false) &&
-        getIntent().getStringExtra("predefinedMac") != null
+        getIntent().getStringExtra("predefinedMac") != null &&
         getIntent().getIntExtra("predefinedType", UNKNOWN_DEVICE) != UNKNOWN_DEVICE) {
       String predefinedMac = getIntent().getStringExtra("predefinedMac");
       int predefinedType = getIntent().getIntExtra("predefinedType", UNKNOWN_DEVICE);
