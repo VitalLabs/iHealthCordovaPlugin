@@ -42,7 +42,7 @@ CBCentralManager *manager = nil;
 - (void)pluginInitialize:(CDVInvokedUrlCommand*)command 
 {
 
-  manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+  manager = [[CBCentralManager alloc] initWithDelegate:nil queue:nil];
 
   int bluetoothState = [manager state];
 
