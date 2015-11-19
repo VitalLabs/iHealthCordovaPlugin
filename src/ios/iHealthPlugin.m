@@ -42,22 +42,22 @@ CBCentralManager *manager = nil;
 - (void)pluginInitialize:(CDVInvokedUrlCommand*)command 
 {
 
-  manager = [[CBCentralManager alloc] initWithDelegate:nil queue:nil];
+  // manager = [[CBCentralManager alloc] initWithDelegate:nil queue:nil];
 
-  int bluetoothState = [manager state];
+  //int bluetoothState = [manager state];
 
-  BOOL enabled = bluetoothState == CBCentralManagerStatePoweredOn;
+  //BOOL enabled = bluetoothState == CBCentralManagerStatePoweredOn;
 
-  if (enabled) {
+  //if (enabled) {
       bp7Controller = [BP7Controller shareBP7Controller];
       bp5Controller = [BP5Controller shareBP5Controller];
 
       pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                        messageAsString:[NSString stringWithFormat: @"pluginInitialize BP7: %@ BP5: %@", bp7Controller, bp5Controller]];
-  } else {
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:bluetoothState];
+      //} else {
+      //pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:bluetoothState];
     
-  }
+      //}
     
   [self.commandDelegate sendPluginResult:pluginResult
                               callbackId:command.callbackId];
