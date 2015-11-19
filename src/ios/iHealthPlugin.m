@@ -9,7 +9,7 @@
 #import "iHealthPlugin.h"
 #import "iHealthPluginConstants.h"
 #import <Cordova/CDV.h>
-#import <CoreBluetooth/CoreBluetooth.h>
+//#import <CoreBluetooth/CoreBluetooth.h>
 
 CDVPluginResult* pluginResult = nil;
 BP7Controller *bp7Controller = nil;
@@ -18,7 +18,7 @@ NSString * const BP5Cuff = @"BP5";
 NSString * const BP7Cuff = @"BP7";
 NSString *available = nil;
 
-CBCentralManager *manager = nil;
+//CBCentralManager *manager = nil;
 
 
 @implementation iHealthPlugin
