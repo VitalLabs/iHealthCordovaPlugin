@@ -121,6 +121,12 @@
         <string>com.jiuan.BPV21</string>
       </array>
     </config-file>
+
+    <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+      <array>
+        <string>epicmychart</string>
+      </array>
+    </config-file>
     
     <header-file src="src/ios/BPHeader.h" />
     <header-file src="src/ios/BP5Controller.h" />

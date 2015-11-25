@@ -9,7 +9,6 @@
 #import "iHealthPlugin.h"
 #import "iHealthPluginConstants.h"
 #import <Cordova/CDV.h>
-//#import <CoreBluetooth/CoreBluetooth.h>
 
 CDVPluginResult* pluginResult = nil;
 BP7Controller *bp7Controller = nil;
@@ -17,9 +16,6 @@ BP5Controller *bp5Controller = nil;
 NSString * const BP5Cuff = @"BP5";
 NSString * const BP7Cuff = @"BP7";
 NSString *available = nil;
-
-//CBCentralManager *manager = nil;
-
 
 @implementation iHealthPlugin
 
@@ -41,24 +37,11 @@ NSString *available = nil;
 // Custom stuff
 - (void)pluginInitialize:(CDVInvokedUrlCommand*)command 
 {
+  bp7Controller = [BP7Controller shareBP7Controller];
+  bp5Controller = [BP5Controller shareBP5Controller];
 
-  // manager = [[CBCentralManager alloc] initWithDelegate:nil queue:nil];
-
-  //int bluetoothState = [manager state];
-
-  //BOOL enabled = bluetoothState == CBCentralManagerStatePoweredOn;
-
-  //if (enabled) {
-      bp7Controller = [BP7Controller shareBP7Controller];
-      bp5Controller = [BP5Controller shareBP5Controller];
-
-      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                       messageAsString:[NSString stringWithFormat: @"pluginInitialize BP7: %@ BP5: %@", bp7Controller, bp5Controller]];
-      //} else {
-      //pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:bluetoothState];
-    
-      //}
-    
+  pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                   messageAsString:[NSString stringWithFormat: @"pluginInitialize BP7: %@ BP5: %@", bp7Controller, bp5Controller]];
   [self.commandDelegate sendPluginResult:pluginResult
                               callbackId:command.callbackId];
 }
