@@ -141,11 +141,11 @@ public class Ihealth extends CordovaPlugin {
   }
 
   private void pluginInitialize(CallbackContext callbackContext) {
-    callbackContext.success("Plugin Initialized");
     isCuffAvailable = false;
     isTakingMeasure = false;
     isChecking = false;
     deviceType = UNKNOWN_DEVICE;
+    callbackContext.success("Plugin Initialized");
   }
   
   // ===================
