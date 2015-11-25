@@ -359,7 +359,7 @@ public class Ihealth extends CordovaPlugin {
       case IHEALTH_IS_ANY_CUFF_AVAILABLE:
       case IHEALTH_IS_BP7_CUFF_AVAILABLE:
       case IHEALTH_IS_BP5_CUFF_AVAILABLE:
-        Log.i(TAG, "case BP available with mac:" + intent.getStringExtra("result"));
+        //Log.i(TAG, "case BP available with mac:" + intent.getStringExtra("result"));
         if (resultCode == Activity.RESULT_OK) {
           Log.i(TAG, "Available? OK");
           isCuffAvailable = true;
