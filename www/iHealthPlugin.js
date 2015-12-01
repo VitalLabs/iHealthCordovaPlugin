@@ -28,6 +28,17 @@ window.isBP5CuffAvailable = function(callback) {
     }, "iHealthPlugin", "isBP5CuffAvailable", []);
 };
 
+window.AnyDeviceConnect = function(callback) {
+    cordova.exec(callback, function(err) {
+        callback('Nothing to Connecting. ' + err);
+    }, "iHealthPlugin", "AnyDeviceConnect", []);
+};
+
+window.isAnyCuffAvailable = function(callback) {
+    cordova.exec(callback, function(err) {
+        callback(err);
+    }, "iHealthPlugin", "isAnyCuffAvailable", []);
+};
 
 window.pluginInitialize = function(callback) {
     cordova.exec(callback, function(err) {

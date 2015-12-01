@@ -63,6 +63,12 @@
           android:noHistory="true"
           android:theme = "@android:style/Theme.NoDisplay">
       </activity>
+
+      <activity 
+          android:name="co.vitallabs.plugin.IhealthBP7Activity"
+          android:noHistory="true"
+          android:theme = "@android:style/Theme.NoDisplay">
+      </activity>
      
       <service
           android:name="com.jiuan.android.sdk.ble.manager.LPCBT422Service"
@@ -81,6 +87,9 @@
                  target-dir="src/co/vitallabs/plugin" />
 
     <source-file src="src/android/co/vitallabs/plugin/IhealthBP5Activity.java"
+                 target-dir="src/co/vitallabs/plugin" />
+
+    <source-file src="src/android/co/vitallabs/plugin/IhealthBP7Activity.java"
                  target-dir="src/co/vitallabs/plugin" />
 
   </platform>
@@ -112,6 +121,12 @@
         <string>com.jiuan.BPV21</string>
       </array>
     </config-file>
+
+    <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+      <array>
+        <string>epicmychart</string>
+      </array>
+    </config-file>
     
     <header-file src="src/ios/BPHeader.h" />
     <header-file src="src/ios/BP5Controller.h" />
@@ -125,6 +140,7 @@
     <header-file src="src/ios/ABI.h" />
     <header-file src="src/ios/ABIController.h" />
     <header-file src="src/ios/iHealthPlugin.h" />
+    <header-file src="src/ios/iHealthPluginConstants.h" />
     
     <source-file src="src/ios/iHealthLibrary(1.0.6).a" framework="true"/>
     <source-file src="src/ios/iHealthPlugin.m" />

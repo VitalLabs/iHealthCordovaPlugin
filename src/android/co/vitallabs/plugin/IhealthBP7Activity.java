@@ -30,10 +30,10 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 
-public class IhealthBP5Activity extends Activity implements
+public class IhealthBP7Activity extends Activity implements
                                                 Interface_Observer_BP {
   private BPControl bpControl;
-	private String TAG = "IhealthBP5Activity";
+	private String TAG = "IhealthBP7Activity";
 	private boolean isOffline = false;
 	private String mAddress;
 	private DeviceManager deviceManager;
@@ -41,10 +41,21 @@ public class IhealthBP5Activity extends Activity implements
   private boolean keepRunning;
   private boolean activityResultKeepRunning;
   private int action;
+  private boolean measureStarted;
 
   final int IHEALTH_INITIALIZE_PLUGIN = 0;
   final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
+
+  final int IHEALTH_IS_BP7_CUFF_AVAILABLE = 3;
+  final int IHEALTH_DEVICE_CONNECT_FOR_BP7 = 4;
+
+  final int IHEALTH_IS_ANY_CUFF_AVAILABLE = 5;
+  final int IHEALTH_BP5 = 6;
+  final int IHEALTH_BP7 = 7;
+  final int UNKNOWN_DEVICE = 8;
+
+  
   Handler myHandler;
 
   
@@ -55,6 +66,7 @@ public class IhealthBP5Activity extends Activity implements
     action = getIntent().getIntExtra("action", 1);
     mAddress = getIntent().getStringExtra("mAddress");
     super.onCreate(savedInstanceState);
+    measureStarted = false;
     String userId = "devops@vitallabs.co";
     deviceManager = DeviceManager.getInstance();
     getbpControl();
@@ -77,7 +89,7 @@ public class IhealthBP5Activity extends Activity implements
   public void setTimeoutHandler() {
     Log.i(TAG, "setTimeoutHandler");
     myHandler = new Handler();
-    if (action == IHEALTH_IS_BP5_CUFF_AVAILABLE) {
+    if (action == IHEALTH_IS_BP7_CUFF_AVAILABLE) {
       myHandler.postDelayed(mRunnable, 1000);
     } else {
       myHandler.postDelayed(mRunnable, 3000);
@@ -240,6 +252,9 @@ public class IhealthBP5Activity extends Activity implements
 	public void msgUserStatus(int status) {
 		// TODO Auto-generated method stub
 		Log.e(TAG, "User status " + status);
+    // if (status < 5 ) {
+    //   bpControl.angleIsOk();
+    // }
 	}
 
 	@Override
@@ -257,7 +272,20 @@ public class IhealthBP5Activity extends Activity implements
 	@Override
 	public void msgAngle(int angle) {
 		// TODO Auto-generated method stub
-
+    Log.i(TAG, "We've got an angle stuff: " + angle);
+    if (angle == 1) {
+      
+      if (!measureStarted) {
+        Log.i(TAG, "Angle is ok!");
+        measureStarted = true;
+        bpControl.angleIsOk();
+      } else {
+        Log.i(TAG, "Angle is Ok but measure is in process");
+      }
+        
+    } else {
+      Log.i(TAG, "Not the right angle: " + angle);
+    }
 	}
 
 	@Override
@@ -288,6 +316,7 @@ public class IhealthBP5Activity extends Activity implements
 	public void msgResult(int[] result) {
 		// TODO Auto-generated method stub
     Log.e(TAG, "msgResult: "+ result[0]+" "+result[1]+" "+result[2]+" "+ Arrays.toString(result));
+    measureStarted = false;
     Intent intentResult = new Intent();
     intentResult.putExtra("result", result);
     intentResult.putExtra("action", action);
@@ -310,7 +339,8 @@ public class IhealthBP5Activity extends Activity implements
   public void startMeasure () {
     String clientID =  "b42e648c6c224f9a890e7d9323dc5b6a";
     String clientSecret = "ce7a64efe52e446990f1c696e864d3a7";
-    bpControl.start(IhealthBP5Activity.this, clientID, clientSecret);
+    Log.e(TAG, "startMeasure");
+    bpControl.start(IhealthBP7Activity.this, clientID, clientSecret);
   }
 
 }

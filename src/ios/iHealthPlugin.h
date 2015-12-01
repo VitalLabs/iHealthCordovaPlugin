@@ -15,4 +15,7 @@
 - (void) DeviceDisConnectForBP5:(CDVInvokedUrlCommand*)command;
 - (void) isBP5CuffAvailable:(CDVInvokedUrlCommand*)command;
 
+- (void) AnyDeviceConnect:(CDVInvokedUrlCommand*)command;
+- (void) isAnyCuffAvailable:(CDVInvokedUrlCommand*)command;
+
 @end

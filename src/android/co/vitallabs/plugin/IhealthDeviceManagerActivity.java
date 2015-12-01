@@ -63,9 +63,19 @@ public class IhealthDeviceManagerActivity extends Activity implements
   private boolean activityResultKeepRunning;
   private int action;
 
+  private int availableType;
+  
   final int IHEALTH_INITIALIZE_PLUGIN = 0;
   final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
+  final int IHEALTH_IS_BP7_CUFF_AVAILABLE = 3;
+  final int IHEALTH_DEVICE_CONNECT_FOR_BP7 = 4;
+
+  final int IHEALTH_IS_ANY_CUFF_AVAILABLE = 5;
+  final int IHEALTH_BP5 = 6;
+  final int IHEALTH_BP7 = 7;
+  final int UNKNOWN_DEVICE = 8;
+  
   Handler myHandler;
 
   
@@ -207,8 +217,10 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
     
     if (getIntent().getBooleanExtra("checkForDevice", false) &&
-        getIntent().getStringExtra("predefinedMac") != null) {
+        getIntent().getStringExtra("predefinedMac") != null &&
+        getIntent().getIntExtra("predefinedType", UNKNOWN_DEVICE) != UNKNOWN_DEVICE) {
       String predefinedMac = getIntent().getStringExtra("predefinedMac");
+      int predefinedType = getIntent().getIntExtra("predefinedType", UNKNOWN_DEVICE);
       Log.i(TAG, "Get a predefinedMac address check if is available:" + predefinedMac);
 
       bpControl = deviceManager.getBpDevice(predefinedMac);
@@ -217,6 +229,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
         Log.i(TAG, "bpControl show that we already hace a Cuff available!");
         Intent intentResult = new Intent();
         intentResult.putExtra("result", predefinedMac);
+        intentResult.putExtra("type", predefinedType);
         intentResult.putExtra("action", action);
         Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
         setResult(RESULT_OK, intentResult);
@@ -277,6 +290,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   protected void onStop() {
     Log.i(TAG, "onStopActivity");    
     super.onStop();
+    unReceiver();
   }
 
 
@@ -344,6 +358,14 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
     Intent intentResult = new Intent();
     intentResult.putExtra("result", deviceMac);
+    
+    if (deviceType.equals("BP5")) {
+      intentResult.putExtra("type", this.IHEALTH_BP5);
+    } else if (deviceType.equals("BP7")) {
+      intentResult.putExtra("type", this.IHEALTH_BP7);
+    } else  {
+      intentResult.putExtra("type", this.UNKNOWN_DEVICE);
+    }
     intentResult.putExtra("action", action);
     Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
     setResult(RESULT_OK, intentResult);
