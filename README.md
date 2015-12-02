@@ -82,7 +82,7 @@ This plugin exposes two different types of functions:
   => false //if error occurred while taking the measure
   ```
 
-Note: All this function will return undefined, the callbacks are the functions that receive the result, usually the callback is a function that receives at least one argument with the result of the plugin API call.
+Note: All these function will return undefined, the callbacks are the functions that receive the result, usually the callback is a function that receives at least one argument with the result of the plugin API call.
 
 Usually you will first see if there's a BPControl device connected to the device before calling a connect function.
 
