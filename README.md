@@ -1,7 +1,7 @@
 iHealth Cordova plugin
 ====================
 
-This cordova plugin provides a set of Cordova API functions to interact with iHealth Blood Pressure Control.
+This cordova plugin provides a set of Cordova API functions to interact with iHealth Blood Pressure Control devices.
 
 ###Limitations
 Supported devices:
@@ -12,9 +12,9 @@ Supported Platforms
  - Android 4.0+
  - iOS 8.0+
 
-Tested only on a Appgyver Steroids project.
+Tested only on Appgyver Steroids project.
 
-Device must be paired with the phone before being able to retrive info from it.
+Device must be paired with the phone before being able to retrieve info from it.
 
 ##Before Usage
 
@@ -81,7 +81,9 @@ This plugin exposes two different types of functions:
   => {DIA: 120, SYS: 80, heartRate: 95} // if success
   => false //if error occurred while taking the measure
   ```
-  
+
+Note: All this function will return undefined, the callbacks are the functions that receive the result, usually the callback is a function that receives at least one argument with the result of the plugin API call.
+
 Usually you will first see if there's a BPControl device connected to the device before calling a connect function.
 
-If paired with a BP7 and using either window.AnyDeviceConnect or window.DeviceConnectForBP7 the measure will start if and only if the cuff is between 10 ans 30 degrees from the horizontal table. For more info about taking a valid measure please see the devices manual.
+If paired with a BP7 and using either window.AnyDeviceConnect or window.DeviceConnectForBP7 the measure will start if and only if the cuff is between 10 and 30 degrees from the horizontal table. For more info about taking a valid measure please see the devices manual.
