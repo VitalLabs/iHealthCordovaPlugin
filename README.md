@@ -21,7 +21,7 @@ Device must be paired with the phone before being able to retrive info from it.
  - Make sure that you are registered on: https://developer.ihealthlabs.com
  - Register an app on iHealth developer portal and add capability to use the Android/iOS SDK
 
-##Usuage
+##Usage
  - Remember to include the iHealthPlugin.js into your index.html
 
 ```html
@@ -61,12 +61,26 @@ This plugin exposes two different types of functions:
   => true // if cuff available
   => false // if the scan couldn't find a valid devices paired
   ```
- - If any of above functions return a success callback, the Cordova app can use any of the following functions to retrieve a 
+ - If any of above functions return a success callback, the Cordova app can use any of the following functions to retrieve blood pressure measure data. If you don't care about the device type you should only use `window.AnyDeviceConnect`.
+  - window.DeviceConnectForBP5 (only for BP5 cuffs)
+  ```javascript
+  window.DeviceConnectForBP5(successCallback, errrorCallback);
+  => {DIA: 120, SYS: 80, heartRate 95} // if success
+  => false //if error occurred while taking the measure
+  ```
+  - window.DeviceConnectForBP7 (only for BP7 cuffs)
+  ```javascript
+  window.DeviceConnectForBP7(successCallback, errrorCallback);
+  => {DIA: 120, SYS: 80, heartRate 95} // if success
+  => false //if error occurred while taking the measure
+  ```
+  - window.AnyDeviceConnect (Both BP5 and BP7, takes more priority a BP5 Cuff)
+  ```javascript
+  window.DeviceConnectForBP5(successCallback, errrorCallback);
+  => {DIA: 120, SYS: 80, heartRate 95} // if success
+  => false //if error occurred while taking the measure
+  ```
 
 Usually you will first see if there's a BPControl device connected to the device before calling a connect function.
 
-```
-window.ihealth("echome", function(echoValue) {
-    alert(echoValue == "echome"); // should alert true.
-});
-```
+If paired with a BP7 and using either window.AnyDeviceConnect or window.DeviceConnectForBP7 the measure will start if and only if the cuff is between 10 ans 30 degrees from the horizontal table. For more info about taking a valid measure please see the devices manual.
