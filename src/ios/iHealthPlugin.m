@@ -232,7 +232,7 @@ NSString *available = nil;
                                                 callbackId:command.callbackId];
                   } errorBlock:^(BPDeviceError error) {
                     NSLog(@"error:%d",error);
-                    NSString *msg = [getErrorMessage error];
+                    NSString *msg = [NSString getErrorMessage error];
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                      messageAsString:msg];
                     [self.commandDelegate sendPluginResult:pluginResult
@@ -241,7 +241,7 @@ NSString *available = nil;
             }
         } errorBlock:^(BPDeviceError error) {
             NSLog(@"error:%d",error);
-            NSString *msg = [getErrorMessage msg];
+            NSString *msg = [NSString getErrorMessage error];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                              messageAsString:msg];
             [self.commandDelegate sendPluginResult:pluginResult
@@ -294,7 +294,7 @@ NSString *available = nil;
                                         callbackId:command.callbackId];
         } errorBlock:^(BPDeviceError error) {
             NSLog(@"error:%d",error);
-            NSString *msg = [getErrorMessage msg];
+            NSString *msg = [NSString getErrorMessage error];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                              messageAsString:msg];
             [self.commandDelegate sendPluginResult:pluginResult
