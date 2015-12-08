@@ -7,7 +7,7 @@
 - (void) pluginInitialize:(CDVInvokedUrlCommand*)command;
 - (void) ihealth:(CDVInvokedUrlCommand*)command;
 
-+ (NSString*) getErrorMessage:(int)error;
+- (NSString*) getErrorMessage:(int)error;
 
 - (void) DeviceConnectForBP7:(CDVInvokedUrlCommand*)command;
 - (void) DeviceDisConnectForBP7:(CDVInvokedUrlCommand*)command;
