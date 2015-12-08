@@ -49,7 +49,7 @@ NSString *available = nil;
 
 // Useful for getting the error on a measure
 
-- (NSString*) getErrorMessage: (int)error
++ (NSString*) getErrorMessage: (int)error
 {
   NSString *msg = @"Unknown error";
 
