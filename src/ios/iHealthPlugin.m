@@ -47,6 +47,89 @@ NSString *available = nil;
 }
 
 
+// Useful for getting the error on a measure
+
+- (NSString*) getErrorMessage: (int)error
+{
+  NSString *msg = @"Unknown error";
+
+  switch (error)
+  {
+    case 0:
+      msg = @"Unable to take measurements due to arm/wrist movements";
+      break;
+    case 1:
+      msg = @"Failed to detect systolic pressure";
+      break;
+
+    case 2:
+      msg = @"Failed to detect diastolic pressure";
+      break;
+
+    case 3:
+      msg = @"Pneumatic system blocked or cuff is too tight during inflation";
+      break;
+
+    case 4:
+      msg = @"Pneumatic system leakage or cuff is too loose during inflaiton";
+      break;
+
+    case 5:
+      msg = @"Cuff pressure reached over 300mmHg";
+      break;
+
+    case 6:
+      msg = @"Cuff pressure reached over 15mmHg for more than 160 seconds";
+      break;
+
+    case 7:
+      msg = @"Data retrieving error";
+      break;
+
+    case 8:
+      msg = @"Data retrieving error";
+      break;
+
+    case 9:
+      msg = @"Data retrieving error";
+      break;
+
+    case 10:
+      msg = @"Data retrieving error";
+      break;
+
+    case 11:
+      msg = @"Communication Error";
+      break;
+
+    case 12:
+      msg = @"Communication Error";
+      break;
+
+    case 13:
+      msg = @"Low battery";
+      break;
+
+    case 15:
+      msg = @"Systolic exceeds 260mmHg or diastolic exceeds 199mmHg";
+      break;
+
+    case 16:
+      msg = @"Systolic below 60mmHg or diastolic below 40mmHg";
+      break;
+
+    case 17:
+      msg = @"Arm/wrist movement beyond range";
+      break;
+
+    case 18:
+      msg = @"Device Error";
+      break;
+  }
+
+  return msg;
+}
+
 // Functions to make sure Cuffs are available
 - (void) isBP7CuffAvailable:(CDVInvokedUrlCommand*)command
 {
@@ -149,16 +232,18 @@ NSString *available = nil;
                                                 callbackId:command.callbackId];
                   } errorBlock:^(BPDeviceError error) {
                     NSLog(@"error:%d",error);
+                    NSString *msg = [self getErrorMessage:error];
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                                     messageAsString:@"Device Error"];
+                                                     messageAsString:msg];
                     [self.commandDelegate sendPluginResult:pluginResult
                                                 callbackId:command.callbackId];
                 }];
             }
         } errorBlock:^(BPDeviceError error) {
             NSLog(@"error:%d",error);
+            NSString *msg = [self getErrorMessage:error];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                             messageAsString:@"Device Error"];
+                                             messageAsString:msg];
             [self.commandDelegate sendPluginResult:pluginResult
                                         callbackId:command.callbackId];
         }];
@@ -209,8 +294,9 @@ NSString *available = nil;
                                         callbackId:command.callbackId];
         } errorBlock:^(BPDeviceError error) {
             NSLog(@"error:%d",error);
+            NSString *msg = [self getErrorMessage:error];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                             messageAsString:@"Device Error"];
+                                             messageAsString:msg];
             [self.commandDelegate sendPluginResult:pluginResult
                                         callbackId:command.callbackId];
         }];

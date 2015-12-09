@@ -344,8 +344,6 @@ public class Ihealth extends CordovaPlugin {
     isTakingMeasure = false;
     isCuffAvailable = false;
     isChecking = false;
-    //deviceType = UNKNOWN_DEVICE;
-    //mac = null;
   }
   
   @Override
@@ -359,7 +357,6 @@ public class Ihealth extends CordovaPlugin {
       case IHEALTH_IS_ANY_CUFF_AVAILABLE:
       case IHEALTH_IS_BP7_CUFF_AVAILABLE:
       case IHEALTH_IS_BP5_CUFF_AVAILABLE:
-        //Log.i(TAG, "case BP available with mac:" + intent.getStringExtra("result"));
         if (resultCode == Activity.RESULT_OK) {
           Log.i(TAG, "Available? OK");
           isCuffAvailable = true;
@@ -390,13 +387,13 @@ public class Ihealth extends CordovaPlugin {
             this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
           } catch (JSONException e) {
             resetPluginState();
-            this.callbackContext.error("Error" + e.toString());
+            this.callbackContext.error("Error parsing result from the device.");
           }
         } else {
           int errorCode = intent.getIntExtra("error", -1);
           resetPluginState();
           Log.e(TAG, "Error: " + bpGetErrorMessage(errorCode));
-          this.callbackContext.error("Error: " + bpGetErrorMessage(errorCode));
+          this.callbackContext.error(bpGetErrorMessage(errorCode));
         }
 
         break;

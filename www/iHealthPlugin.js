@@ -1,12 +1,12 @@
 window.ihealth = function(str, callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to echo.');
+        callback(err);
     }, "iHealthPlugin", "ihealth", [str]);
 };
 
 window.DeviceConnectForBP7 = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to Connecting. ' + err);
+        callback(err);
     }, "iHealthPlugin", "DeviceConnectForBP7", []);
 };
 
@@ -18,7 +18,7 @@ window.isBP7CuffAvailable = function(callback) {
 
 window.DeviceConnectForBP5 = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to Connecting. ' + err);
+        callback(err);
     }, "iHealthPlugin", "DeviceConnectForBP5", []);
 };
 
@@ -30,7 +30,7 @@ window.isBP5CuffAvailable = function(callback) {
 
 window.AnyDeviceConnect = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to Connecting. ' + err);
+        callback(err);
     }, "iHealthPlugin", "AnyDeviceConnect", []);
 };
 
@@ -42,13 +42,13 @@ window.isAnyCuffAvailable = function(callback) {
 
 window.pluginInitialize = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to init. ' + err);
+        callback(err);
     }, "iHealthPlugin", "pluginInitialize", []);
 };
 
 window.cleanPluginState = function(callback) {
     cordova.exec(callback, function(err) {
-        callback('Nothing to init. ' + err);
+        callback(err);
     }, "iHealthPlugin", "cleanPluginState", []);
 };
 
