@@ -142,7 +142,7 @@
     <header-file src="src/ios/iHealthPlugin.h" />
     <header-file src="src/ios/iHealthPluginConstants.h" />
     
-    <source-file src="src/ios/iHealthLibrary(1.0.6).a" framework="true"/>
+    <source-file src="src/ios/iHealthLibrary(1.0.14).a" framework="true"/>
     <source-file src="src/ios/iHealthPlugin.m" />
 
     <framework src="ExternalAccessory.framework" />
