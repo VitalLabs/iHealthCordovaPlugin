@@ -19,6 +19,15 @@ NSString *available = nil;
 
 @implementation iHealthPlugin
 
+- (void) logActionToJs:(NSString*)action withCause:(NSString*)cause andEvent:(NSString*)event
+{
+  NSString *pluginName = @"iHealthPlugin";
+  NSString *js = [NSString stringWithFormat: @"orchestra.service.metrics(%@, %@, %@, %@)", pluginName, action, event, cause];
+  [self.commandDelegate evalJs:js];
+  
+}
+
+
 - (void)ihealth:(CDVInvokedUrlCommand*)command
 {
     NSString* ihealth = [command.arguments objectAtIndex:0];
@@ -173,6 +182,9 @@ NSString *available = nil;
   NSArray *bp5DeviceArray = [bp5Controller getAllCurrentBP5Instace];
 
   [self.commandDelegate evalJs:@"console.log('HELLO CONSOLE.LOG FROM NATIVE SIDE')"];
+  [self.logActionToJs:@"isAnyCuffAvail"
+            withCause:@"MyCause"
+             andEvent:@"MyEvent"];
   
   if(bp5DeviceArray.count) {
     available = @"BP5";
