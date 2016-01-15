@@ -182,7 +182,7 @@ NSString *available = nil;
   NSArray *bp5DeviceArray = [bp5Controller getAllCurrentBP5Instace];
 
   [self.commandDelegate evalJs:@"console.log('HELLO CONSOLE.LOG FROM NATIVE SIDE')"];
-  [self.logActionToJs:@"isAnyCuffAvail"
+  [self logActionToJs:@"isAnyCuffAvail"
             withCause:@"MyCause"
              andEvent:@"MyEvent"];
   
