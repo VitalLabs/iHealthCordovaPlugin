@@ -172,7 +172,7 @@ NSString *available = nil;
   NSArray *bp7DeviceArray = [bp7Controller getAllCurrentBP7Instace];
   NSArray *bp5DeviceArray = [bp5Controller getAllCurrentBP5Instace];
 
-  [self.commandDelegate @"console.log('HELLO CONSOLE.LOG FROM NATIVE SIDE')"];
+  [self.commandDelegate evalJs:@"console.log('HELLO CONSOLE.LOG FROM NATIVE SIDE')"];
   
   if(bp5DeviceArray.count) {
     available = @"BP5";
