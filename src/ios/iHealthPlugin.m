@@ -249,7 +249,7 @@ NSString *available = nil;
                     // NSLog(@"error:%d",error);
                     NSString *msg = [self getErrorMessage:error];
                     [self logActionToJs:@"measure-bp-7"
-                              withCause:[NSString stringWithFormat:@"errorBlock:%@", error]
+                              withCause:[NSString stringWithFormat:@"errorBlock:%ld", (long)error]
                                andEvent:@"DeviceConnectForBP7"];
                     
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
@@ -265,7 +265,7 @@ NSString *available = nil;
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                              messageAsString:msg];
             [self logActionToJs:@"measure-bp-7"
-                      withCause:[NSString stringWithFormat:@"errorBlock:%@", error]
+                      withCause:[NSString stringWithFormat:@"errorBlock:%ld", (long)error]
                        andEvent:@"DeviceConnectForBP7"];
                     
             [self.commandDelegate sendPluginResult:pluginResult
@@ -327,7 +327,7 @@ NSString *available = nil;
         } errorBlock:^(BPDeviceError error) {
             // NSLog(@"error:%d",error);
             [self logActionToJs:@"measure-bp-5"
-                      withCause:[NSString stringWithFormat:@"error:%@", error]
+                      withCause:[NSString stringWithFormat:@"error:%ld", (long)error]
                        andEvent:@"DeviceConnectForBP5"];
             
             NSString *msg = [self getErrorMessage:error];
