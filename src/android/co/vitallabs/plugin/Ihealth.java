@@ -59,6 +59,24 @@ public class Ihealth extends CordovaPlugin {
   private boolean isChecking;
   private String mac;
   private int deviceType;
+  private String pluginName = "AndroidiHealthPlugin";
+  
+  private void logActionToJs (action, cause, event) {
+    try {
+        
+        String metricsJs = String.format("javascript:orchestra.service.metrics.pluginMetric('%s', '%s', '%s', '%s');", pluginName, action, event, cause);
+        Log.i(TAG, "Sending metric: " + metricJs);
+        
+        cordova.getActivity().runOnUiThread(new Runnable() {
+          public void run() {
+            webView.loadUrl(metricsJs);
+          };
+        });       
+      } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(TAG, "Exception: logging to JS");
+      }
+  }
 
   @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -66,6 +84,7 @@ public class Ihealth extends CordovaPlugin {
     this.callbackContext = callbackContext;
     
     Log.i(TAG, "calling action:" + action);
+ 
     if (action.equals("pluginInitialize")) {
       Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable + " - " +isTakingMeasure);
       this.pluginInitialize(callbackContext);
@@ -111,17 +130,6 @@ public class Ihealth extends CordovaPlugin {
     if (action.equals("isAnyCuffAvailable")) {
        
       Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable+ " - " +isTakingMeasure);
-      try {
-        Log.i(TAG, "is webview? " + webView);
-        cordova.getActivity().runOnUiThread(new Runnable() {
-          public void run() {
-            webView.loadUrl("javascript:console.log('Hello from Plugin Side Android');");
-          };
-        });       
-      } catch (Exception e) {
-        e.printStackTrace();
-        Log.e(TAG, "Exception: logging to JS");
-      }
       
       if (!isTakingMeasure && !isCuffAvailable && !isChecking) {
         isAnyCuffAvailable(callbackContext);
@@ -157,6 +165,7 @@ public class Ihealth extends CordovaPlugin {
     isTakingMeasure = false;
     isChecking = false;
     deviceType = UNKNOWN_DEVICE;
+    logActionToJs("initialize", "initialize", "called");
     callbackContext.success("Plugin Initialized");
   }
   
@@ -186,7 +195,9 @@ public class Ihealth extends CordovaPlugin {
             } else {
               myIntent.putExtra("checkForDevice", false);
             }
-            
+            logActionToJs("is-any-cuff-available",
+                          "calling-android-activity",
+                          "getting-device");
             plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_IS_ANY_CUFF_AVAILABLE);
             
           }
@@ -211,6 +222,9 @@ public class Ihealth extends CordovaPlugin {
           intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
           intent.putExtra("action", IHEALTH_DEVICE_CONNECT_FOR_BP5);
           intent.putExtra("mAddress", mac);
+          logActionToJs("device-connect-for-bp5",
+                        "calling-android-activity",
+                        "get-measure");
           plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_DEVICE_CONNECT_FOR_BP5);
         }
       });
@@ -267,6 +281,9 @@ public class Ihealth extends CordovaPlugin {
           intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
           intent.putExtra("action", IHEALTH_DEVICE_CONNECT_FOR_BP7);
           intent.putExtra("mAddress", mac);
+          logActionToJs("device-connect-for-bp7",
+                        "calling-android-activity",
+                        "get-measure");
           plugin.cordova.startActivityForResult(plugin, intent, IHEALTH_DEVICE_CONNECT_FOR_BP7);
         }
       });
@@ -274,6 +291,10 @@ public class Ihealth extends CordovaPlugin {
   }
 
   private void anyDeviceConnect(CallbackContext callbackContext) {
+
+    logActionToJs("any-device-connect",
+                  "calling-plugin-fn-with-device" + deviceType,
+                  "get-measure");
 
     if (deviceType == IHEALTH_BP5) {
       Log.i(TAG, "anyDeviceConnect for BP5");
@@ -353,6 +374,9 @@ public class Ihealth extends CordovaPlugin {
   }
 
   private void resetPluginState() {
+    logActionToJs("reset-plugin-state",
+                  "invoking-plugin-function",
+                  "force-to-reset-plugin-state");
     isTakingMeasure = false;
     isCuffAvailable = false;
     isChecking = false;
@@ -374,6 +398,9 @@ public class Ihealth extends CordovaPlugin {
           isCuffAvailable = true;
           mac =  intent.getStringExtra("result");
           deviceType = intent.getIntExtra("type", UNKNOWN_DEVICE);
+          logActionToJs("getting-callback-result",
+                        "result:" + deviceType,
+                        "is-cuff-available?");
           this.callbackContext.success();
         } else {
           Log.i(TAG, "Available? NOTOK");
@@ -381,6 +408,9 @@ public class Ihealth extends CordovaPlugin {
           isChecking = false;
           mac = null;
           deviceType = UNKNOWN_DEVICE;
+          logActionToJs("getting-callback-result",
+                        "error-result",
+                        "is-cuff-available?");
           this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, false));
         }
         break;
@@ -395,14 +425,24 @@ public class Ihealth extends CordovaPlugin {
             json.put("SYS", result[0] + result[1]);
             json.put("DIA", result[1]);
             json.put("heartRate", result[2]);
+            logActionToJs("getting-callback-result",
+                          "got-result:" + result.toString(),
+                          "device-connect");
             resetPluginState();
             this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
           } catch (JSONException e) {
+            logActionToJs("getting-callback-result",
+                          "error:JSONException",
+                          "device-connect");
             resetPluginState();
             this.callbackContext.error("Error parsing result from the device.");
           }
         } else {
           int errorCode = intent.getIntExtra("error", -1);
+          logActionToJs("getting-callback-result",
+                        "error:Getting-result-from-activity:" + errorCode,
+                        "device-connect");
+
           resetPluginState();
           Log.e(TAG, "Error: " + bpGetErrorMessage(errorCode));
           this.callbackContext.error(bpGetErrorMessage(errorCode));
