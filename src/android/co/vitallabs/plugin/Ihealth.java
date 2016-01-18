@@ -63,12 +63,11 @@ public class Ihealth extends CordovaPlugin {
   
   private void logActionToJs (String action, String cause, String event) {
     try {
-        
-        String metricsJs = String.format("javascript:orchestra.service.metrics.pluginMetric('%s', '%s', '%s', '%s');", pluginName, action, event, cause);
-        Log.i(TAG, "Sending metric: " + metricJs);
-        
         cordova.getActivity().runOnUiThread(new Runnable() {
           public void run() {
+            String metricsJs = String.format("javascript:orchestra.service.metrics.pluginMetric('%s', '%s', '%s', '%s');", pluginName, action, event, cause);
+            Log.i(TAG, "Sending metric: " + metricsJs);
+        
             webView.loadUrl(metricsJs);
           };
         });       
