@@ -23,7 +23,7 @@ NSString *available = nil;
 {
   NSString *pluginName = @"iHealthPlugin";
   NSString *js = [NSString stringWithFormat: @"orchestra.service.metrics.pluginMetric('%@', '%@', '%@', '%@')", pluginName, action, event, cause];
-  //[self.commandDelegate evalJs:js];
+  [self.commandDelegate evalJs:js];
   
 }
 
