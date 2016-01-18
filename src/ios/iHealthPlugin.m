@@ -23,7 +23,7 @@ NSString *available = nil;
 {
   NSString *pluginName = @"iHealthPlugin";
   NSString *js = [NSString stringWithFormat: @"orchestra.service.metrics.pluginMetric('%@', '%@', '%@', '%@')", pluginName, action, event, cause];
-  [self.commandDelegate evalJs:js];
+  //[self.commandDelegate evalJs:js];
   
 }
 
@@ -221,8 +221,8 @@ NSString *available = nil;
                                     clientSecret:SDKSecret
                                   Authentication:^(UserAuthenResult result) {
             // NSLog(@"Authentication Result:%d",result);
-            [self logActionToJs:[NSString stringWithFormat:@"Authentication Result: %@", result]
-                      withCause:@"AuthenticationResult"
+            [self logActionToJs:[NSString stringWithFormat:@"result: %ld", (long)result]
+                      withCause:@"authentication-result"
                        andEvent:@"DeviceConnectForBP7"];
   
         } angle:^(NSDictionary *dic) {
@@ -305,8 +305,10 @@ NSString *available = nil;
                                        clientID:SDKKey
                                    clientSecret:SDKSecret
                                  Authentication:^(UserAuthenResult result) {
-            NSLog(@"Authentication Result:%d",result);
-      
+            // NSLog(@"Authentication Result:%d",result);
+            [self logActionToJs:[NSString stringWithFormat:@"result:%ld", (long)result]
+                      withCause:@"authentication-result"
+                       andEvent:@"DeviceConnectForBP5"];
         } pressure:^(NSArray *pressureArr) {
  
         } xiaoboWithHeart:^(NSArray *xiaoboArr) {
