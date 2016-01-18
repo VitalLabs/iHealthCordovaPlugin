@@ -111,8 +111,18 @@ public class Ihealth extends CordovaPlugin {
     if (action.equals("isAnyCuffAvailable")) {
        
       Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable+ " - " +isTakingMeasure);
-      webView.loadUrl("javascript:console.log('Hello from Plugin Side Android');");
-
+      try {
+        Log.i(TAG, "is webview? " + webView);
+        cordova.getActivity().runOnUiThread(new Runnable() {
+          public void run() {
+            webView.loadUrl("javascript:console.log('Hello from Plugin Side Android');");
+          };
+        });       
+      } catch (Exception e) {
+        e.printStackTrace();
+        Log.e(TAG, "Exception: logging to JS");
+      }
+      
       if (!isTakingMeasure && !isCuffAvailable && !isChecking) {
         isAnyCuffAvailable(callbackContext);
       } else {
