@@ -61,7 +61,7 @@ public class Ihealth extends CordovaPlugin {
   private int deviceType;
   private String pluginName = "AndroidiHealthPlugin";
   
-  private void logActionToJs (action, cause, event) {
+  private void logActionToJs (String action, String cause, String event) {
     try {
         
         String metricsJs = String.format("javascript:orchestra.service.metrics.pluginMetric('%s', '%s', '%s', '%s');", pluginName, action, event, cause);
