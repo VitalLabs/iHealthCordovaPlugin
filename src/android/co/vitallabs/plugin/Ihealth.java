@@ -431,7 +431,7 @@ public class Ihealth extends CordovaPlugin {
             json.put("DIA", result[1]);
             json.put("heartRate", result[2]);
             logActionToJs("getting-callback-result",
-                          "got-result:" + result.toString(),
+                          "got-result:" + json.toString(),
                           "device-connect");
             resetPluginState();
             this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
