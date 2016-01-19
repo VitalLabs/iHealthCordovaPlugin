@@ -290,6 +290,11 @@ public class IhealthDeviceManagerActivity extends Activity implements
   protected void onStop() {
     Log.i(TAG, "onStopActivity");    
     super.onStop();
+    // new
+    if (deviceManager != null) {
+      deviceManager.unReceiver();
+    }
+    // EOF
     unReceiver();
   }
 
