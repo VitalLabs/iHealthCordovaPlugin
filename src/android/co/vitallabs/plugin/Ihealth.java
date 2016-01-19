@@ -40,7 +40,7 @@ public class Ihealth extends CordovaPlugin {
   private String TAG = "BPtest_Plugin";
   protected Context context;
   private CallbackContext callbackContext;
-  
+
   final int IHEALTH_INITIALIZE_PLUGIN = 0;
   final int IHEALTH_IS_BP5_CUFF_AVAILABLE = 1;
   final int IHEALTH_DEVICE_CONNECT_FOR_BP5 = 2;
@@ -53,6 +53,7 @@ public class Ihealth extends CordovaPlugin {
   final int IHEALTH_BP7 = 7;
   final int UNKNOWN_DEVICE = 8;
 
+  final int IHEALTH_CLEAN_DEVICE_MANAGER = 9;
   
   private boolean isCuffAvailable;
   private boolean isTakingMeasure;
@@ -209,6 +210,9 @@ public class Ihealth extends CordovaPlugin {
         });
     } else {
       Log.i(TAG, "is already checking our monitor...");
+      logActionToJs("is-any-cuff-available",
+                    "skipping-due-to-already-checking",
+                    "getting-device");
     }
     
   }
@@ -236,41 +240,6 @@ public class Ihealth extends CordovaPlugin {
     
   }
 
-  // ===================
-  // BP7
-  // ===================
-  
-  // private void isBP7CuffAvailable(CallbackContext callbackContext) {
-
-  //   if (!isChecking) {
-  //     isChecking = true;
-  //     final CordovaPlugin plugin = (CordovaPlugin) this;
-  //     cordova.getThreadPool().execute(new Runnable() {
-  //         @Override
-  //         public void run () {
-  //           cordova.setActivityResultCallback(plugin);
-  //           Context context = plugin.cordova.getActivity().getApplicationContext();
-  //           Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
-  //           myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-  //           myIntent.putExtra("action", IHEALTH_IS_BP7_CUFF_AVAILABLE);
-            
-  //           if (mac != null && !mac.equals("")) {
-  //             Log.i(TAG, "BP7: Checking for previous paired device: " + mac);
-  //             myIntent.putExtra("checkForDevice", true);
-  //             myIntent.putExtra("predefinedMac", mac);
-  //           } else {
-  //             myIntent.putExtra("checkForDevice", false);
-  //           }
-            
-  //           plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_IS_BP7_CUFF_AVAILABLE);
-            
-  //         }
-  //       });
-  //   } else {
-  //     Log.i(TAG, "BP7 is already checking our monitor...");
-  //   }
-    
-  // }
 
   private void deviceConnectForBP7(CallbackContext callbackContext) {
     final CordovaPlugin plugin = (CordovaPlugin) this;
@@ -382,6 +351,36 @@ public class Ihealth extends CordovaPlugin {
     logActionToJs("reset-plugin-state",
                   "invoking-plugin-function",
                   "force-to-reset-plugin-state");
+
+    // if (!isChecking) {
+    //   isChecking = true;
+    //   final CordovaPlugin plugin = (CordovaPlugin) this;
+    //   cordova.getThreadPool().execute(new Runnable() {
+    //       @Override
+    //       public void run () {
+    //         cordova.setActivityResultCallback(plugin);
+    //         Context context = plugin.cordova.getActivity().getApplicationContext();
+    //         Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
+    //         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+    //         myIntent.putExtra("action", IHEALTH_CLEAN_DEVICE_MANAGER);
+            
+    //         // if (mac != null && !mac.equals("") && deviceType != UNKNOWN_DEVICE) {
+    //         //   Log.i(TAG, "Checking for previous paired device: " + mac);
+    //         //   myIntent.putExtra("checkForDevice", true);
+    //         //   myIntent.putExtra("predefinedMac", mac);
+    //         //   myIntent.putExtra("predefinedType", deviceType);
+    //         // } else {
+    //         //   myIntent.putExtra("checkForDevice", false);
+    //         // }
+    //         logActionToJs("reset-plugin-state",
+    //                       "calling-android-activity",
+    //                       "reset-device-manager");
+    //         plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_CLEAN_DEVICE_MANAGER);
+            
+    //       }
+    //     });
+    // }
+    
     isTakingMeasure = false;
     isCuffAvailable = false;
     isChecking = false;

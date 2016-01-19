@@ -75,6 +75,8 @@ public class IhealthDeviceManagerActivity extends Activity implements
   final int IHEALTH_BP5 = 6;
   final int IHEALTH_BP7 = 7;
   final int UNKNOWN_DEVICE = 8;
+
+  final int IHEALTH_CLEAN_DEVICE_MANAGER = 9;
   
   Handler myHandler;
 
@@ -291,9 +293,9 @@ public class IhealthDeviceManagerActivity extends Activity implements
     Log.i(TAG, "onStopActivity");    
     super.onStop();
     // new
-    if (deviceManager != null) {
-      deviceManager.unReceiver();
-    }
+    //if (deviceManager != null) {
+    //  deviceManager.unReceiver();
+    //}
     // EOF
     unReceiver();
   }
