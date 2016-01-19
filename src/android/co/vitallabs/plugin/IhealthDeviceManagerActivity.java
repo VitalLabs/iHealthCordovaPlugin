@@ -217,8 +217,21 @@ public class IhealthDeviceManagerActivity extends Activity implements
     // Init receiver
     initReceiver();
 
-    
-    if (getIntent().getBooleanExtra("checkForDevice", false) &&
+
+    if (action == IHEALTH_CLEAN_DEVICE_MANAGER) {
+      Log.i(TAG, "Unregister deviceManager for cleaning operation");
+      if (deviceManager != null) {
+        deviceManager.unReceiver();
+      }
+      Intent intentResult = new Intent();
+      intentResult.putExtra("result", predefinedMac);
+      intentResult.putExtra("type", predefinedType);
+      intentResult.putExtra("action", action);
+      Log.i(TAG, "CLEAN done? " + intentResult);
+      setResult(RESULT_OK, intentResult);
+      finish();
+    } else
+      if (getIntent().getBooleanExtra("checkForDevice", false) &&
         getIntent().getStringExtra("predefinedMac") != null &&
         getIntent().getIntExtra("predefinedType", UNKNOWN_DEVICE) != UNKNOWN_DEVICE) {
       String predefinedMac = getIntent().getStringExtra("predefinedMac");

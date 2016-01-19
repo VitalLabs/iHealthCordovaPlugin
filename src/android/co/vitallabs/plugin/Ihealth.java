@@ -352,34 +352,27 @@ public class Ihealth extends CordovaPlugin {
                   "invoking-plugin-function",
                   "force-to-reset-plugin-state");
 
-    // if (!isChecking) {
-    //   isChecking = true;
-    //   final CordovaPlugin plugin = (CordovaPlugin) this;
-    //   cordova.getThreadPool().execute(new Runnable() {
-    //       @Override
-    //       public void run () {
-    //         cordova.setActivityResultCallback(plugin);
-    //         Context context = plugin.cordova.getActivity().getApplicationContext();
-    //         Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
-    //         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-    //         myIntent.putExtra("action", IHEALTH_CLEAN_DEVICE_MANAGER);
+    if (!isChecking) {
+      isChecking = true;
+      final CordovaPlugin plugin = (CordovaPlugin) this;
+      cordova.getThreadPool().execute(new Runnable() {
+          @Override
+          public void run () {
+            cordova.setActivityResultCallback(plugin);
+            Context context = plugin.cordova.getActivity().getApplicationContext();
+            Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
+            myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+            myIntent.putExtra("action", IHEALTH_CLEAN_DEVICE_MANAGER);
             
-    //         // if (mac != null && !mac.equals("") && deviceType != UNKNOWN_DEVICE) {
-    //         //   Log.i(TAG, "Checking for previous paired device: " + mac);
-    //         //   myIntent.putExtra("checkForDevice", true);
-    //         //   myIntent.putExtra("predefinedMac", mac);
-    //         //   myIntent.putExtra("predefinedType", deviceType);
-    //         // } else {
-    //         //   myIntent.putExtra("checkForDevice", false);
-    //         // }
-    //         logActionToJs("reset-plugin-state",
-    //                       "calling-android-activity",
-    //                       "reset-device-manager");
-    //         plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_CLEAN_DEVICE_MANAGER);
+            logActionToJs("reset-plugin-state",
+                          "calling-android-activity",
+                          "reset-device-manager");
+
+            plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_CLEAN_DEVICE_MANAGER);
             
-    //       }
-    //     });
-    // }
+          }
+        });
+    }
     
     isTakingMeasure = false;
     isCuffAvailable = false;
@@ -453,6 +446,14 @@ public class Ihealth extends CordovaPlugin {
         }
 
         break;
+    case IHEALTH_CLEAN_DEVICE_MANAGER:
+      Log.i(TAG, "cleanManager case result:"+resultCode);
+      if (resultCode == Activity.RESULT_OK) {
+        this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "OK_CLEAN"));
+      } else {
+          this.callbackContext.error("ERROR_CLEAR");
+      }
+      break;
     }
     
   }
