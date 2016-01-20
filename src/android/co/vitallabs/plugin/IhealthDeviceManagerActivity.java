@@ -79,7 +79,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
   final int IHEALTH_CLEAN_DEVICE_MANAGER = 9;
   
   Handler myHandler;
-
+  private String userId = "devops@vitallabs.co";
   
   @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
   private void initDeviceManager() {
     Log.i(TAG, "initDeviceManager");
-    String userId = "devops@vitallabs.co";
+    
     try {
       //setTimeoutHandler();
       deviceManager.initDeviceManager(this, userId);
