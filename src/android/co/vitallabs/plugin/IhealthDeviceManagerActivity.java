@@ -224,8 +224,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
         deviceManager.unReceiver();
       }
       Intent intentResult = new Intent();
-      intentResult.putExtra("result", predefinedMac);
-      intentResult.putExtra("type", predefinedType);
       intentResult.putExtra("action", action);
       Log.i(TAG, "CLEAN done? " + intentResult);
       setResult(RESULT_OK, intentResult);
