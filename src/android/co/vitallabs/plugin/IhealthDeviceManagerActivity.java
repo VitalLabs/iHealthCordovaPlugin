@@ -220,9 +220,16 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
     if (action == IHEALTH_CLEAN_DEVICE_MANAGER) {
       Log.i(TAG, "Unregister deviceManager for cleaning operation");
-      if (deviceManager != null) {
-        deviceManager.unReceiver();
+      try {
+        if (deviceManager != null) {
+          deviceManager.initDeviceManager(this, userId);
+          deviceManager.initReceiver();
+          deviceManager.unReceiver();
+        }
+      } (Exception e) {
+        Log.i(TAG, "Exception cleaning DM");
       }
+      
       Intent intentResult = new Intent();
       intentResult.putExtra("action", action);
       Log.i(TAG, "CLEAN done? " + intentResult);
