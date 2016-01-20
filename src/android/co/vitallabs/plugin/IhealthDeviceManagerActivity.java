@@ -226,7 +226,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
           deviceManager.initReceiver();
           deviceManager.unReceiver();
         }
-      } (Exception e) {
+      } catch (Exception e) {
         Log.i(TAG, "Exception cleaning DM");
       }
       
