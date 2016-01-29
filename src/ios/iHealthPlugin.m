@@ -211,10 +211,8 @@ NSString *available = nil;
     NSArray *bpDeviceArray = [bp7Controller getAllCurrentBP7Instace];
     NSString *YourUserName = @"devops@vitallabs.co";
     // ORIGINAL CREDENTIALS
-    //NSString *SDKKey = @"d1a2829fbe4c473e9566c920eb0c4bc3";
-    //NSString *SDKSecret = @"f6abeaf0040543b4a00eda3c2f238c84";
-    NSString *SDKKey = @"b42e648c6c224f9a890e7d9323dc5b6a";
-    NSString *SDKSecret = @"ce7a64efe52e446990f1c696e864d3a7";
+    NSString *SDKKey = @"d1a2829fbe4c473e9566c920eb0c4bc3";
+    NSString *SDKSecret = @"f6abeaf0040543b4a00eda3c2f238c84";
     
     __block NSString *stringresult = nil;
     
