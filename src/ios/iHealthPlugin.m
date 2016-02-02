@@ -19,6 +19,15 @@ NSString *available = nil;
 
 @implementation iHealthPlugin
 
+- (void) logActionToJs:(NSString*)action withCause:(NSString*)cause andEvent:(NSString*)event
+{
+  NSString *pluginName = @"iHealthPlugin";
+  NSString *js = [NSString stringWithFormat: @"orchestra.service.metrics.plugin_metric('%@', '%@', '%@', '%@')", pluginName, action, event, cause];
+  [self.commandDelegate evalJs:js];
+  
+}
+
+
 - (void)ihealth:(CDVInvokedUrlCommand*)command
 {
     NSString* ihealth = [command.arguments objectAtIndex:0];
@@ -171,8 +180,7 @@ NSString *available = nil;
 
   NSArray *bp7DeviceArray = [bp7Controller getAllCurrentBP7Instace];
   NSArray *bp5DeviceArray = [bp5Controller getAllCurrentBP5Instace];
-
-
+  
   if(bp5DeviceArray.count) {
     available = @"BP5";
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
@@ -202,8 +210,10 @@ NSString *available = nil;
     
     NSArray *bpDeviceArray = [bp7Controller getAllCurrentBP7Instace];
     NSString *YourUserName = @"devops@vitallabs.co";
+    // ORIGINAL CREDENTIALS
     NSString *SDKKey = @"d1a2829fbe4c473e9566c920eb0c4bc3";
     NSString *SDKSecret = @"f6abeaf0040543b4a00eda3c2f238c84";
+    
     __block NSString *stringresult = nil;
     
     if(bpDeviceArray.count){
@@ -212,7 +222,11 @@ NSString *available = nil;
                                         clientID:SDKKey
                                     clientSecret:SDKSecret
                                   Authentication:^(UserAuthenResult result) {
-            NSLog(@"Authentication Result:%d",result);
+            // NSLog(@"Authentication Result:%d",result);
+            [self logActionToJs:[NSString stringWithFormat:@"result: %ld", (long)result]
+                      withCause:@"authentication-result"
+                       andEvent:@"DeviceConnectForBP7"];
+  
         } angle:^(NSDictionary *dic) {
             NSLog(@"angle:%@",dic);
             NSNumber *angleDigital = [dic valueForKey:@"angle"];
@@ -224,16 +238,23 @@ NSString *available = nil;
                 } xiaoboNoHeart:^(NSArray *xiaoboArr) {
                     
                 } result:^(NSDictionary *dic) {
-                    NSLog(@"dic:%@",dic);
-                    stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
+                    // NSLog(@"dic:%@",dic);
+                    [self logActionToJs:@"measure-bp-7"
+                              withCause:[NSString stringWithFormat:@"result:%@", dic]
+                               andEvent:@"DeviceConnectForBP7"];
+                    
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                      messageAsDictionary:dic];
                     [self.commandDelegate sendPluginResult:pluginResult
                                                 callbackId:command.callbackId];
                   } errorBlock:^(BPDeviceError error) {
-                    NSLog(@"error:%d",error);
+                    // NSLog(@"error:%d",error);
                     NSString *msg = [self getErrorMessage:error];
-                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                    [self logActionToJs:@"measure-bp-7"
+                              withCause:[NSString stringWithFormat:@"errorBlock:%ld", (long)error]
+                               andEvent:@"DeviceConnectForBP7"];
+                    
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                                      messageAsString:msg];
                     [self.commandDelegate sendPluginResult:pluginResult
                                                 callbackId:command.callbackId];
@@ -242,18 +263,27 @@ NSString *available = nil;
         } errorBlock:^(BPDeviceError error) {
             NSLog(@"error:%d",error);
             NSString *msg = [self getErrorMessage:error];
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+            
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                              messageAsString:msg];
+            [self logActionToJs:@"measure-bp-7"
+                      withCause:[NSString stringWithFormat:@"errorBlock:%ld", (long)error]
+                       andEvent:@"DeviceConnectForBP7"];
+                    
             [self.commandDelegate sendPluginResult:pluginResult
                                         callbackId:command.callbackId];
         }];
     }
     else{
-        NSLog(@"log...");
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                         messageAsString:@"No devices available"]; 
-        [self.commandDelegate sendPluginResult:pluginResult
-                                    callbackId:command.callbackId];
+      // NSLog(@"log...");
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+                                       messageAsString:@"No devices available"]; 
+      [self logActionToJs:@"measure-bp-7"
+                withCause:@"no-devices-available-at-measure"
+                 andEvent:@"DeviceConnectForBP7"];
+            
+      [self.commandDelegate sendPluginResult:pluginResult
+                                  callbackId:command.callbackId];
     }
     
 }
@@ -277,8 +307,10 @@ NSString *available = nil;
                                        clientID:SDKKey
                                    clientSecret:SDKSecret
                                  Authentication:^(UserAuthenResult result) {
-            NSLog(@"Authentication Result:%d",result);
-      
+            // NSLog(@"Authentication Result:%d",result);
+            [self logActionToJs:[NSString stringWithFormat:@"result:%ld", (long)result]
+                      withCause:@"authentication-result"
+                       andEvent:@"DeviceConnectForBP5"];
         } pressure:^(NSArray *pressureArr) {
  
         } xiaoboWithHeart:^(NSArray *xiaoboArr) {
@@ -286,16 +318,24 @@ NSString *available = nil;
         } xiaoboNoHeart:^(NSArray *xiaoboArr) {
             
         } result:^(NSDictionary *dic) {
-            NSLog(@"dic:%@",dic);
+            // NSLog(@"dic:%@",dic);
+            [self logActionToJs:@"measure-bp-5"
+                      withCause:[NSString stringWithFormat:@"result:%@", dic]
+                       andEvent:@"DeviceConnectForBP5"];
+            
             stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                          messageAsDictionary:dic];
             [self.commandDelegate sendPluginResult:pluginResult
                                         callbackId:command.callbackId];
         } errorBlock:^(BPDeviceError error) {
-            NSLog(@"error:%d",error);
+            // NSLog(@"error:%d",error);
+            [self logActionToJs:@"measure-bp-5"
+                      withCause:[NSString stringWithFormat:@"error:%ld", (long)error]
+                       andEvent:@"DeviceConnectForBP5"];
+            
             NSString *msg = [self getErrorMessage:error];
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
                                              messageAsString:msg];
             [self.commandDelegate sendPluginResult:pluginResult
                                         callbackId:command.callbackId];
@@ -303,11 +343,14 @@ NSString *available = nil;
 
     }
     else{
-        NSLog(@"log...");
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                         messageAsString:@"No devices available"]; 
-        [self.commandDelegate sendPluginResult:pluginResult
-                                    callbackId:command.callbackId];
+      // NSLog(@"log...");
+      [self logActionToJs:@"measure-bp-5"
+                withCause:@"no-devices-available"
+                 andEvent:@"DeviceConnectForBP5"];
+      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+                                       messageAsString:@"No devices available"]; 
+      [self.commandDelegate sendPluginResult:pluginResult
+                                  callbackId:command.callbackId];
     }
     
 }
@@ -316,16 +359,19 @@ NSString *available = nil;
 {
   if ([available isEqualToString:BP5Cuff]) {
     [self DeviceConnectForBP5:command];
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                     messageAsString:@"Device BP5"];
+    // pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+    //                                  messageAsString:@"Device BP5"];
   } else {
     if ([available isEqualToString:BP7Cuff]) {
       [self DeviceConnectForBP7:command];
-      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                     messageAsString:@"Device BP7"];
+      // pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+      //                                messageAsString:@"Device BP7"];
     } else {
-      pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                       messageAsString:@"Device NOT FOUND"];
+      [self logActionToJs:@"any-device-connect"
+                withCause:@"invoking-anydeviceconnect-with-no-previous-checking"
+                 andEvent:@"AnyDeviceConnect"];
+      // pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+      //                                  messageAsString:@"Device NOT FOUND"];
     }
   }
 }
@@ -337,6 +383,10 @@ NSString *available = nil;
 {
   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                     messageAsString:@"disconnect"];
+  [self logActionToJs:@"device-disconnect-for-bp7"
+            withCause:@"invoking"
+             andEvent:@"DeviceDisConnectForBP7"];
+ 
   [self.commandDelegate sendPluginResult:pluginResult
                               callbackId:command.callbackId];
 }
@@ -345,6 +395,12 @@ NSString *available = nil;
 {
   CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                     messageAsString:@"disconnect"];
+
+  [self logActionToJs:@"device-disconnect-for-bp5"
+            withCause:@"invoking"
+             andEvent:@"DeviceDisConnectForBP5"];
+ 
+  
   [self.commandDelegate sendPluginResult:pluginResult
                               callbackId:command.callbackId];
 }

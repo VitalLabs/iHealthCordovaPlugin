@@ -75,9 +75,11 @@ public class IhealthDeviceManagerActivity extends Activity implements
   final int IHEALTH_BP5 = 6;
   final int IHEALTH_BP7 = 7;
   final int UNKNOWN_DEVICE = 8;
+
+  final int IHEALTH_CLEAN_DEVICE_MANAGER = 9;
   
   Handler myHandler;
-
+  private String userId = "devops@vitallabs.co";
   
   @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
 
   private void initDeviceManager() {
     Log.i(TAG, "initDeviceManager");
-    String userId = "devops@vitallabs.co";
+    
     try {
       //setTimeoutHandler();
       deviceManager.initDeviceManager(this, userId);
@@ -215,8 +217,26 @@ public class IhealthDeviceManagerActivity extends Activity implements
     // Init receiver
     initReceiver();
 
-    
-    if (getIntent().getBooleanExtra("checkForDevice", false) &&
+
+    if (action == IHEALTH_CLEAN_DEVICE_MANAGER) {
+      Log.i(TAG, "Unregister deviceManager for cleaning operation");
+      try {
+        if (deviceManager != null) {
+          deviceManager.initDeviceManager(this, userId);
+          deviceManager.initReceiver();
+          deviceManager.unReceiver();
+        }
+      } catch (Exception e) {
+        Log.i(TAG, "Exception cleaning DM");
+      }
+      
+      Intent intentResult = new Intent();
+      intentResult.putExtra("action", action);
+      Log.i(TAG, "CLEAN done? " + intentResult);
+      setResult(RESULT_OK, intentResult);
+      finish();
+    } else
+      if (getIntent().getBooleanExtra("checkForDevice", false) &&
         getIntent().getStringExtra("predefinedMac") != null &&
         getIntent().getIntExtra("predefinedType", UNKNOWN_DEVICE) != UNKNOWN_DEVICE) {
       String predefinedMac = getIntent().getStringExtra("predefinedMac");
@@ -290,6 +310,11 @@ public class IhealthDeviceManagerActivity extends Activity implements
   protected void onStop() {
     Log.i(TAG, "onStopActivity");    
     super.onStop();
+    // new
+    //if (deviceManager != null) {
+    //  deviceManager.unReceiver();
+    //}
+    // EOF
     unReceiver();
   }
 

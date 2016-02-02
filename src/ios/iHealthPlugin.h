@@ -8,6 +8,7 @@
 - (void) ihealth:(CDVInvokedUrlCommand*)command;
 
 - (NSString*) getErrorMessage:(int)error;
+- (void) logActionToJs:(NSString*)action withCause:(NSString*)cause andEvent:(NSString*)event;
 
 - (void) DeviceConnectForBP7:(CDVInvokedUrlCommand*)command;
 - (void) DeviceDisConnectForBP7:(CDVInvokedUrlCommand*)command;
