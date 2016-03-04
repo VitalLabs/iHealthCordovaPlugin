@@ -242,7 +242,8 @@ NSString *available = nil;
                     [self logActionToJs:@"measure-bp-7"
                               withCause:[NSString stringWithFormat:@"result:%@", dic]
                                andEvent:@"DeviceConnectForBP7"];
-                    
+                    UIApplication* app = [UIApplication sharedApplication];
+                    [app setIdleTimerDisabled: NO];
                     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                      messageAsDictionary:dic];
                     [self.commandDelegate sendPluginResult:pluginResult
@@ -322,7 +323,8 @@ NSString *available = nil;
             [self logActionToJs:@"measure-bp-5"
                       withCause:[NSString stringWithFormat:@"result:%@", dic]
                        andEvent:@"DeviceConnectForBP5"];
-            
+            UIApplication* app = [UIApplication sharedApplication];
+            [app setIdleTimerDisabled: NO];
             stringresult = [NSString stringWithFormat:@"my dictionary is %@", dic];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                          messageAsDictionary:dic];
