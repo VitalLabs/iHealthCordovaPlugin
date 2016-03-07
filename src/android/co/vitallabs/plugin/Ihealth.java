@@ -27,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-// import co.vitallabs.plugin.IhealthActivity;
 import co.vitallabs.plugin.IhealthDeviceManagerActivity;
 import co.vitallabs.plugin.IhealthBP5Activity;
 import co.vitallabs.plugin.IhealthBP7Activity;
@@ -288,6 +287,10 @@ public class Ihealth extends CordovaPlugin {
     String errorMessage = "Unknown Error";
     
     switch (errorCode) {
+      case -3:
+        errorMessage = "Cancelled by User [BackButton was pressed]";
+        break;
+        
       case 0:
         errorMessage = "Pressure system is unstable before measurement";
         break;

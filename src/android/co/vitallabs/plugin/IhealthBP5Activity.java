@@ -313,4 +313,15 @@ public class IhealthBP5Activity extends Activity implements
     bpControl.start(IhealthBP5Activity.this, clientID, clientSecret);
   }
 
+  @Override
+  public void onBackPressed() {
+    //super.onBackPressed();
+    Log.i(TAG, "User Cancelled via BackButton");
+    Intent intentResult = new Intent();
+    intentResult.putExtra("result", -3);
+    intentResult.putExtra("action", action);
+    setResult(RESULT_CANCELED, intentResult);
+    finish();
+  }
+  
 }

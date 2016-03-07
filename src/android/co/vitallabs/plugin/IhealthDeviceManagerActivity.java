@@ -503,5 +503,17 @@ public class IhealthDeviceManagerActivity extends Activity implements
   public void msgDeviceDisconnect_ABI(String deviceMac, String deviceType, int arg) {
     // TODO Auto-generated method stub
   }
+
+  @Override
+  public void onBackPressed() {
+    //super.onBackPressed();
+    Log.i(TAG, "User Cancelled via BackButton");
+    Intent intentResult = new Intent();
+    intentResult.putExtra("result", false);
+    intentResult.putExtra("action", action);
+    setResult(RESULT_CANCELED, intentResult);
+    deviceManager.cancelScanDevice();
+    finish();
+  }
   
 }
