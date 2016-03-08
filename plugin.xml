@@ -47,7 +47,8 @@
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <activity 
-          android:name="co.vitallabs.plugin.IhealthDeviceManagerActivity">
+          android:name="co.vitallabs.plugin.IhealthDeviceManagerActivity"
+          android:theme = "@android:style/Theme.NoDisplay">
 
         <intent-filter>
             <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
