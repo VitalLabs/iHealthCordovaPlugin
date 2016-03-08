@@ -34,7 +34,7 @@ import android.content.Intent;
 import android.content.Context;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
-
+import android.view.KeyEvent;
 import android.media.AudioManager;
 
 import android.bluetooth.BluetoothAdapter;
@@ -521,5 +521,16 @@ public class IhealthDeviceManagerActivity extends Activity implements
     deviceManager.cancelScanDevice();
     finish();
   }
-  
+
+
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_BACK) {
+      //do whatever you need for the hardware 'back' button
+      Log.i(TAG, "User pressed a back button");
+      onBackPressed();
+      return true;
+    }
+    return super.onKeyDown(keyCode, event);
+  }
 }
