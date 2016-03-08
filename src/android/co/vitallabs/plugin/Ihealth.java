@@ -208,7 +208,7 @@ public class Ihealth extends CordovaPlugin {
                           "getting-device");
             
             //plugin.cordova.startService(plugin, myIntent, IHEALTH_IS_ANY_CUFF_AVAILABLE);
-            plugin.cordova.startService(myIntent);
+            plugin.cordova.getActivity().startService(myIntent);
             
           }
         });

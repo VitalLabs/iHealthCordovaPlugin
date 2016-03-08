@@ -178,8 +178,8 @@ public class IhealthDeviceManagerActivity extends Service implements
   }
   
   @Override
-  protected void onStartCommand(Intent intent) {
-    Log.i(TAG, "onStart");
+  protected void onStart(Intent intent, int startId) {
+    Log.i(TAG, "onStart" + startId);
     super.onStart();
     action = intent.getIntExtra("action", 1);
     this.activityResultCallback = intent.getIntExtra("pluginInstance", 1);
