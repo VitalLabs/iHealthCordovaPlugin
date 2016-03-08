@@ -137,7 +137,7 @@ public class Ihealth extends CordovaPlugin {
        
       Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable+ " - " +isTakingMeasure);
       
-      if (!isTakingMeasure && !isCuffAvailable && !isChecking) {
+      if (!isTakingMeasure && !isCuffAvailable) { //&& !isChecking) {
         isAnyCuffAvailable(callbackContext);
       } else {
         callbackContext.success();
