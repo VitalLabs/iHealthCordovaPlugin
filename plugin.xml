@@ -116,7 +116,6 @@
 
     <config-file target="*-Info.plist" parent="UISupportedExternalAccessoryProtocols">
       <array>
-        <!-- <string>com.jiuan.P930</string> -->
         <string>com.jiuan.BPV20</string>
         <string>com.jiuan.BPV21</string>
       </array>

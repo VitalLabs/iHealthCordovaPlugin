@@ -102,7 +102,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
     Log.i(TAG, "initDeviceManager");
     
     try {
-      //setTimeoutHandler();
       deviceManager.initDeviceManager(this, userId);
       deviceManager.initReceiver();
       deviceManager.initBpStateCallback(this);
@@ -132,6 +131,13 @@ public class IhealthDeviceManagerActivity extends Activity implements
         }
       });
     myt.start();
+
+    try {
+      setTimeoutHandler();
+    } catch (Exception e) {
+      Log.e(TAG, "Exception in setTimeoutHandler()");
+    }
+
   }
   
   private Runnable mRunnable = new Runnable() {
