@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+// import co.vitallabs.plugin.IhealthDeviceManagerService;
 import co.vitallabs.plugin.IhealthDeviceManagerActivity;
 import co.vitallabs.plugin.IhealthBP5Activity;
 import co.vitallabs.plugin.IhealthBP7Activity;
