@@ -27,8 +27,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-// import co.vitallabs.plugin.IhealthDeviceManagerService;
-import co.vitallabs.plugin.IhealthDeviceManagerActivity;
+import co.vitallabs.plugin.IhealthDeviceManagerService;
+// import co.vitallabs.plugin.IhealthDeviceManagerActivity;
 import co.vitallabs.plugin.IhealthBP5Activity;
 import co.vitallabs.plugin.IhealthBP7Activity;
 
@@ -189,7 +189,7 @@ public class Ihealth extends CordovaPlugin {
           public void run () {
             cordova.setActivityResultCallback(plugin);
             Context context = plugin.cordova.getActivity().getApplicationContext();
-            Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
+            Intent myIntent = new Intent(context, IhealthDeviceManagerService.class);
             myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
             myIntent.putExtra("action", IHEALTH_IS_ANY_CUFF_AVAILABLE);
             
@@ -198,13 +198,17 @@ public class Ihealth extends CordovaPlugin {
               myIntent.putExtra("checkForDevice", true);
               myIntent.putExtra("predefinedMac", mac);
               myIntent.putExtra("predefinedType", deviceType);
+              // We send this to the service so it 
+              myIntent.putExtra("pluginInstance", plugin);
             } else {
               myIntent.putExtra("checkForDevice", false);
             }
             logActionToJs("is-any-cuff-available",
                           "calling-android-activity",
                           "getting-device");
-            plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_IS_ANY_CUFF_AVAILABLE);
+            
+            //plugin.cordova.startService(plugin, myIntent, IHEALTH_IS_ANY_CUFF_AVAILABLE);
+            plugin.cordova.startService(myIntent);
             
           }
         });

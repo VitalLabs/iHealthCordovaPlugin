@@ -29,12 +29,12 @@ import com.jiuan.android.sdk.po.observer_comm.Interface_Observer_CommMsg_PO;
 
 import org.apache.cordova.CordovaPlugin;
 
-import android.app.Activity;
+import android.app.Service
 import android.content.Intent;
 import android.content.Context;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
-import android.view.KeyEvent;
+
 import android.media.AudioManager;
 
 import android.bluetooth.BluetoothAdapter;
@@ -45,14 +45,14 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 
-public class IhealthDeviceManagerActivity extends Activity implements
-                                                             Interface_Observer_BGCoomMsg,
-                                                             Interface_Observer_CommMsg_BP,
-                                                             Interface_Observer_CommMsg_AM,
-                                                             Interface_Observer_CommMsg_HS,
-                                                             Interface_Observer_CommMsg_PO,
-                                                             Interface_Observer_BG,
-                                                             Interface_Observer_CommMsg_ABI {
+public class IhealthDeviceManagerActivity extends Service implements
+                                                            Interface_Observer_BGCoomMsg,
+                                                            Interface_Observer_CommMsg_BP,
+                                                            Interface_Observer_CommMsg_AM,
+                                                            Interface_Observer_CommMsg_HS,
+                                                            Interface_Observer_CommMsg_PO,
+                                                            Interface_Observer_BG,
+                                                            Interface_Observer_CommMsg_ABI {
   private BPControl bpControl;
 	private String TAG = "IhealthDevicemanagerActivity";
 	private boolean isOffline = false;
@@ -102,6 +102,7 @@ public class IhealthDeviceManagerActivity extends Activity implements
     Log.i(TAG, "initDeviceManager");
     
     try {
+      //setTimeoutHandler();
       deviceManager.initDeviceManager(this, userId);
       deviceManager.initReceiver();
       deviceManager.initBpStateCallback(this);
@@ -131,13 +132,6 @@ public class IhealthDeviceManagerActivity extends Activity implements
         }
       });
     myt.start();
-
-    // try {
-    //   setTimeoutHandler();
-    // } catch (Exception e) {
-    //   Log.e(TAG, "Exception in setTimeoutHandler()");
-    // }
-
   }
   
   private Runnable mRunnable = new Runnable() {
@@ -162,7 +156,8 @@ public class IhealthDeviceManagerActivity extends Activity implements
           Log.i(TAG, "Device not registered never");
         }
         Log.i(TAG, "Aborting");
-        finish();
+        //finish();
+        this.activityResultCallback.onActivityResult(action, RESULT_CANCELED, intentResult);
       } else {
         Log.i(TAG, "We can't abort the mission now!");
       }
@@ -182,43 +177,12 @@ public class IhealthDeviceManagerActivity extends Activity implements
     myHandler.removeCallbacks(mRunnable);
   }
   
-  // OnActivityResult stuff hopefully it will work
-  public void setActivityResultCallback(CordovaPlugin plugin) {
-    Log.i(TAG, "setActivityResultCallback");
-    this.activityResultCallback = plugin;        
-  }
-
-  public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode) {
-    Log.i(TAG, "startActivityForResult first");
-    this.activityResultCallback = command;
-    this.activityResultKeepRunning = this.keepRunning;
-    intent.putExtra("action", requestCode);
-    // If multitasking turned on, then disable it for activities that return results
-    if (command != null) {
-      this.keepRunning = false;
-    }
-
-    // Start activity
-    Log.i(TAG, "startActivityForResult"+requestCode);
-    super.startActivityForResult(intent, requestCode);
-  }
-
   @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    Log.i(TAG, "onActivityResult");
-    super.onActivityResult(requestCode, resultCode, intent);
-    CordovaPlugin callback = this.activityResultCallback;
-    if (callback != null) {
-      callback.onActivityResult(requestCode, resultCode, intent);
-    }
-  }
-  // EOF OnActivityResult
-
-  @Override
-  protected void onStart() {
+  protected void onStartCommand(Intent intent) {
     Log.i(TAG, "onStart");
     super.onStart();
-    action = getIntent().getIntExtra("action", 1);
+    action = intent.getIntExtra("action", 1);
+    this.activityResultCallback = intent.getIntExtra("pluginInstance", 1);
     
     // Init receiver
     initReceiver();
@@ -240,13 +204,14 @@ public class IhealthDeviceManagerActivity extends Activity implements
       intentResult.putExtra("action", action);
       Log.i(TAG, "CLEAN done? " + intentResult);
       setResult(RESULT_OK, intentResult);
-      finish();
+      //finish();
+      this.activityResultCallback.onActivityResult(action, RESULT_OK, intentResult);
     } else
-      if (getIntent().getBooleanExtra("checkForDevice", false) &&
-        getIntent().getStringExtra("predefinedMac") != null &&
-        getIntent().getIntExtra("predefinedType", UNKNOWN_DEVICE) != UNKNOWN_DEVICE) {
-      String predefinedMac = getIntent().getStringExtra("predefinedMac");
-      int predefinedType = getIntent().getIntExtra("predefinedType", UNKNOWN_DEVICE);
+      if (intent.getBooleanExtra("checkForDevice", false) &&
+        intent.getStringExtra("predefinedMac") != null &&
+        intent.getIntExtra("predefinedType", UNKNOWN_DEVICE) != UNKNOWN_DEVICE) {
+      String predefinedMac = intent.getStringExtra("predefinedMac");
+      int predefinedType = intent.getIntExtra("predefinedType", UNKNOWN_DEVICE);
       Log.i(TAG, "Get a predefinedMac address check if is available:" + predefinedMac);
 
       bpControl = deviceManager.getBpDevice(predefinedMac);
@@ -260,7 +225,8 @@ public class IhealthDeviceManagerActivity extends Activity implements
         Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
         setResult(RESULT_OK, intentResult);
         deviceManager.cancelScanDevice();
-        finish();
+        //finish();
+        this.activityResultCallback.onActivityResult(action, RESULT_OK, intentResult);
       } else {
         Log.i(TAG, "bpControl is null so we lost previous paired device...");
         Intent intentResult = new Intent();
@@ -279,7 +245,8 @@ public class IhealthDeviceManagerActivity extends Activity implements
           Log.i(TAG, "Device not registered never");
         }
         deviceManager.cancelScanDevice();
-        finish();
+        // finish();
+        this.activityResultCallback.onActivityResult(action, RESULT_CANCELED, intentResult);
       }
         
     } else {
@@ -292,43 +259,9 @@ public class IhealthDeviceManagerActivity extends Activity implements
   }
 
   @Override
-  protected void onRestart() {
-    Log.i(TAG, "onRestart");
-    super.onRestart();
-  }
-
-  @Override
-  protected void onResume() {
-    Log.i(TAG, "onResume");
-
-    super.onResume();
-    Log.i(TAG, "Activity Height" + this.getWindow().getDecorView().getHeight());
-  }
-
-  @Override
-  protected void onPause() {
-    Log.i(TAG, "onPause");
-    super.onPause();
-    //unReceiver();
-  }
-  
-  @Override
-  protected void onStop() {
-    Log.i(TAG, "onStopActivity");    
-    super.onStop();
-    // new
-    //if (deviceManager != null) {
-    //  deviceManager.unReceiver();
-    //}
-    // EOF
-    unReceiver();
-  }
-
-
-  
-  @Override
   protected void onDestroy() {
-    Log.i(TAG, "onDestroy");
+    Log.i(TAG, "onDestroyService");    
+    unReceiver();
     super.onDestroy();
     
   }
@@ -401,7 +334,8 @@ public class IhealthDeviceManagerActivity extends Activity implements
     Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
     setResult(RESULT_OK, intentResult);
     deviceManager.cancelScanDevice();
-    finish();
+    //finish();
+    this.activityResultCallback.onActivityResult(action, RESULT_OK, intentResult);
   }
   
   @Override
@@ -413,7 +347,8 @@ public class IhealthDeviceManagerActivity extends Activity implements
     Log.i(TAG, "wird state done? " + intentResult);
     setResult(RESULT_CANCELED, intentResult);
     deviceManager.cancelScanDevice();
-    finish();
+    //finish();
+    this.activityResultCallback.onActivityResult(action, RESULT_CANCELED, intentResult);
       
   }
 
@@ -509,28 +444,5 @@ public class IhealthDeviceManagerActivity extends Activity implements
   public void msgDeviceDisconnect_ABI(String deviceMac, String deviceType, int arg) {
     // TODO Auto-generated method stub
   }
-
-  @Override
-  public void onBackPressed() {
-    //super.onBackPressed();
-    Log.i(TAG, "User Cancelled via BackButton");
-    Intent intentResult = new Intent();
-    intentResult.putExtra("result", false);
-    intentResult.putExtra("action", action);
-    setResult(RESULT_CANCELED, intentResult);
-    deviceManager.cancelScanDevice();
-    finish();
-  }
-
-
-  @Override
-  public boolean onKeyDown(int keyCode, KeyEvent event) {
-    if (keyCode == KeyEvent.KEYCODE_BACK) {
-      //do whatever you need for the hardware 'back' button
-      Log.i(TAG, "User pressed a back button");
-      onBackPressed();
-      return true;
-    }
-    return super.onKeyDown(keyCode, event);
-  }
+  
 }

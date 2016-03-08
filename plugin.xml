@@ -46,9 +46,10 @@
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
-      <activity 
-          android:name="co.vitallabs.plugin.IhealthDeviceManagerActivity"
-          android:theme = "@android:style/Theme.NoDisplay">
+
+      <service android:name="co.vitallabs.plugin.IhealthDeviceManagerActivity"
+               android:enabled="true"
+               >
 
         <intent-filter>
             <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
@@ -57,7 +58,8 @@
             <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
         </intent-filter>
         
-      </activity>
+      </service>
+      
       <activity 
           android:name="co.vitallabs.plugin.IhealthBP5Activity"
           android:noHistory="true"
