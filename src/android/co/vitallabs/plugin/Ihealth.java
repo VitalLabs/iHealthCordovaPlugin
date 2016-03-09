@@ -35,6 +35,8 @@ import co.vitallabs.plugin.IhealthDeviceManagerService;
 import co.vitallabs.plugin.IhealthBP5Activity;
 import co.vitallabs.plugin.IhealthBP7Activity;
 
+import co.vitallabs.plugin.IhealthDeviceManagerService.LocalBinder;
+
 /**
  * This class echoes a string called from JavaScript.
  */

@@ -421,13 +421,13 @@ public class IhealthDeviceManagerService extends Service implements
     
     if (deviceType.equals("BP5")) {
       intentResult.putExtra("type", this.IHEALTH_BP5);
-      deviceType = this.IHEALTH_BP5;
+      availableType = this.IHEALTH_BP5;
     } else if (deviceType.equals("BP7")) {
       intentResult.putExtra("type", this.IHEALTH_BP7);
-      deviceType = this.IHEALTH_BP7;
+      availableType = this.IHEALTH_BP7;
     } else  {
       intentResult.putExtra("type", this.UNKNOWN_DEVICE);
-      deviceType = this.UNKNOWN_DEVICE;
+      availableType = this.UNKNOWN_DEVICE;
     }
     intentResult.putExtra("action", action);
     Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
