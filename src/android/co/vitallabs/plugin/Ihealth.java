@@ -184,7 +184,7 @@ public class Ihealth extends CordovaPlugin {
     if (!isChecking) {
       isChecking = true;
       final CordovaPlugin plugin = (CordovaPlugin) this;
-      cordova.getThreadPool().execute(new Runnable() {
+      cordova.getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run () {
             cordova.setActivityResultCallback(plugin);
@@ -355,7 +355,7 @@ public class Ihealth extends CordovaPlugin {
     if (!isChecking) {
       isChecking = true;
       final CordovaPlugin plugin = (CordovaPlugin) this;
-      cordova.getThreadPool().execute(new Runnable() {
+      cordova.getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run () {
             cordova.setActivityResultCallback(plugin);
