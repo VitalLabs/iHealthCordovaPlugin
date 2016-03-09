@@ -138,7 +138,6 @@ public class IhealthDeviceManagerService extends Service implements
 
 
   // Binder stuff for interacting with the CordovaPlugin
-
   public class LocalBinder extends Binder {
     IhealthDeviceManagerService getService() {
       // Return this instance of LocalService so clients can call public methods

@@ -21,6 +21,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.os.Binder;
+import android.os.IBinder;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
