@@ -210,7 +210,7 @@ public class Ihealth extends CordovaPlugin {
               myIntent.putExtra("predefinedMac", mac);
               myIntent.putExtra("predefinedType", deviceType);
               // We send this to the service so it 
-              myIntent.putExtra("pluginInstance", plugin);
+              // myIntent.putExtra("pluginInstance", plugin);
             } else {
               myIntent.putExtra("checkForDevice", false);
             }
