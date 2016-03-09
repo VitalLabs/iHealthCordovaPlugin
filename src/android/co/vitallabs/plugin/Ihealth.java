@@ -224,6 +224,7 @@ public class Ihealth extends CordovaPlugin {
             //plugin.cordova.startService(plugin, myIntent, IHEALTH_IS_ANY_CUFF_AVAILABLE);
             //plugin.cordova.getActivity().startService(myIntent);
             //plugin.cordova.getActivity().bindService(myIntent, mConnection, Context.BIND_AUTO_CREATE);
+            Log.i(TAG, "Is mService instantiaded?" + mService);
             Log.i(TAG, "Getting a device?" + mService.getDeviceMac());
             
           }
@@ -490,6 +491,7 @@ public class Ihealth extends CordovaPlugin {
       public void onServiceConnected(ComponentName className,
                                      IBinder service) {
             // We've bound to LocalService, cast the IBinder and get LocalService instance?
+        Log.i(TAG, "onServiceConnected");
         LocalBinder binder = (LocalBinder) service;
         mService = binder.getService();
         mBound = true;
@@ -497,6 +499,7 @@ public class Ihealth extends CordovaPlugin {
       
       @Override
       public void onServiceDisconnected(ComponentName arg0) {
+        Log.i(TAG, "onServiceDisconnected");
         mBound = false;
       }
     };

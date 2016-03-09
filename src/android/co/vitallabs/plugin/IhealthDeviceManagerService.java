@@ -143,6 +143,7 @@ public class IhealthDeviceManagerService extends Service implements
   public class LocalBinder extends Binder {
     IhealthDeviceManagerService getService() {
       // Return this instance of LocalService so clients can call public methods
+      Log.i(TAG, "LocalBinder > getService");
       return IhealthDeviceManagerService.this;
     }
   }
