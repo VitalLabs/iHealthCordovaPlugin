@@ -32,8 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import co.vitallabs.plugin.IhealthDeviceManagerService;
-import co.vitallabs.plugin.LocalBinder;
-// import co.vitallabs.plugin.IhealthDeviceManagerActivity;
 import co.vitallabs.plugin.IhealthBP5Activity;
 import co.vitallabs.plugin.IhealthBP7Activity;
 
@@ -182,7 +180,8 @@ public class Ihealth extends CordovaPlugin {
     isChecking = false;
     deviceType = UNKNOWN_DEVICE;
     logActionToJs("initialize", "initialize", "called");
-    Intent intent = new Intent(plugin.cordova.getActivity(), IhealthDeviceManagerService.class);
+    Context context = this.cordova.getActivity().getApplicationContext();
+    Intent intent = new Intent(context, IhealthDeviceManagerService.class);
     Log.i(TAG, "Binding Service for testing");
     this.cordova.getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     callbackContext.success("Plugin Initialized");
@@ -222,7 +221,9 @@ public class Ihealth extends CordovaPlugin {
             
             //plugin.cordova.startService(plugin, myIntent, IHEALTH_IS_ANY_CUFF_AVAILABLE);
             //plugin.cordova.getActivity().startService(myIntent);
-            plugin.cordova.getActivity().bindService(myIntent, mConnection, Context.BIND_AUTO_CREATE);
+            //plugin.cordova.getActivity().bindService(myIntent, mConnection, Context.BIND_AUTO_CREATE);
+            Log.i(TAG, "Getting a device?" + mService.getDeviceMac());
+            
           }
         });
     } else {

@@ -30,6 +30,7 @@ import com.jiuan.android.sdk.po.observer_comm.Interface_Observer_CommMsg_PO;
 import org.apache.cordova.CordovaPlugin;
 
 import android.app.Service;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
 import android.content.BroadcastReceiver;
@@ -44,6 +45,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.os.Binder;
+import android.os.IBinder;
 import android.util.Log;
 
 public class IhealthDeviceManagerService extends Service implements
@@ -55,7 +57,7 @@ public class IhealthDeviceManagerService extends Service implements
                                                             Interface_Observer_BG,
                                                             Interface_Observer_CommMsg_ABI {
   private BPControl bpControl;
-	private String TAG = "IhealthDevicemanagerActivity";
+	private String TAG = "IhealthDevicemanagerService";
 	private boolean isOffline = false;
 	private String mAddress;
 	private DeviceManager deviceManager = DeviceManager.getInstance();
@@ -84,10 +86,10 @@ public class IhealthDeviceManagerService extends Service implements
   private final IBinder mBinder = new LocalBinder();
   
   @Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate() {
 		// TODO Auto-generated method stub
     Log.i(TAG, "onCreate");
-    super.onCreate(savedInstanceState);
+    //super.onCreate(savedInstanceState);
     mAddress = null;    
   }
 
@@ -148,6 +150,80 @@ public class IhealthDeviceManagerService extends Service implements
 
   @Override
   public IBinder onBind(Intent intent) {
+    Log.i(TAG, "onStart" + startId);
+    //super.onStart();
+    action = intent.getIntExtra("action", 1);
+
+    // Init receiver
+    initReceiver();
+
+
+    if (action == IHEALTH_CLEAN_DEVICE_MANAGER) {
+      Log.i(TAG, "Unregister deviceManager for cleaning operation");
+      try {
+        if (deviceManager != null) {
+          deviceManager.initDeviceManager(this, userId);
+          deviceManager.initReceiver();
+          deviceManager.unReceiver();
+        }
+      } catch (Exception e) {
+        Log.i(TAG, "Exception cleaning DM");
+      }
+      
+      Intent intentResult = new Intent();
+      intentResult.putExtra("action", action);
+      Log.i(TAG, "CLEAN done? " + intentResult);
+      setResult(Activity.RESULT_OK, intentResult);
+      //finish();
+      //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
+    } else
+      if (intent.getBooleanExtra("checkForDevice", false) &&
+        intent.getStringExtra("predefinedMac") != null &&
+        intent.getIntExtra("predefinedType", UNKNOWN_DEVICE) != UNKNOWN_DEVICE) {
+      String predefinedMac = intent.getStringExtra("predefinedMac");
+      int predefinedType = intent.getIntExtra("predefinedType", UNKNOWN_DEVICE);
+      Log.i(TAG, "Get a predefinedMac address check if is available:" + predefinedMac);
+
+      bpControl = deviceManager.getBpDevice(predefinedMac);
+      
+      if (bpControl != null) {
+        Log.i(TAG, "bpControl show that we already hace a Cuff available!");
+        Intent intentResult = new Intent();
+        intentResult.putExtra("result", predefinedMac);
+        intentResult.putExtra("type", predefinedType);
+        intentResult.putExtra("action", action);
+        Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
+        setResult(Activity.RESULT_OK, intentResult);
+        deviceManager.cancelScanDevice();
+        //finish();
+        //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
+      } else {
+        Log.i(TAG, "bpControl is null so we lost previous paired device...");
+        Intent intentResult = new Intent();
+        intentResult.putExtra("result", false);
+        intentResult.putExtra("action", action);
+        Log.i(TAG, "wird state done? " + intentResult);
+        setResult(Activity.RESULT_CANCELED, intentResult);
+
+        try {
+          Log.i(TAG, "Unregister deviceManager");
+          if (deviceManager != null) {
+            deviceManager.unReceiver();
+          }
+          
+        } catch (Exception e) {
+          Log.i(TAG, "Device not registered never");
+        }
+        deviceManager.cancelScanDevice();
+        // finish();
+        //this.activityResultCallback.onActivityResult(action, Activity.RESULT_CANCELED, intentResult);
+      }
+        
+    } else {
+      Log.i(TAG, "First time looking for a device");
+      initDeviceManager();
+    }
+
     return mBinder;
   }
 
@@ -163,7 +239,7 @@ public class IhealthDeviceManagerService extends Service implements
         Intent intentResult = new Intent();
         intentResult.putExtra("result", false);
         intentResult.putExtra("action", action);
-        setResult(RESULT_CANCELED, intentResult);
+        setResult(Activity.RESULT_CANCELED, intentResult);
         Log.i(TAG, "TimeOut Activity!!!");
         try {
           Log.i(TAG, "Unregister deviceManager");
@@ -176,7 +252,7 @@ public class IhealthDeviceManagerService extends Service implements
         }
         Log.i(TAG, "Aborting");
         //finish();
-        this.activityResultCallback.onActivityResult(action, RESULT_CANCELED, intentResult);
+        //this.activityResultCallback.onActivityResult(action, Activity.RESULT_CANCELED, intentResult);
       } else {
         Log.i(TAG, "We can't abort the mission now!");
       }
@@ -201,7 +277,7 @@ public class IhealthDeviceManagerService extends Service implements
     Log.i(TAG, "onStart" + startId);
     super.onStart();
     action = intent.getIntExtra("action", 1);
-    this.activityResultCallback = intent.getIntExtra("pluginInstance", 1);
+    //this.activityResultCallback = intent.getIntExtra("pluginInstance", 1);
     
     // Init receiver
     initReceiver();
@@ -222,9 +298,9 @@ public class IhealthDeviceManagerService extends Service implements
       Intent intentResult = new Intent();
       intentResult.putExtra("action", action);
       Log.i(TAG, "CLEAN done? " + intentResult);
-      setResult(RESULT_OK, intentResult);
+      setResult(Activity.RESULT_OK, intentResult);
       //finish();
-      this.activityResultCallback.onActivityResult(action, RESULT_OK, intentResult);
+      //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
     } else
       if (intent.getBooleanExtra("checkForDevice", false) &&
         intent.getStringExtra("predefinedMac") != null &&
@@ -242,17 +318,17 @@ public class IhealthDeviceManagerService extends Service implements
         intentResult.putExtra("type", predefinedType);
         intentResult.putExtra("action", action);
         Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
-        setResult(RESULT_OK, intentResult);
+        setResult(Activity.RESULT_OK, intentResult);
         deviceManager.cancelScanDevice();
         //finish();
-        this.activityResultCallback.onActivityResult(action, RESULT_OK, intentResult);
+        //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
       } else {
         Log.i(TAG, "bpControl is null so we lost previous paired device...");
         Intent intentResult = new Intent();
         intentResult.putExtra("result", false);
         intentResult.putExtra("action", action);
         Log.i(TAG, "wird state done? " + intentResult);
-        setResult(RESULT_CANCELED, intentResult);
+        setResult(Activity.RESULT_CANCELED, intentResult);
 
         try {
           Log.i(TAG, "Unregister deviceManager");
@@ -265,7 +341,7 @@ public class IhealthDeviceManagerService extends Service implements
         }
         deviceManager.cancelScanDevice();
         // finish();
-        this.activityResultCallback.onActivityResult(action, RESULT_CANCELED, intentResult);
+        //this.activityResultCallback.onActivityResult(action, Activity.RESULT_CANCELED, intentResult);
       }
         
     } else {
@@ -278,11 +354,10 @@ public class IhealthDeviceManagerService extends Service implements
   }
 
   @Override
-  protected void onDestroy() {
+  public void onDestroy() {
     Log.i(TAG, "onDestroyService");    
     unReceiver();
     super.onDestroy();
-    
   }
 
   private void unReceiver() {
@@ -351,10 +426,10 @@ public class IhealthDeviceManagerService extends Service implements
     }
     intentResult.putExtra("action", action);
     Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
-    setResult(RESULT_OK, intentResult);
+    setResult(Activity.RESULT_OK, intentResult);
     deviceManager.cancelScanDevice();
     //finish();
-    this.activityResultCallback.onActivityResult(action, RESULT_OK, intentResult);
+    //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
   }
   
   @Override
@@ -364,10 +439,10 @@ public class IhealthDeviceManagerService extends Service implements
     intentResult.putExtra("result", false);
     intentResult.putExtra("action", action);
     Log.i(TAG, "wird state done? " + intentResult);
-    setResult(RESULT_CANCELED, intentResult);
+    setResult(Activity.RESULT_CANCELED, intentResult);
     deviceManager.cancelScanDevice();
     //finish();
-    this.activityResultCallback.onActivityResult(action, RESULT_CANCELED, intentResult);
+    //this.activityResultCallback.onActivityResult(action, Activity.RESULT_CANCELED, intentResult);
       
   }
 
@@ -463,5 +538,12 @@ public class IhealthDeviceManagerService extends Service implements
   public void msgDeviceDisconnect_ABI(String deviceMac, String deviceType, int arg) {
     // TODO Auto-generated method stub
   }
-  
+
+  public String getDeviceMac() {
+    return this.maddress;
+  }
+
+  public int getDeviceType () {
+    return this.availableType;
+  }
 }
