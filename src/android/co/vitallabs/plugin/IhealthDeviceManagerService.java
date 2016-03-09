@@ -194,7 +194,7 @@ public class IhealthDeviceManagerService extends Service implements
         intentResult.putExtra("action", action);
         Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
         //setResult(Activity.RESULT_OK, intentResult);
-        deviceType = predefinedType;
+        availableType = predefinedType;
         mAddress = predefinedMac;
         deviceManager.cancelScanDevice();
         //finish();
