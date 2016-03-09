@@ -184,7 +184,7 @@ public class Ihealth extends CordovaPlugin {
     logActionToJs("initialize", "initialize", "called");
     Intent intent = new Intent(plugin.cordova.getActivity(), IhealthDeviceManagerService.class);
     Log.i(TAG, "Binding Service for testing");
-    bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+    this.cordova.getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     callbackContext.success("Plugin Initialized");
   }
   
@@ -222,7 +222,7 @@ public class Ihealth extends CordovaPlugin {
             
             //plugin.cordova.startService(plugin, myIntent, IHEALTH_IS_ANY_CUFF_AVAILABLE);
             //plugin.cordova.getActivity().startService(myIntent);
-            bindService(myIntent, mConnection, Context.BIND_AUTO_CREATE);
+            plugin.cordova.getActivity().bindService(myIntent, mConnection, Context.BIND_AUTO_CREATE);
           }
         });
     } else {

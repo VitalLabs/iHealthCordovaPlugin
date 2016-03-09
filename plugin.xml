@@ -47,9 +47,7 @@
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-      <service android:name="co.vitallabs.plugin.IhealthDeviceManagerService"
-               android:enabled="true"
-               >
+      <service android:name=".IhealthDeviceManagerService">
 
         <intent-filter>
             <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
