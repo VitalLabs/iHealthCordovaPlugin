@@ -150,7 +150,7 @@ public class IhealthDeviceManagerService extends Service implements
 
   @Override
   public IBinder onBind(Intent intent) {
-    Log.i(TAG, "onStart" + startId);
+    Log.i(TAG, "onStart");
     //super.onStart();
     action = intent.getIntExtra("action", 1);
 
@@ -173,7 +173,7 @@ public class IhealthDeviceManagerService extends Service implements
       Intent intentResult = new Intent();
       intentResult.putExtra("action", action);
       Log.i(TAG, "CLEAN done? " + intentResult);
-      setResult(Activity.RESULT_OK, intentResult);
+      //setResult(Activity.RESULT_OK, intentResult);
       //finish();
       //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
     } else
@@ -193,7 +193,9 @@ public class IhealthDeviceManagerService extends Service implements
         intentResult.putExtra("type", predefinedType);
         intentResult.putExtra("action", action);
         Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
-        setResult(Activity.RESULT_OK, intentResult);
+        //setResult(Activity.RESULT_OK, intentResult);
+        deviceType = predefinedType;
+        mAddress = predefinedMac;
         deviceManager.cancelScanDevice();
         //finish();
         //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
@@ -203,7 +205,7 @@ public class IhealthDeviceManagerService extends Service implements
         intentResult.putExtra("result", false);
         intentResult.putExtra("action", action);
         Log.i(TAG, "wird state done? " + intentResult);
-        setResult(Activity.RESULT_CANCELED, intentResult);
+        //setResult(Activity.RESULT_CANCELED, intentResult);
 
         try {
           Log.i(TAG, "Unregister deviceManager");
@@ -239,7 +241,7 @@ public class IhealthDeviceManagerService extends Service implements
         Intent intentResult = new Intent();
         intentResult.putExtra("result", false);
         intentResult.putExtra("action", action);
-        setResult(Activity.RESULT_CANCELED, intentResult);
+        //setResult(Activity.RESULT_CANCELED, intentResult);
         Log.i(TAG, "TimeOut Activity!!!");
         try {
           Log.i(TAG, "Unregister deviceManager");
@@ -272,86 +274,86 @@ public class IhealthDeviceManagerService extends Service implements
     myHandler.removeCallbacks(mRunnable);
   }
   
-  @Override
-  protected void onStart(Intent intent, int startId) {
-    Log.i(TAG, "onStart" + startId);
-    super.onStart();
-    action = intent.getIntExtra("action", 1);
-    //this.activityResultCallback = intent.getIntExtra("pluginInstance", 1);
+  // @Override
+  // protected void onStart(Intent intent, int startId) {
+  //   Log.i(TAG, "onStart" + startId);
+  //   super.onStart();
+  //   action = intent.getIntExtra("action", 1);
+  //   //this.activityResultCallback = intent.getIntExtra("pluginInstance", 1);
     
-    // Init receiver
-    initReceiver();
+  //   // Init receiver
+  //   initReceiver();
 
 
-    if (action == IHEALTH_CLEAN_DEVICE_MANAGER) {
-      Log.i(TAG, "Unregister deviceManager for cleaning operation");
-      try {
-        if (deviceManager != null) {
-          deviceManager.initDeviceManager(this, userId);
-          deviceManager.initReceiver();
-          deviceManager.unReceiver();
-        }
-      } catch (Exception e) {
-        Log.i(TAG, "Exception cleaning DM");
-      }
+  //   if (action == IHEALTH_CLEAN_DEVICE_MANAGER) {
+  //     Log.i(TAG, "Unregister deviceManager for cleaning operation");
+  //     try {
+  //       if (deviceManager != null) {
+  //         deviceManager.initDeviceManager(this, userId);
+  //         deviceManager.initReceiver();
+  //         deviceManager.unReceiver();
+  //       }
+  //     } catch (Exception e) {
+  //       Log.i(TAG, "Exception cleaning DM");
+  //     }
       
-      Intent intentResult = new Intent();
-      intentResult.putExtra("action", action);
-      Log.i(TAG, "CLEAN done? " + intentResult);
-      setResult(Activity.RESULT_OK, intentResult);
-      //finish();
-      //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
-    } else
-      if (intent.getBooleanExtra("checkForDevice", false) &&
-        intent.getStringExtra("predefinedMac") != null &&
-        intent.getIntExtra("predefinedType", UNKNOWN_DEVICE) != UNKNOWN_DEVICE) {
-      String predefinedMac = intent.getStringExtra("predefinedMac");
-      int predefinedType = intent.getIntExtra("predefinedType", UNKNOWN_DEVICE);
-      Log.i(TAG, "Get a predefinedMac address check if is available:" + predefinedMac);
+  //     Intent intentResult = new Intent();
+  //     intentResult.putExtra("action", action);
+  //     Log.i(TAG, "CLEAN done? " + intentResult);
+  //     setResult(Activity.RESULT_OK, intentResult);
+  //     //finish();
+  //     //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
+  //   } else
+  //     if (intent.getBooleanExtra("checkForDevice", false) &&
+  //       intent.getStringExtra("predefinedMac") != null &&
+  //       intent.getIntExtra("predefinedType", UNKNOWN_DEVICE) != UNKNOWN_DEVICE) {
+  //     String predefinedMac = intent.getStringExtra("predefinedMac");
+  //     int predefinedType = intent.getIntExtra("predefinedType", UNKNOWN_DEVICE);
+  //     Log.i(TAG, "Get a predefinedMac address check if is available:" + predefinedMac);
 
-      bpControl = deviceManager.getBpDevice(predefinedMac);
+  //     bpControl = deviceManager.getBpDevice(predefinedMac);
       
-      if (bpControl != null) {
-        Log.i(TAG, "bpControl show that we already hace a Cuff available!");
-        Intent intentResult = new Intent();
-        intentResult.putExtra("result", predefinedMac);
-        intentResult.putExtra("type", predefinedType);
-        intentResult.putExtra("action", action);
-        Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
-        setResult(Activity.RESULT_OK, intentResult);
-        deviceManager.cancelScanDevice();
-        //finish();
-        //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
-      } else {
-        Log.i(TAG, "bpControl is null so we lost previous paired device...");
-        Intent intentResult = new Intent();
-        intentResult.putExtra("result", false);
-        intentResult.putExtra("action", action);
-        Log.i(TAG, "wird state done? " + intentResult);
-        setResult(Activity.RESULT_CANCELED, intentResult);
+  //     if (bpControl != null) {
+  //       Log.i(TAG, "bpControl show that we already hace a Cuff available!");
+  //       Intent intentResult = new Intent();
+  //       intentResult.putExtra("result", predefinedMac);
+  //       intentResult.putExtra("type", predefinedType);
+  //       intentResult.putExtra("action", action);
+  //       Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
+  //       setResult(Activity.RESULT_OK, intentResult);
+  //       deviceManager.cancelScanDevice();
+  //       //finish();
+  //       //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
+  //     } else {
+  //       Log.i(TAG, "bpControl is null so we lost previous paired device...");
+  //       Intent intentResult = new Intent();
+  //       intentResult.putExtra("result", false);
+  //       intentResult.putExtra("action", action);
+  //       Log.i(TAG, "wird state done? " + intentResult);
+  //       setResult(Activity.RESULT_CANCELED, intentResult);
 
-        try {
-          Log.i(TAG, "Unregister deviceManager");
-          if (deviceManager != null) {
-            deviceManager.unReceiver();
-          }
+  //       try {
+  //         Log.i(TAG, "Unregister deviceManager");
+  //         if (deviceManager != null) {
+  //           deviceManager.unReceiver();
+  //         }
           
-        } catch (Exception e) {
-          Log.i(TAG, "Device not registered never");
-        }
-        deviceManager.cancelScanDevice();
-        // finish();
-        //this.activityResultCallback.onActivityResult(action, Activity.RESULT_CANCELED, intentResult);
-      }
+  //       } catch (Exception e) {
+  //         Log.i(TAG, "Device not registered never");
+  //       }
+  //       deviceManager.cancelScanDevice();
+  //       // finish();
+  //       //this.activityResultCallback.onActivityResult(action, Activity.RESULT_CANCELED, intentResult);
+  //     }
         
-    } else {
-      Log.i(TAG, "First time looking for a device");
-      initDeviceManager();
-    }
+  //   } else {
+  //     Log.i(TAG, "First time looking for a device");
+  //     initDeviceManager();
+  //   }
 
 
     
-  }
+  // }
 
   @Override
   public void onDestroy() {
@@ -419,14 +421,18 @@ public class IhealthDeviceManagerService extends Service implements
     
     if (deviceType.equals("BP5")) {
       intentResult.putExtra("type", this.IHEALTH_BP5);
+      deviceType = this.IHEALTH_BP5;
     } else if (deviceType.equals("BP7")) {
       intentResult.putExtra("type", this.IHEALTH_BP7);
+      deviceType = this.IHEALTH_BP7;
     } else  {
       intentResult.putExtra("type", this.UNKNOWN_DEVICE);
+      deviceType = this.UNKNOWN_DEVICE;
     }
     intentResult.putExtra("action", action);
     Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
-    setResult(Activity.RESULT_OK, intentResult);
+    // setResult(Activity.RESULT_OK, intentResult);
+    
     deviceManager.cancelScanDevice();
     //finish();
     //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
@@ -439,7 +445,7 @@ public class IhealthDeviceManagerService extends Service implements
     intentResult.putExtra("result", false);
     intentResult.putExtra("action", action);
     Log.i(TAG, "wird state done? " + intentResult);
-    setResult(Activity.RESULT_CANCELED, intentResult);
+    // setResult(Activity.RESULT_CANCELED, intentResult);
     deviceManager.cancelScanDevice();
     //finish();
     //this.activityResultCallback.onActivityResult(action, Activity.RESULT_CANCELED, intentResult);
@@ -540,7 +546,7 @@ public class IhealthDeviceManagerService extends Service implements
   }
 
   public String getDeviceMac() {
-    return this.maddress;
+    return this.mAddress;
   }
 
   public int getDeviceType () {
