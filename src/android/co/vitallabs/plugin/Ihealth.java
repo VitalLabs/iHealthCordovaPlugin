@@ -68,7 +68,7 @@ public class Ihealth extends CordovaPlugin {
   private String pluginName = "AndroidiHealthPlugin";
 
   // Binder stuff
-  LocalService mService;
+  IhealthDeviceManagerService mService;
   boolean mBound = false;
   // EOF Binder stuff
   
@@ -197,7 +197,7 @@ public class Ihealth extends CordovaPlugin {
     if (!isChecking) {
       isChecking = true;
       final CordovaPlugin plugin = (CordovaPlugin) this;
-      cordova.getThreadPool().execute(new Runnable() {
+      cordova.getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run () {
             cordova.setActivityResultCallback(plugin);
@@ -221,8 +221,8 @@ public class Ihealth extends CordovaPlugin {
                           "getting-device");
             
             //plugin.cordova.startService(plugin, myIntent, IHEALTH_IS_ANY_CUFF_AVAILABLE);
-            plugin.cordova.getActivity().startService(myIntent);
-            
+            //plugin.cordova.getActivity().startService(myIntent);
+            bindService(myIntent, mConnection, Context.BIND_AUTO_CREATE);
           }
         });
     } else {
