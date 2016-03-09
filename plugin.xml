@@ -47,7 +47,7 @@
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-      <service android:name="co.vitallabs.plugin.IhealthDeviceManagerActivity"
+      <service android:name="co.vitallabs.plugin.IhealthDeviceManagerService"
                android:enabled="true"
                >
 

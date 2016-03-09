@@ -43,10 +43,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.os.Binder;
 import android.util.Log;
 
-public class IhealthDeviceManagerActivity extends Service implements
-                                                            Interface_Observer_BGCoomMsg,
+public class IhealthDeviceManagerService extends Service implements
+                                                           Interface_Observer_BGCoomMsg,
                                                             Interface_Observer_CommMsg_BP,
                                                             Interface_Observer_CommMsg_AM,
                                                             Interface_Observer_CommMsg_HS,
@@ -80,6 +81,7 @@ public class IhealthDeviceManagerActivity extends Service implements
   
   Handler myHandler;
   private String userId = "devops@vitallabs.co";
+  private final IBinder mBinder = new LocalBinder();
   
   @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +135,24 @@ public class IhealthDeviceManagerActivity extends Service implements
       });
     myt.start();
   }
+
+
+  // Binder stuff for interacting with the CordovaPlugin
+
+  public class LocalBinder extends Binder {
+    IhealthDeviceManagerService getService() {
+      // Return this instance of LocalService so clients can call public methods
+      return IhealthDeviceManagerService.this;
+    }
+  }
+
+
+  @Override
+  public IBinder onBind(Intent intent) {
+    return mBinder;
+  }
+
+  // EOF Binder stuff
   
   private Runnable mRunnable = new Runnable() {
 

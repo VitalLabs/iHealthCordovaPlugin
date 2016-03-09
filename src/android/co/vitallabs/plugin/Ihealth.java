@@ -11,6 +11,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
+import android.content.ComponentName;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
+import android.os.Binder;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -28,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import co.vitallabs.plugin.IhealthDeviceManagerService;
+import co.vitallabs.plugin.LocalBinder;
 // import co.vitallabs.plugin.IhealthDeviceManagerActivity;
 import co.vitallabs.plugin.IhealthBP5Activity;
 import co.vitallabs.plugin.IhealthBP7Activity;
@@ -61,6 +64,11 @@ public class Ihealth extends CordovaPlugin {
   private String mac;
   private int deviceType;
   private String pluginName = "AndroidiHealthPlugin";
+
+  // Binder stuff
+  LocalService mService;
+  boolean mBound = false;
+  // EOF Binder stuff
   
   private void logActionToJs (String action, String cause, String event) {
     try {
@@ -172,6 +180,9 @@ public class Ihealth extends CordovaPlugin {
     isChecking = false;
     deviceType = UNKNOWN_DEVICE;
     logActionToJs("initialize", "initialize", "called");
+    Intent intent = new Intent(plugin.cordova.getActivity(), IhealthDeviceManagerService.class);
+    Log.i(TAG, "Binding Service for testing");
+    bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     callbackContext.success("Plugin Initialized");
   }
   
@@ -465,4 +476,23 @@ public class Ihealth extends CordovaPlugin {
     }
     
   }
+
+  // Binder stuff
+  /** Defines callbacks for service binding, passed to bindService() */
+  private ServiceConnection mConnection = new ServiceConnection() {
+
+      @Override
+      public void onServiceConnected(ComponentName className,
+                                     IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance?
+        LocalBinder binder = (LocalBinder) service;
+        mService = binder.getService();
+        mBound = true;
+      }
+      
+      @Override
+      public void onServiceDisconnected(ComponentName arg0) {
+        mBound = false;
+      }
+    };
 }
