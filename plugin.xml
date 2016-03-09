@@ -86,6 +86,9 @@
     <source-file src="src/android/co/vitallabs/plugin/IhealthDeviceManagerActivity.java"
                  target-dir="src/co/vitallabs/plugin" />
 
+    <source-file src="src/android/co/vitallabs/plugin/IhealthDeviceManagerService.java"
+                 target-dir="src/co/vitallabs/plugin" />
+
     <source-file src="src/android/co/vitallabs/plugin/IhealthBP5Activity.java"
                  target-dir="src/co/vitallabs/plugin" />
 
