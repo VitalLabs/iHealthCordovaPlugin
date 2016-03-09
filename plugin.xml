@@ -19,7 +19,7 @@
   <platform name="android">
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="iHealthPlugin">
-        <param name="android-package" value="co.vitallabs.plugin" />
+        <param name="android-package" value="co.vitallabs.plugin.Ihealth" />
       </feature>
     </config-file>
 
@@ -47,7 +47,7 @@
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
 
-      <service android:name=".IhealthDeviceManagerService">
+      <service android:name="co.vitallabs.plugin.IhealthDeviceManagerService">
 
         <intent-filter>
             <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
