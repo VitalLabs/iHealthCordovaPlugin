@@ -29,7 +29,7 @@ import com.jiuan.android.sdk.po.observer_comm.Interface_Observer_CommMsg_PO;
 
 import org.apache.cordova.CordovaPlugin;
 
-import android.app.Service
+import android.app.Service;
 import android.content.Intent;
 import android.content.Context;
 import android.content.BroadcastReceiver;
