@@ -46,9 +46,8 @@
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
-      <activity 
-          android:name="co.vitallabs.plugin.IhealthDeviceManagerActivity"
-          android:theme = "@android:style/Theme.NoDisplay">
+
+      <service android:name="co.vitallabs.plugin.IhealthDeviceManagerService">
 
         <intent-filter>
             <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
@@ -57,7 +56,8 @@
             <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
         </intent-filter>
         
-      </activity>
+      </service>
+      
       <activity 
           android:name="co.vitallabs.plugin.IhealthBP5Activity"
           android:noHistory="true"
@@ -84,6 +84,9 @@
 
 
     <source-file src="src/android/co/vitallabs/plugin/IhealthDeviceManagerActivity.java"
+                 target-dir="src/co/vitallabs/plugin" />
+
+    <source-file src="src/android/co/vitallabs/plugin/IhealthDeviceManagerService.java"
                  target-dir="src/co/vitallabs/plugin" />
 
     <source-file src="src/android/co/vitallabs/plugin/IhealthBP5Activity.java"
@@ -116,7 +119,6 @@
 
     <config-file target="*-Info.plist" parent="UISupportedExternalAccessoryProtocols">
       <array>
-        <!-- <string>com.jiuan.P930</string> -->
         <string>com.jiuan.BPV20</string>
         <string>com.jiuan.BPV21</string>
       </array>

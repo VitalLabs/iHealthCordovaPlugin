@@ -221,19 +221,20 @@ public class IhealthBP5Activity extends Activity implements
 	}
 
 	private void getFunctionInfo(){
-		
+    Log.i(TAG, "getfunctioninfo");
 	}
 
 	@Override
 	public void msgInden() {
 		// TODO Auto-generated method stub
+    Log.i(TAG, "msginden");
 
 	}
 
 	@Override
 	public void msgBattery(int battery) {
 		// TODO Auto-generated method stub
-
+        Log.i(TAG, "msgBattery " + battery);
 	}
 
 	@Override
@@ -257,6 +258,7 @@ public class IhealthBP5Activity extends Activity implements
 	@Override
 	public void msgAngle(int angle) {
 		// TODO Auto-generated method stub
+    Log.i(TAG, "msgAngle " + angle);
 
 	}
 
@@ -313,4 +315,15 @@ public class IhealthBP5Activity extends Activity implements
     bpControl.start(IhealthBP5Activity.this, clientID, clientSecret);
   }
 
+  @Override
+  public void onBackPressed() {
+    //super.onBackPressed();
+    Log.i(TAG, "User Cancelled via BackButton");
+    Intent intentResult = new Intent();
+    intentResult.putExtra("result", -3);
+    intentResult.putExtra("action", action);
+    setResult(RESULT_CANCELED, intentResult);
+    finish();
+  }
+  
 }

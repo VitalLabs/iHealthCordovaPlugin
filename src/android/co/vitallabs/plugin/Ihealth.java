@@ -11,6 +11,8 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
+import android.os.Binder;
+import android.os.IBinder;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -27,10 +31,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-// import co.vitallabs.plugin.IhealthActivity;
-import co.vitallabs.plugin.IhealthDeviceManagerActivity;
+import co.vitallabs.plugin.IhealthDeviceManagerService;
 import co.vitallabs.plugin.IhealthBP5Activity;
 import co.vitallabs.plugin.IhealthBP7Activity;
+
+import co.vitallabs.plugin.IhealthDeviceManagerService.LocalBinder;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -61,6 +66,11 @@ public class Ihealth extends CordovaPlugin {
   private String mac;
   private int deviceType;
   private String pluginName = "AndroidiHealthPlugin";
+
+  // Binder stuff
+  IhealthDeviceManagerService mService;
+  boolean mBound = false;
+  // EOF Binder stuff
   
   private void logActionToJs (String action, String cause, String event) {
     try {
@@ -135,7 +145,7 @@ public class Ihealth extends CordovaPlugin {
 
     if (action.equals("isAnyCuffAvailable")) {
        
-      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable+ " - " +isTakingMeasure);
+      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable+ " - " +isTakingMeasure + " - " + isChecking);
       
       if (!isTakingMeasure && !isCuffAvailable && !isChecking) {
         isAnyCuffAvailable(callbackContext);
@@ -154,11 +164,6 @@ public class Ihealth extends CordovaPlugin {
     
     if (action.equals("cleanPluginState")) {
       Log.i(TAG, "FinishActivity!!");
-      try {
-        cordova.getActivity().finishActivity(IHEALTH_IS_ANY_CUFF_AVAILABLE);
-      } catch (Exception e) {
-        Log.e(TAG, "Exception in finishActivity");
-      }
       resetPluginState();
       callbackContext.success();
     }
@@ -172,6 +177,10 @@ public class Ihealth extends CordovaPlugin {
     isChecking = false;
     deviceType = UNKNOWN_DEVICE;
     logActionToJs("initialize", "initialize", "called");
+    Context context = this.cordova.getActivity().getApplicationContext();
+    Intent intent = new Intent(context, IhealthDeviceManagerService.class);
+    Log.i(TAG, "Binding Service for testing");
+    this.cordova.getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     callbackContext.success("Plugin Initialized");
   }
   
@@ -182,30 +191,24 @@ public class Ihealth extends CordovaPlugin {
   private void isAnyCuffAvailable(CallbackContext callbackContext) {
 
     if (!isChecking) {
-      isChecking = true;
+      // isChecking = true;
       final CordovaPlugin plugin = (CordovaPlugin) this;
-      cordova.getThreadPool().execute(new Runnable() {
+      cordova.getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run () {
-            cordova.setActivityResultCallback(plugin);
-            Context context = plugin.cordova.getActivity().getApplicationContext();
-            Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
-            myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-            myIntent.putExtra("action", IHEALTH_IS_ANY_CUFF_AVAILABLE);
-            
-            if (mac != null && !mac.equals("") && deviceType != UNKNOWN_DEVICE) {
-              Log.i(TAG, "Checking for previous paired device: " + mac);
-              myIntent.putExtra("checkForDevice", true);
-              myIntent.putExtra("predefinedMac", mac);
-              myIntent.putExtra("predefinedType", deviceType);
-            } else {
-              myIntent.putExtra("checkForDevice", false);
-            }
             logActionToJs("is-any-cuff-available",
                           "calling-android-activity",
                           "getting-device");
-            plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_IS_ANY_CUFF_AVAILABLE);
             
+            Log.i(TAG, "Is mService instantiaded?" + mService);
+            Log.i(TAG, "Getting a device?" + mService.getDeviceMac());
+
+            if (mService.isScanSuccessful()) {
+              isChecking = true;
+              isCuffAvailable = true;
+              mac =  mService.getDeviceMac();
+              deviceType = mService.getDeviceType();
+            }
           }
         });
     } else {
@@ -279,7 +282,6 @@ public class Ihealth extends CordovaPlugin {
       this.deviceConnectForBP7(callbackContext);
       
     } else {
-      resetPluginState();
       callbackContext.error("Unknown Device");
     }
   }
@@ -288,6 +290,10 @@ public class Ihealth extends CordovaPlugin {
     String errorMessage = "Unknown Error";
     
     switch (errorCode) {
+      case -3:
+        errorMessage = "Cancelled by User [BackButton was pressed]";
+        break;
+        
       case 0:
         errorMessage = "Pressure system is unstable before measurement";
         break;
@@ -351,28 +357,7 @@ public class Ihealth extends CordovaPlugin {
     logActionToJs("reset-plugin-state",
                   "invoking-plugin-function",
                   "force-to-reset-plugin-state");
-
-    if (!isChecking) {
-      isChecking = true;
-      final CordovaPlugin plugin = (CordovaPlugin) this;
-      cordova.getThreadPool().execute(new Runnable() {
-          @Override
-          public void run () {
-            cordova.setActivityResultCallback(plugin);
-            Context context = plugin.cordova.getActivity().getApplicationContext();
-            Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
-            myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-            myIntent.putExtra("action", IHEALTH_CLEAN_DEVICE_MANAGER);
-            
-            logActionToJs("reset-plugin-state",
-                          "calling-android-activity",
-                          "reset-device-manager");
-
-            plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_CLEAN_DEVICE_MANAGER);
-            
-          }
-        });
-    }
+    //Maybe rebind or clean state in service?
     
     isTakingMeasure = false;
     isCuffAvailable = false;
@@ -387,30 +372,6 @@ public class Ihealth extends CordovaPlugin {
     Log.i(TAG, "onActivityResult "+requestCode+" "+resultCode+" "+intent);
     int actionResult = intent.getIntExtra("action", 1);
     switch (actionResult) {
-      case IHEALTH_IS_ANY_CUFF_AVAILABLE:
-      case IHEALTH_IS_BP7_CUFF_AVAILABLE:
-      case IHEALTH_IS_BP5_CUFF_AVAILABLE:
-        if (resultCode == Activity.RESULT_OK) {
-          Log.i(TAG, "Available? OK");
-          isCuffAvailable = true;
-          mac =  intent.getStringExtra("result");
-          deviceType = intent.getIntExtra("type", UNKNOWN_DEVICE);
-          logActionToJs("getting-callback-result",
-                        "result:" + deviceType,
-                        "is-cuff-available?");
-          this.callbackContext.success();
-        } else {
-          Log.i(TAG, "Available? NOTOK");
-          isCuffAvailable = false;
-          isChecking = false;
-          mac = null;
-          deviceType = UNKNOWN_DEVICE;
-          logActionToJs("getting-callback-result",
-                        "error-result",
-                        "is-cuff-available?");
-          this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, false));
-        }
-        break;
 
     case IHEALTH_DEVICE_CONNECT_FOR_BP5:
     case IHEALTH_DEVICE_CONNECT_FOR_BP7:
@@ -425,7 +386,7 @@ public class Ihealth extends CordovaPlugin {
             logActionToJs("getting-callback-result",
                           "got-result:" + json.toString(),
                           "device-connect");
-            resetPluginState();
+            isChecking = false;
             this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
           } catch (JSONException e) {
             logActionToJs("getting-callback-result",
@@ -440,21 +401,34 @@ public class Ihealth extends CordovaPlugin {
                         "error:Getting-result-from-activity:" + errorCode,
                         "device-connect");
 
-          resetPluginState();
+          isChecking = false;
           Log.e(TAG, "Error: " + bpGetErrorMessage(errorCode));
           this.callbackContext.error(bpGetErrorMessage(errorCode));
         }
 
         break;
-    case IHEALTH_CLEAN_DEVICE_MANAGER:
-      Log.i(TAG, "cleanManager case result:"+resultCode);
-      if (resultCode == Activity.RESULT_OK) {
-        this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "OK_CLEAN"));
-      } else {
-          this.callbackContext.error("ERROR_CLEAR");
-      }
-      break;
     }
     
   }
+
+  // Binder stuff
+  /** Defines callbacks for service binding, passed to bindService() */
+  private ServiceConnection mConnection = new ServiceConnection() {
+
+      @Override
+      public void onServiceConnected(ComponentName className,
+                                     IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance?
+        Log.i(TAG, "onServiceConnected");
+        LocalBinder binder = (LocalBinder) service;
+        mService = binder.getService();
+        mBound = true;
+      }
+      
+      @Override
+      public void onServiceDisconnected(ComponentName arg0) {
+        Log.i(TAG, "onServiceDisconnected");
+        mBound = false;
+      }
+    };
 }
