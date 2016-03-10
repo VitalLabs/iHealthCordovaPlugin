@@ -226,7 +226,13 @@ public class Ihealth extends CordovaPlugin {
             //plugin.cordova.getActivity().bindService(myIntent, mConnection, Context.BIND_AUTO_CREATE);
             Log.i(TAG, "Is mService instantiaded?" + mService);
             Log.i(TAG, "Getting a device?" + mService.getDeviceMac());
-            
+
+
+            if (mService.getDeviceMac() != null && mService.getDeviceType()) {
+              isCuffAvailable = true;
+              mac =  mService.getDeviceMac();
+              deviceType = mService.getDeviceType();
+            }
           }
         });
     } else {
