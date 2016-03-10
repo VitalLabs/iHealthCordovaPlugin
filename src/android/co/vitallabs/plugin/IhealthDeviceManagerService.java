@@ -174,9 +174,7 @@ public class IhealthDeviceManagerService extends Service implements
       Intent intentResult = new Intent();
       intentResult.putExtra("action", action);
       Log.i(TAG, "CLEAN done? " + intentResult);
-      //setResult(Activity.RESULT_OK, intentResult);
-      //finish();
-      //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
+      
     } else
       if (intent.getBooleanExtra("checkForDevice", false) &&
         intent.getStringExtra("predefinedMac") != null &&

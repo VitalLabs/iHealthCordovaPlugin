@@ -233,19 +233,20 @@ public class IhealthBP7Activity extends Activity implements
 	}
 
 	private void getFunctionInfo(){
-		
+		    Log.i(TAG, "getFunctionInfo");
 	}
 
 	@Override
 	public void msgInden() {
 		// TODO Auto-generated method stub
+    Log.i(TAG, "msgInden ");
 
 	}
 
 	@Override
 	public void msgBattery(int battery) {
 		// TODO Auto-generated method stub
-
+      Log.i(TAG, "msgBattery " + battery);
 	}
 
 	@Override

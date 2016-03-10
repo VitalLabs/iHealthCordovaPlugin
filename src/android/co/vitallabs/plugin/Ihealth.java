@@ -388,7 +388,7 @@ public class Ihealth extends CordovaPlugin {
     isTakingMeasure = false;
     isCuffAvailable = false;
     isChecking = false;
-    this.cordova.getActivity().unbindService(mConnection);
+    // this.cordova.getActivity().unbindService(mConnection);
   }
   
   @Override
