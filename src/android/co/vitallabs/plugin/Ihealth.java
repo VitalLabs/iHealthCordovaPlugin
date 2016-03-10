@@ -228,7 +228,7 @@ public class Ihealth extends CordovaPlugin {
             Log.i(TAG, "Getting a device?" + mService.getDeviceMac());
 
 
-            if (mService.getDeviceMac() != null && mService.getDeviceType()) {
+            if (mService.getDeviceMac() != null && mService.getDeviceType() != null) {
               isCuffAvailable = true;
               mac =  mService.getDeviceMac();
               deviceType = mService.getDeviceType();
