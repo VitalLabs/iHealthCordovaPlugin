@@ -388,6 +388,7 @@ public class Ihealth extends CordovaPlugin {
     isTakingMeasure = false;
     isCuffAvailable = false;
     isChecking = false;
+    this.cordova.getActivity().unbindService(mConnection);
   }
   
   @Override
@@ -398,30 +399,30 @@ public class Ihealth extends CordovaPlugin {
     Log.i(TAG, "onActivityResult "+requestCode+" "+resultCode+" "+intent);
     int actionResult = intent.getIntExtra("action", 1);
     switch (actionResult) {
-      case IHEALTH_IS_ANY_CUFF_AVAILABLE:
-      case IHEALTH_IS_BP7_CUFF_AVAILABLE:
-      case IHEALTH_IS_BP5_CUFF_AVAILABLE:
-        if (resultCode == Activity.RESULT_OK) {
-          Log.i(TAG, "Available? OK");
-          isCuffAvailable = true;
-          mac =  intent.getStringExtra("result");
-          deviceType = intent.getIntExtra("type", UNKNOWN_DEVICE);
-          logActionToJs("getting-callback-result",
-                        "result:" + deviceType,
-                        "is-cuff-available?");
-          this.callbackContext.success();
-        } else {
-          Log.i(TAG, "Available? NOTOK");
-          isCuffAvailable = false;
-          isChecking = false;
-          mac = null;
-          deviceType = UNKNOWN_DEVICE;
-          logActionToJs("getting-callback-result",
-                        "error-result",
-                        "is-cuff-available?");
-          this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, false));
-        }
-        break;
+      // case IHEALTH_IS_ANY_CUFF_AVAILABLE:
+      // case IHEALTH_IS_BP7_CUFF_AVAILABLE:
+      // case IHEALTH_IS_BP5_CUFF_AVAILABLE:
+      //   if (resultCode == Activity.RESULT_OK) {
+      //     Log.i(TAG, "Available? OK");
+      //     isCuffAvailable = true;
+      //     mac =  intent.getStringExtra("result");
+      //     deviceType = intent.getIntExtra("type", UNKNOWN_DEVICE);
+      //     logActionToJs("getting-callback-result",
+      //                   "result:" + deviceType,
+      //                   "is-cuff-available?");
+      //     this.callbackContext.success();
+      //   } else {
+      //     Log.i(TAG, "Available? NOTOK");
+      //     isCuffAvailable = false;
+      //     isChecking = false;
+      //     mac = null;
+      //     deviceType = UNKNOWN_DEVICE;
+      //     logActionToJs("getting-callback-result",
+      //                   "error-result",
+      //                   "is-cuff-available?");
+      //     this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, false));
+      //   }
+      //   break;
 
     case IHEALTH_DEVICE_CONNECT_FOR_BP5:
     case IHEALTH_DEVICE_CONNECT_FOR_BP7:
@@ -457,14 +458,14 @@ public class Ihealth extends CordovaPlugin {
         }
 
         break;
-    case IHEALTH_CLEAN_DEVICE_MANAGER:
-      Log.i(TAG, "cleanManager case result:"+resultCode);
-      if (resultCode == Activity.RESULT_OK) {
-        this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "OK_CLEAN"));
-      } else {
-          this.callbackContext.error("ERROR_CLEAR");
-      }
-      break;
+    // case IHEALTH_CLEAN_DEVICE_MANAGER:
+    //   Log.i(TAG, "cleanManager case result:"+resultCode);
+    //   if (resultCode == Activity.RESULT_OK) {
+    //     this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "OK_CLEAN"));
+    //   } else {
+    //       this.callbackContext.error("ERROR_CLEAR");
+    //   }
+    //   break;
     }
     
   }
