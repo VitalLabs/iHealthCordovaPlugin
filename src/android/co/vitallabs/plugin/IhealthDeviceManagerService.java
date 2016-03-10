@@ -6,15 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-// import com.jiuan.android.sdk.bp.bluetooth.BPCommManager;
 import com.jiuan.android.sdk.bp.bluetooth.BPControl;
-// import com.jiuan.android.sdk.bp.observer_bp.Interface_Observer_BP;
-// import com.jiuan.android.sdk.bg.observer.Interface_Observer_BG;
-// import com.jiuan.android.sdk.bg.observer.Interface_Observer_BGCoomMsg;
-// import com.jiuan.android.sdk.bp.observer_comm.Interface_Observer_CommMsg_BP;
-
-// import com.jiuan.android.sdk.device.DeviceManager;
-
 import com.jiuan.android.sdk.abi.bluetooth.ABICommManager;
 import com.jiuan.android.sdk.abi.observer_comm.Interface_Observer_CommMsg_ABI;
 import com.jiuan.android.sdk.am.observer_comm.Interface_Observer_CommMsg_AM;
@@ -152,10 +144,8 @@ public class IhealthDeviceManagerService extends Service implements
   @Override
   public IBinder onBind(Intent intent) {
     Log.i(TAG, "onStart");
-    //super.onStart();
     action = intent.getIntExtra("action", 1);
 
-    // Init receiver
     initReceiver();
 
 
@@ -192,20 +182,18 @@ public class IhealthDeviceManagerService extends Service implements
         intentResult.putExtra("type", predefinedType);
         intentResult.putExtra("action", action);
         Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
-        //setResult(Activity.RESULT_OK, intentResult);
+        
         availableType = predefinedType;
         mAddress = predefinedMac;
         deviceManager.cancelScanDevice();
-        //finish();
-        //this.activityResultCallback.onActivityResult(action, Activity.RESULT_OK, intentResult);
+        
       } else {
         Log.i(TAG, "bpControl is null so we lost previous paired device...");
         Intent intentResult = new Intent();
         intentResult.putExtra("result", false);
         intentResult.putExtra("action", action);
         Log.i(TAG, "wird state done? " + intentResult);
-        //setResult(Activity.RESULT_CANCELED, intentResult);
-
+      
         try {
           Log.i(TAG, "Unregister deviceManager");
           if (deviceManager != null) {
@@ -216,8 +204,7 @@ public class IhealthDeviceManagerService extends Service implements
           Log.i(TAG, "Device not registered never");
         }
         deviceManager.cancelScanDevice();
-        // finish();
-        //this.activityResultCallback.onActivityResult(action, Activity.RESULT_CANCELED, intentResult);
+        
       }
         
     } else {
@@ -252,8 +239,7 @@ public class IhealthDeviceManagerService extends Service implements
           Log.i(TAG, "Device not registered never");
         }
         Log.i(TAG, "Aborting");
-        //finish();
-        //this.activityResultCallback.onActivityResult(action, Activity.RESULT_CANCELED, intentResult);
+        
       } else {
         Log.i(TAG, "We can't abort the mission now!");
       }
