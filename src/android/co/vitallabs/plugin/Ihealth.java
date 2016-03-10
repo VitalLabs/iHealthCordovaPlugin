@@ -437,7 +437,7 @@ public class Ihealth extends CordovaPlugin {
             logActionToJs("getting-callback-result",
                           "got-result:" + json.toString(),
                           "device-connect");
-            resetPluginState();
+            isChecking = false;
             this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, json));
           } catch (JSONException e) {
             logActionToJs("getting-callback-result",
@@ -452,7 +452,7 @@ public class Ihealth extends CordovaPlugin {
                         "error:Getting-result-from-activity:" + errorCode,
                         "device-connect");
 
-          resetPluginState();
+          isChecking = false;
           Log.e(TAG, "Error: " + bpGetErrorMessage(errorCode));
           this.callbackContext.error(bpGetErrorMessage(errorCode));
         }
