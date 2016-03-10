@@ -307,7 +307,7 @@ public class Ihealth extends CordovaPlugin {
       this.deviceConnectForBP7(callbackContext);
       
     } else {
-      resetPluginState();
+      // resetPluginState();
       callbackContext.error("Unknown Device");
     }
   }
@@ -384,27 +384,27 @@ public class Ihealth extends CordovaPlugin {
                   "invoking-plugin-function",
                   "force-to-reset-plugin-state");
 
-    if (!isChecking) {
-      isChecking = true;
-      final CordovaPlugin plugin = (CordovaPlugin) this;
-      cordova.getThreadPool().execute(new Runnable() {
-          @Override
-          public void run () {
-            cordova.setActivityResultCallback(plugin);
-            Context context = plugin.cordova.getActivity().getApplicationContext();
-            Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
-            myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-            myIntent.putExtra("action", IHEALTH_CLEAN_DEVICE_MANAGER);
+    // if (!isChecking) {
+    //   isChecking = true;
+    //   final CordovaPlugin plugin = (CordovaPlugin) this;
+    //   cordova.getThreadPool().execute(new Runnable() {
+    //       @Override
+    //       public void run () {
+    //         cordova.setActivityResultCallback(plugin);
+    //         Context context = plugin.cordova.getActivity().getApplicationContext();
+    //         Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
+    //         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+    //         myIntent.putExtra("action", IHEALTH_CLEAN_DEVICE_MANAGER);
             
-            logActionToJs("reset-plugin-state",
-                          "calling-android-activity",
-                          "reset-device-manager");
+    //         logActionToJs("reset-plugin-state",
+    //                       "calling-android-activity",
+    //                       "reset-device-manager");
 
-            plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_CLEAN_DEVICE_MANAGER);
+    //         plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_CLEAN_DEVICE_MANAGER);
             
-          }
-        });
-    }
+    //       }
+    //     });
+    // }
     
     isTakingMeasure = false;
     isCuffAvailable = false;
