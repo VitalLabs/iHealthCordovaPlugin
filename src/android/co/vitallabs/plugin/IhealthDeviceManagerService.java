@@ -126,6 +126,7 @@ public class IhealthDeviceManagerService extends Service implements
           }
 
           try {
+            Log.i(TAG, "Scan for devices...");
             deviceManager.scanDevice();
           } catch (Exception e) {
             e.printStackTrace();
@@ -362,7 +363,14 @@ public class IhealthDeviceManagerService extends Service implements
     Log.i(TAG, "msgDeviceDisconnect_BP");
     availableType = this.UNKNOWN_DEVICE;
     mAddress = null;
-    deviceManager.cancelScanDevice();
+    // deviceManager.cancelScanDevice();
+    try {
+      Log.i(TAG, "Scan for devices...");
+      deviceManager.scanDevice();
+    } catch (Exception e) {
+      e.printStackTrace();
+      Log.e(TAG, "Exception in deviceManager.scanDevice");
+    }
       
   }
 
