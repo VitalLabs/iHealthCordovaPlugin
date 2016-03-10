@@ -145,7 +145,7 @@ public class Ihealth extends CordovaPlugin {
 
     if (action.equals("isAnyCuffAvailable")) {
        
-      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable+ " - " +isTakingMeasure);
+      Log.i(TAG, "Var isCuffAvailable " + isCuffAvailable+ " - " +isTakingMeasure + " - " + isChecking);
       
       if (!isTakingMeasure && !isCuffAvailable && !isChecking) {
         isAnyCuffAvailable(callbackContext);
@@ -196,27 +196,27 @@ public class Ihealth extends CordovaPlugin {
   private void isAnyCuffAvailable(CallbackContext callbackContext) {
 
     if (!isChecking) {
-      isChecking = true;
+      // isChecking = true;
       final CordovaPlugin plugin = (CordovaPlugin) this;
       cordova.getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run () {
-            cordova.setActivityResultCallback(plugin);
-            Context context = plugin.cordova.getActivity().getApplicationContext();
-            Intent myIntent = new Intent(context, IhealthDeviceManagerService.class);
-            myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-            myIntent.putExtra("action", IHEALTH_IS_ANY_CUFF_AVAILABLE);
+            // cordova.setActivityResultCallback(plugin);
+            // Context context = plugin.cordova.getActivity().getApplicationContext();
+            // Intent myIntent = new Intent(context, IhealthDeviceManagerService.class);
+            // myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+            // myIntent.putExtra("action", IHEALTH_IS_ANY_CUFF_AVAILABLE);
             
-            if (mac != null && !mac.equals("") && deviceType != UNKNOWN_DEVICE) {
-              Log.i(TAG, "Checking for previous paired device: " + mac);
-              myIntent.putExtra("checkForDevice", true);
-              myIntent.putExtra("predefinedMac", mac);
-              myIntent.putExtra("predefinedType", deviceType);
-              // We send this to the service so it 
-              // myIntent.putExtra("pluginInstance", plugin);
-            } else {
-              myIntent.putExtra("checkForDevice", false);
-            }
+            // if (mac != null && !mac.equals("") && deviceType != UNKNOWN_DEVICE) {
+            //   Log.i(TAG, "Checking for previous paired device: " + mac);
+            //   myIntent.putExtra("checkForDevice", true);
+            //   myIntent.putExtra("predefinedMac", mac);
+            //   myIntent.putExtra("predefinedType", deviceType);
+            //   // We send this to the service so it 
+            //   // myIntent.putExtra("pluginInstance", plugin);
+            // } else {
+            //   myIntent.putExtra("checkForDevice", false);
+            // }
             logActionToJs("is-any-cuff-available",
                           "calling-android-activity",
                           "getting-device");
@@ -229,6 +229,7 @@ public class Ihealth extends CordovaPlugin {
 
 
             if (mService.getDeviceMac() != null && ( mService.getDeviceType() == IHEALTH_BP5 || mService.getDeviceType() == IHEALTH_BP7)) {
+              isChecking = true;
               isCuffAvailable = true;
               mac =  mService.getDeviceMac();
               deviceType = mService.getDeviceType();
