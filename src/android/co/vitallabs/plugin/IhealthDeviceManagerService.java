@@ -348,8 +348,8 @@ public class IhealthDeviceManagerService extends Service implements
       //intentResult.putExtra("type", this.UNKNOWN_DEVICE);
       availableType = this.UNKNOWN_DEVICE;
     }
-    intentResult.putExtra("action", action);
-    Log.i(TAG, "isBPCuffAvailable done? " + intentResult);
+    // intentResult.putExtra("action", action);
+    Log.i(TAG, "isBPCuffAvailable done?");
     // setResult(Activity.RESULT_OK, intentResult);
     
     deviceManager.cancelScanDevice();

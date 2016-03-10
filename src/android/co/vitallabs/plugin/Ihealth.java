@@ -164,11 +164,11 @@ public class Ihealth extends CordovaPlugin {
     
     if (action.equals("cleanPluginState")) {
       Log.i(TAG, "FinishActivity!!");
-      try {
-        cordova.getActivity().finishActivity(IHEALTH_IS_ANY_CUFF_AVAILABLE);
-      } catch (Exception e) {
-        Log.e(TAG, "Exception in finishActivity");
-      }
+      // try {
+      //   cordova.getActivity().finishActivity(IHEALTH_IS_ANY_CUFF_AVAILABLE);
+      // } catch (Exception e) {
+      //   Log.e(TAG, "Exception in finishActivity");
+      // }
       resetPluginState();
       callbackContext.success();
     }
@@ -383,28 +383,7 @@ public class Ihealth extends CordovaPlugin {
     logActionToJs("reset-plugin-state",
                   "invoking-plugin-function",
                   "force-to-reset-plugin-state");
-
-    // if (!isChecking) {
-    //   isChecking = true;
-    //   final CordovaPlugin plugin = (CordovaPlugin) this;
-    //   cordova.getThreadPool().execute(new Runnable() {
-    //       @Override
-    //       public void run () {
-    //         cordova.setActivityResultCallback(plugin);
-    //         Context context = plugin.cordova.getActivity().getApplicationContext();
-    //         Intent myIntent = new Intent(context, IhealthDeviceManagerActivity.class);
-    //         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-    //         myIntent.putExtra("action", IHEALTH_CLEAN_DEVICE_MANAGER);
-            
-    //         logActionToJs("reset-plugin-state",
-    //                       "calling-android-activity",
-    //                       "reset-device-manager");
-
-    //         plugin.cordova.startActivityForResult(plugin, myIntent, IHEALTH_CLEAN_DEVICE_MANAGER);
-            
-    //       }
-    //     });
-    // }
+    //Maybe rebind or clean state in service?
     
     isTakingMeasure = false;
     isCuffAvailable = false;
