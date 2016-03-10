@@ -468,10 +468,23 @@ public class IhealthDeviceManagerService extends Service implements
   }
 
   public String getDeviceMac() {
+    Log.i(TAG, "getDeviceMac");
     return this.mAddress;
   }
 
   public int getDeviceType () {
+    Log.i(TAG, "getDeviceType");
     return this.availableType;
   }
+
+  public boolean isScanSuccessful() {
+    Log.i(TAG, "isScanSuccessful");
+    if (mAddress != null && ( availableType == IHEALTH_BP5 || availableType == IHEALTH_BP7)) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+  
 }
